@@ -2,4 +2,5 @@
 import rospy
 
 if __name__ == '__main__':
-    pass
+    rospy.init_node('controller')
+    rospy.spin()
