@@ -7,6 +7,8 @@ from trajectory_tracking.srv import TrajectoryPoint
 from constants import delta_t, k_V, k_w
 
 i = 0
+theta_ez_n_minus_1 = 0
+theta_n_minus_1 = 0
 
 
 def get_position(pose):
@@ -51,6 +53,17 @@ def get_V_n(next_reference, current_reference, current_position, theta_ez_n):
     return (operand_0 * math.cos(theta_ez_n) + operand_1 * math.sin(theta_ez_n)) / delta_t
 
 
+def get_w_n(theta_ez_n, current_orientation):
+    global theta_ez_n_minus_1, theta_n_minus_1
+    
+    w_n = (theta_ez_n - k_w * (theta_ez_n_minus_1 - theta_n_minus_1) - theta_n_minus_1) / delta_t
+    
+    theta_ez_n_minus_1 = theta_ez_n
+    theta_n_minus_1 = current_orientation[2]
+    
+    return math.atan2(math.sin(w_n), math.cos(w_n))
+
+
 def compute_control_actions(pose):
     global i
     
@@ -64,6 +77,7 @@ def compute_control_actions(pose):
     theta_ez_n = get_theta_ez_n(next_reference, current_reference, current_position)
     
     V_n = get_V_n(next_reference, current_reference, current_position, theta_ez_n)
+    w_n = get_w_n(theta_ez_n, current_orientation)
 
     i += 1
 
