@@ -24,10 +24,10 @@ def get_orientation(pose):
 
 
 def get_theta_ez_n(next_reference, current_reference, current_position):
-    x_ref_n_plus_1 = next_reference.position.x
-    y_ref_n_plus_1 = next_reference.position.y
-    x_ref_n = current_reference.position.x
-    y_ref_n = current_reference.position.y
+    x_ref_n_plus_1 = next_reference.x
+    y_ref_n_plus_1 = next_reference.y
+    x_ref_n = current_reference.x
+    y_ref_n = current_reference.y
     x_n = current_position.x
     y_n = current_position.y
     
@@ -44,8 +44,8 @@ def compute_control_actions(pose):
     current_orientation = get_orientation(pose)
     service_proxy = rospy.ServiceProxy('trajectory', TrajectoryPoint)
     
-    current_reference = service_proxy(i * delta_t)
-    next_reference = service_proxy((i + 1) * delta_t)
+    current_reference = service_proxy(i * delta_t).position
+    next_reference = service_proxy((i + 1) * delta_t).position
     
     theta_ez_n = get_theta_ez_n(next_reference, current_reference, current_position)
 
