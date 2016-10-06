@@ -1,23 +1,25 @@
 #!/usr/bin/env python
 import rospy
-from nav_msgs.msg import Odometry
+from gazebo_msgs.msg import ModelStates
+from geometry_msgs.msg import Pose
 
-current_odometry = None
+current_pose = None
 
-def get_odometry(message):
-    global current_odometry
-    current_odometry = message
+def get_pose(message):
+    global current_pose
+    
+    current_pose = message.pose[0]
 
 
 if __name__ == '__main__':
-    rospy.init_node('odometry')
-    subscriber = rospy.Subscriber('odom', Odometry, get_odometry)
-    publisher = rospy.Publisher('odometry_10_hz', Odometry, queue_size=1)
+    rospy.init_node('pose')
+    subscriber = rospy.Subscriber('gazebo/model_states', ModelStates, get_pose)
+    publisher = rospy.Publisher('pose_10_hz', Pose, queue_size=1)
     
-    while current_odometry == None:
+    while current_pose == None:
         pass
     
     rate = rospy.Rate(10)
     while not rospy.is_shutdown():
-        publisher.publish(current_odometry)
+        publisher.publish(current_pose)
         rate.sleep()
