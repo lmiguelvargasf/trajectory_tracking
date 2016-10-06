@@ -8,7 +8,7 @@ def compute_position(request):
     position.x = 0.0
     position.y = 1.0
     position.z = 2.0
-    return TrajectoryPointResponse('position', position)
+    return TrajectoryPointResponse(position)
 
 
 if __name__ == '__main__':
