@@ -37,6 +37,20 @@ def get_theta_ez_n(next_reference, current_reference, current_position):
     return math.atan2(numerator, denominator)
 
 
+def get_V_n(next_reference, current_reference, current_position, theta_ez_n):
+    x_ref_n_plus_1 = next_reference.x
+    y_ref_n_plus_1 = next_reference.y
+    x_ref_n = current_reference.x
+    y_ref_n = current_reference.y
+    x_n = current_position.x
+    y_n = current_position.y
+    
+    operand_0 = x_ref_n_plus_1 - k_V * (x_ref_n - x_n) - x_n
+    operand_1 = y_ref_n_plus_1 - k_V * (y_ref_n - y_n) - y_n
+    
+    return (operand_0 * math.cos(theta_ez_n) + operand_1 * math.sin(theta_ez_n)) / delta_t
+
+
 def compute_control_actions(pose):
     global i
     
@@ -48,6 +62,8 @@ def compute_control_actions(pose):
     next_reference = service_proxy((i + 1) * delta_t).position
     
     theta_ez_n = get_theta_ez_n(next_reference, current_reference, current_position)
+    
+    V_n = get_V_n(next_reference, current_reference, current_position, theta_ez_n)
 
     i += 1
 
