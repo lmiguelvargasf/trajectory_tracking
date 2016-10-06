@@ -5,7 +5,7 @@ from nav_msgs.msg import Odometry
 publisher = None
 
 def send_computed_control_actions(msg):
-    pass
+    publisher.publish(msg)
     
 
 if __name__ == '__main__':
