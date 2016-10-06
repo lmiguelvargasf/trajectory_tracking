@@ -8,7 +8,7 @@ current_pose = None
 def get_pose(message):
     global current_pose
     
-    current_pose = message.pose[0]
+    current_pose = message.pose[2]
 
 
 if __name__ == '__main__':
