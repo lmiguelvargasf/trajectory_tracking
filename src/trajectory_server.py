@@ -5,10 +5,12 @@ from geometry_msgs.msg import Point
 
 def compute_position(request):
     t = request.t
+
     position = Point()
     position.x = 0.05 * t
     position.y = 0.05 * t
     position.z = 0.0
+
     return position
 
 
