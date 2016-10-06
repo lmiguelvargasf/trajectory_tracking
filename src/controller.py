@@ -1,25 +1,25 @@
 #!/usr/bin/env python
 import rospy
 import tf
-from nav_msgs.msg import Odometry
+from geometry_msgs.msg import Pose
+from trajectory_tracking.srv import TrajectoryPoint
 
 i = 0
 
 def get_position(pose):
-    return pose.pose.position
+    return pose.position
 
 def get_orientation(pose):
-    quaternion = (
-        pose.pose.orientation.x,
-        pose.pose.orientation.y,
-        pose.pose.orientation.z,
-        pose.pose.orientation.w
-        )
+    quaternion = [
+        pose.orientation.x,
+        pose.orientation.y,
+        pose.orientation.z,
+        pose.orientation.w
+        ]
     return tf.transformations.euler_from_quaternion(quaternion)
 
-def compute_control_actions(msg):
+def compute_control_actions(pose):
     global i
-    pose = msg.pose
     
     current_position = get_position(pose)
     current_orientation = get_orientation(pose)
@@ -27,5 +27,5 @@ def compute_control_actions(msg):
 
 if __name__ == '__main__':
     rospy.init_node('controller')
-    subscriber = rospy.Subscriber('odometry_10_hz', Odometry, compute_control_actions)
+    subscriber = rospy.Subscriber('pose_10_hz', Pose, compute_control_actions)
     rospy.spin()
