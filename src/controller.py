@@ -2,10 +2,11 @@
 import rospy
 import tf
 import math
-from geometry_msgs.msg import Pose
+from geometry_msgs.msg import Pose, Twist
 from trajectory_tracking.srv import TrajectoryPoint
 from constants import delta_t, k_V, k_w
 
+publisher = None
 i = 0
 theta_ez_n_minus_1 = 0
 theta_n_minus_1 = 0
@@ -79,11 +80,18 @@ def compute_control_actions(pose):
     V_n = get_V_n(next_reference, current_reference, current_position, theta_ez_n)
     w_n = get_w_n(theta_ez_n, current_orientation)
 
+    twist = Twist()
+    twist.linear.x = V_n
+    twist.angular.z = w_n
+    
+    publisher.publish(twist)
+
     i += 1
 
 
 if __name__ == '__main__':
     rospy.init_node('controller')
     subscriber = rospy.Subscriber('pose_10_hz', Pose, compute_control_actions)
+    publisher = rospy.Publisher('computed_control_actions', Twist, queue_size=1)
     rospy.wait_for_service('trajectory_server')
     rospy.spin()
