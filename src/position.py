@@ -11,3 +11,7 @@ class Position:
         position.z = 0.0
 
         return position
+
+    @staticmethod
+    def get_position_from_pose(pose):
+        return pose.position

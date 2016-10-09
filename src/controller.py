@@ -12,10 +12,6 @@ theta_ez_n_minus_1 = 0
 theta_n_minus_1 = 0
 
 
-def get_position(pose):
-    return pose.position
-
-
 def get_orientation(pose):
     quaternion = (
         pose.orientation.x,
@@ -69,8 +65,8 @@ def get_w_n(theta_ez_n, current_orientation):
 def compute_control_actions(pose):
     global i
 
-    current_position = get_position(pose)
     current_orientation = get_orientation(pose)
+    current_position = Position.get_position_from_pose(pose)
 
     current_reference = Position.get_position_at(i * DELTA_T)
     next_reference = Position.get_position_at((i + 1) * DELTA_T)
