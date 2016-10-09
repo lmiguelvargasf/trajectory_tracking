@@ -105,3 +105,4 @@ fabric.properties
 
 # version control
 .idea/vcs.xml
+.idea/dictionaries/
