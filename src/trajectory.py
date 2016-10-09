@@ -2,18 +2,9 @@
 from geometry_msgs.msg import Point
 
 
-class Position:
-    def __init__(self, trajectory_type):
-        self.trajectory_type = trajectory_type
-
-    def get_position_at(self, t):
-        position = Point()
-        if self.trajectory_type == 'linear':
-            position.x = 0.05 * t
-            position.y = 0.05 * t
-            position.z = 0.0
-
-        return position
+def create_trajectory(trajectory_type):
+    if trajectory_type == 'linear':
+        return LinearTrajectory(0.05, 0, 0.05, 0)
 
 
 class LinearTrajectory:
