@@ -14,7 +14,7 @@ class LinearTrajectory:
         self.x_0 = x_0
         self.y_0 = y_0
 
-    def get_position_a(self, t):
+    def get_position_at(self, t):
         position = Point()
         position.x = self.v_x * t + self.x_0
         position.y = self.v_y * t + self.y_0
