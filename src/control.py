@@ -84,7 +84,7 @@ def compute_control_actions(pose):
 
 
 if __name__ == '__main__':
-    rospy.init_node('controller')
+    rospy.init_node('control')
     subscriber = rospy.Subscriber('gazebo/model_states', ModelStates, get_pose)
     publisher = rospy.Publisher('computed_control_actions', Twist, queue_size=1)
 
