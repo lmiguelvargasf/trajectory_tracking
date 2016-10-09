@@ -3,8 +3,8 @@ import rospy
 import tf.transformations
 import math
 from geometry_msgs.msg import Pose, Twist
-from trajectory_tracking.srv import TrajectoryPoint
 from constants import K_V, K_W, DELTA_T
+from position import Position
 
 publisher = None
 i = 0
@@ -67,13 +67,14 @@ def get_w_n(theta_ez_n, current_orientation):
 
 def compute_control_actions(pose):
     global i
-    
+
     current_position = get_position(pose)
     current_orientation = get_orientation(pose)
-    service_proxy = rospy.ServiceProxy('trajectory', TrajectoryPoint)
+
+    position = Position()
     
-    current_reference = service_proxy(i * DELTA_T).position
-    next_reference = service_proxy((i + 1) * DELTA_T).position
+    current_reference = position.get_position_at(i * DELTA_T)
+    next_reference = position.get_position_at((i + 1) * DELTA_T)
     
     theta_ez_n = get_theta_ez_n(next_reference, current_reference, current_position)
     
@@ -93,5 +94,4 @@ if __name__ == '__main__':
     rospy.init_node('controller')
     subscriber = rospy.Subscriber('pose_10_hz', Pose, compute_control_actions)
     publisher = rospy.Publisher('computed_control_actions', Twist, queue_size=1)
-    rospy.wait_for_service('trajectory_server')
     rospy.spin()
