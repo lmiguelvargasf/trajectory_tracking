@@ -48,7 +48,7 @@ if __name__ == '__main__':
     rospy.init_node('plot')
     subscriber = rospy.Subscriber('plot_data', Pose, plot_point)
     fig, ((x_plot, e_x_plot), (y_plot, e_y_plot)) = plt.subplots(2, 2, sharex=True, sharey=True)
-    ani = animation.FuncAnimation(fig, animate, interval=1000)
+    ani = animation.FuncAnimation(fig, animate, interval=250)
     plt.show()
 
     rospy.spin()
