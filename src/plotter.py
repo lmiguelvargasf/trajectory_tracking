@@ -1,23 +1,23 @@
 #!/usr/bin/env python
 import matplotlib.pyplot as plt
 
-from constants import STEPS, DELTA_T
-from position import Position
+from constants import STEPS, DELTA_T, TRAJECTORY_TYPE
+from trajectory import create_trajectory
 
 
 class Plotter:
     def __init__(self):
+        trajectory = create_trajectory(TRAJECTORY_TYPE)
         self.t = [i * DELTA_T for i in range(STEPS)]
-        self.x_ref = [Position.get_position_at(i * DELTA_T).x for i in range(STEPS)]
-        self.y_ref = [Position.get_position_at(i * DELTA_T).y for i in range(STEPS)]
+        self.x_ref = [trajectory.get_position_at(i * DELTA_T).x for i in range(STEPS)]
+        self.y_ref = [trajectory.get_position_at(i * DELTA_T).y for i in range(STEPS)]
         self.x = []
         self.y = []
         self.fig, self.plots = plt.subplots(2, 2, sharex=True)
 
     def add_point(self, pose):
-        position = Position.get_position_from_pose(pose)
-        self.x.append(position.x)
-        self.y.append(position.y)
+        self.x.append(pose.position.x)
+        self.y.append(pose.position.y)
 
     def decorate_plot(self, plot, title, x_label, y_label):
         plot.set_title(title)
@@ -25,7 +25,6 @@ class Plotter:
         plot.set_xlabel(x_label)
         plot.set_ylabel(y_label)
         plot.grid()
-
 
     def plot_results(self):
         zeros = [0 for _ in range(STEPS)]
