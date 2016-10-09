@@ -11,7 +11,7 @@ from constants import STEPS, DELTA_T
 from position import Position
 
 
-def plot_point(pose):
+def add_point(pose):
     position = Position.get_position_from_pose(pose)
     x.append(position.x)
     y.append(position.y)
@@ -57,9 +57,9 @@ if __name__ == '__main__':
     y_ref = [Position.get_position_at(i * DELTA_T).y for i in range(STEPS)]
 
     rospy.init_node('plot')
-    subscriber = rospy.Subscriber('plot_data', Pose, plot_point)
+    subscriber = rospy.Subscriber('plot_data', Pose, add_point)
     fig, plots = plt.subplots(2, 2, sharex=True, sharey=True)
-    ani = animation.FuncAnimation(fig, animate, interval=250)
+    ani = animation.FuncAnimation(fig, animate, interval=500)
     plt.show()
 
     rospy.spin()
