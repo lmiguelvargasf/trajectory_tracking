@@ -16,8 +16,7 @@ if __name__ == '__main__':
     rospy.init_node('pose')
     subscriber = rospy.Subscriber('gazebo/model_states', ModelStates, get_pose)
     publisher = rospy.Publisher('pose_10_hz', Pose, queue_size=1)
-    
-    while current_pose == None:
+
     while current_pose is None:
         pass
     
