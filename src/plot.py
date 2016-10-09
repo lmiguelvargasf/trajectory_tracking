@@ -5,6 +5,7 @@ from geometry_msgs.msg import Pose
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 import numpy as np
+from wrapt import synchronized
 
 from constants import STEPS, DELTA_T
 from position import Position
@@ -15,7 +16,7 @@ def plot_point(pose):
     x.append(position.x)
     y.append(position.y)
 
-
+@synchronized
 def animate(i):
     x_plot.clear()
     e_x_plot.clear()
