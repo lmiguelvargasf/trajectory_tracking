@@ -1,26 +1,15 @@
 #!/usr/bin/env python
 import rospy
-import tf.transformations
 import math
 from geometry_msgs.msg import Pose, Twist
 from constants import K_V, K_W, DELTA_T
 from position import Position
+from orientation import Orientation
 
 publisher = None
 i = 0
 theta_ez_n_minus_1 = 0
 theta_n_minus_1 = 0
-
-
-def get_orientation(pose):
-    quaternion = (
-        pose.orientation.x,
-        pose.orientation.y,
-        pose.orientation.z,
-        pose.orientation.w
-        )
-
-    return tf.transformations.euler_from_quaternion(quaternion)
 
 
 def get_theta_ez_n(next_reference, current_reference, current_position):
@@ -65,8 +54,8 @@ def get_w_n(theta_ez_n, current_orientation):
 def compute_control_actions(pose):
     global i
 
-    current_orientation = get_orientation(pose)
     current_position = Position.get_position_from_pose(pose)
+    current_orientation = Orientation.get_orientation_from_pose(pose)
 
     current_reference = Position.get_position_at(i * DELTA_T)
     next_reference = Position.get_position_at((i + 1) * DELTA_T)
