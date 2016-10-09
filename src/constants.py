@@ -1,3 +1,6 @@
-delta_t = 0.1
-k_V = 0.90
-k_w = 0.90
+#!/usr/bin/env python
+SIMULATION_TIME_IN_SECONDS = 40
+DELTA_T = 0.1 # this is the sampling time
+STEPS = int(SIMULATION_TIME_IN_SECONDS / DELTA_T)
+K_V = 0.90
+K_W = 0.90
