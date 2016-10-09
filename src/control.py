@@ -5,34 +5,20 @@ from geometry_msgs.msg import Twist
 
 from constants import DELTA_T, STEPS
 from controller import Controller
-from orientation import Orientation
-from position import Position
 
 
 def get_pose(message):
     global current_pose
-
     current_pose = message.pose[2]
 
 
 def compute_control_actions(pose):
     global i
-
-    current_position = Position.get_position_from_pose(pose)
-    current_orientation = Orientation.get_orientation_from_pose(pose)
-
-    current_reference = Position.get_position_at(i * DELTA_T)
-    next_reference = Position.get_position_at((i + 1) * DELTA_T)
-
-    theta_ez_n = controller.get_theta_ez_n(next_reference, current_reference, current_position)
-    
-    V_n = controller.get_V_n(next_reference, current_reference, current_position, theta_ez_n)
-    w_n = controller.get_w_n(theta_ez_n, current_orientation)
+    controller.compute_control_actions(pose, i)
 
     twist = Twist()
-    twist.linear.x = V_n
-    twist.angular.z = w_n
-
+    twist.linear.x = controller.v_n
+    twist.angular.z = controller.w_n
     publisher.publish(twist)
 
     i += 1
