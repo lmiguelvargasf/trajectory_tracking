@@ -18,9 +18,11 @@ if __name__ == '__main__':
     publisher = rospy.Publisher('pose_10_hz', Pose, queue_size=1)
     
     while current_pose == None:
+    while current_pose is None:
         pass
     
     rate = rospy.Rate(10)
+    rate = rospy.Rate(int(1 / DELTA_T))
     while not rospy.is_shutdown():
         publisher.publish(current_pose)
         rate.sleep()

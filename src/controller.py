@@ -4,7 +4,7 @@ import tf.transformations
 import math
 from geometry_msgs.msg import Pose, Twist
 from trajectory_tracking.srv import TrajectoryPoint
-from constants import K_V, K_W, DELTA_T
+from constants import K_V, K_W, DELTA_T, STEPS
 
 publisher = None
 i = 0
