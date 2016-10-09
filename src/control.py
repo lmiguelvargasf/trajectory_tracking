@@ -8,12 +8,6 @@ from controller import Controller
 from orientation import Orientation
 from position import Position
 
-current_pose = None
-publisher = None
-i = 0
-
-controller = Controller()
-
 
 def get_pose(message):
     global current_pose
@@ -46,12 +40,15 @@ def compute_control_actions(pose):
 
 if __name__ == '__main__':
     rospy.init_node('control')
+    current_pose = None
     subscriber = rospy.Subscriber('gazebo/model_states', ModelStates, get_pose)
     publisher = rospy.Publisher('computed_control_actions', Twist, queue_size=1)
 
     while current_pose is None:
         pass
 
+    i = 0
+    controller = Controller()
     rate = rospy.Rate(int(1 / DELTA_T))
     while not rospy.is_shutdown() and i < STEPS:
         compute_control_actions(current_pose)
