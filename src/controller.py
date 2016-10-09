@@ -1,15 +1,24 @@
 #!/usr/bin/env python
 import rospy
 import math
+
+from gazebo_msgs.msg import ModelStates
 from geometry_msgs.msg import Pose, Twist
 from constants import K_V, K_W, DELTA_T
 from position import Position
 from orientation import Orientation
 
+current_pose = None
 publisher = None
 i = 0
 theta_ez_n_minus_1 = 0
 theta_n_minus_1 = 0
+
+
+def get_pose(message):
+    global current_pose
+
+    current_pose = message.pose[2]
 
 
 def get_theta_ez_n(next_reference, current_reference, current_position):
@@ -76,6 +85,13 @@ def compute_control_actions(pose):
 
 if __name__ == '__main__':
     rospy.init_node('controller')
-    subscriber = rospy.Subscriber('pose_10_hz', Pose, compute_control_actions)
+    subscriber = rospy.Subscriber('gazebo/model_states', ModelStates, get_pose)
     publisher = rospy.Publisher('computed_control_actions', Twist, queue_size=1)
-    rospy.spin()
+
+    while current_pose is None:
+        pass
+
+    rate = rospy.Rate(int(1 / DELTA_T))
+    while not rospy.is_shutdown():
+        compute_control_actions(current_pose)
+        rate.sleep()
