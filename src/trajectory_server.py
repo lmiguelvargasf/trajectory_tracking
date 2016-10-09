@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 import rospy
-from trajectory_tracking.srv import TrajectoryPoint, TrajectoryPointResponse
+from trajectory_tracking.srv import TrajectoryPoint
 from geometry_msgs.msg import Point
 
 def compute_position(request):
