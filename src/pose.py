@@ -2,7 +2,7 @@
 import rospy
 from gazebo_msgs.msg import ModelStates
 from geometry_msgs.msg import Pose
-from constants import delta_t
+from constants import DELTA_T
 
 current_pose = None
 

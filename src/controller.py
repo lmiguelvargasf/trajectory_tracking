@@ -4,7 +4,7 @@ import tf
 import math
 from geometry_msgs.msg import Pose, Twist
 from trajectory_tracking.srv import TrajectoryPoint
-from constants import delta_t, k_V, k_w
+from constants import K_V, K_W, DELTA_T
 
 publisher = None
 i = 0
@@ -34,8 +34,8 @@ def get_theta_ez_n(next_reference, current_reference, current_position):
     x_n = current_position.x
     y_n = current_position.y
     
-    numerator = y_ref_n_plus_1 - k_V * (y_ref_n - y_n) - y_n
-    denominator = x_ref_n_plus_1 - k_V * (x_ref_n - x_n) - x_n
+    numerator = y_ref_n_plus_1 - K_V * (y_ref_n - y_n) - y_n
+    denominator = x_ref_n_plus_1 - K_V * (x_ref_n - x_n) - x_n
     
     return math.atan2(numerator, denominator)
 
@@ -48,16 +48,16 @@ def get_V_n(next_reference, current_reference, current_position, theta_ez_n):
     x_n = current_position.x
     y_n = current_position.y
     
-    operand_0 = x_ref_n_plus_1 - k_V * (x_ref_n - x_n) - x_n
-    operand_1 = y_ref_n_plus_1 - k_V * (y_ref_n - y_n) - y_n
+    operand_0 = x_ref_n_plus_1 - K_V * (x_ref_n - x_n) - x_n
+    operand_1 = y_ref_n_plus_1 - K_V * (y_ref_n - y_n) - y_n
     
-    return (operand_0 * math.cos(theta_ez_n) + operand_1 * math.sin(theta_ez_n)) / delta_t
+    return (operand_0 * math.cos(theta_ez_n) + operand_1 * math.sin(theta_ez_n)) / DELTA_T
 
 
 def get_w_n(theta_ez_n, current_orientation):
     global theta_ez_n_minus_1, theta_n_minus_1
     
-    w_n = (theta_ez_n - k_w * (theta_ez_n_minus_1 - theta_n_minus_1) - theta_n_minus_1) / delta_t
+    w_n = (theta_ez_n - K_W * (theta_ez_n_minus_1 - theta_n_minus_1) - theta_n_minus_1) / DELTA_T
     
     theta_ez_n_minus_1 = theta_ez_n
     theta_n_minus_1 = current_orientation[2]
@@ -72,8 +72,8 @@ def compute_control_actions(pose):
     current_orientation = get_orientation(pose)
     service_proxy = rospy.ServiceProxy('trajectory', TrajectoryPoint)
     
-    current_reference = service_proxy(i * delta_t).position
-    next_reference = service_proxy((i + 1) * delta_t).position
+    current_reference = service_proxy(i * DELTA_T).position
+    next_reference = service_proxy((i + 1) * DELTA_T).position
     
     theta_ez_n = get_theta_ez_n(next_reference, current_reference, current_position)
     
