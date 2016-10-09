@@ -1,13 +1,13 @@
 #!/usr/bin/env python
 import math
 
-from constants import K_V, DELTA_T, K_W
+from constants import K_V, DELTA_T, K_W, TRAJECTORY_TYPE
 from orientation import Orientation
-from position import Position
-
+from trajectory import create_trajectory
 
 class Controller:
     def __init__(self):
+        self.trajectory = create_trajectory(TRAJECTORY_TYPE)
         self.theta_ez_n_minus_1 = 0
         self.theta_n_minus_1 = 0
         self.theta_ez_n = 0
@@ -46,9 +46,9 @@ class Controller:
 
     def compute_control_actions(self, pose, i):
         current_orientation = Orientation.get_orientation_from_pose(pose)
-        self.set_current_position(Position.get_position_from_pose(pose))
-        self.set_current_reference(Position.get_position_at(i * DELTA_T))
-        self.set_next_reference(Position.get_position_at((i + 1) * DELTA_T))
+        self.set_current_position(pose.position)
+        self.set_current_reference(self.trajectory.get_position_at(i * DELTA_T))
+        self.set_next_reference(self.trajectory.get_position_at((i + 1) * DELTA_T))
 
         self.theta_ez_n = self.get_theta_ez_n()
         self.v_n = self.compute_v_n()
