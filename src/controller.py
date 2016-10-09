@@ -4,7 +4,7 @@ import math
 
 from gazebo_msgs.msg import ModelStates
 from geometry_msgs.msg import Pose, Twist
-from constants import K_V, K_W, DELTA_T
+from constants import K_V, K_W, DELTA_T, STEPS
 from position import Position
 from orientation import Orientation
 
@@ -92,6 +92,8 @@ if __name__ == '__main__':
         pass
 
     rate = rospy.Rate(int(1 / DELTA_T))
-    while not rospy.is_shutdown():
+    while not rospy.is_shutdown() and i < STEPS:
         compute_control_actions(current_pose)
         rate.sleep()
+
+    rospy.spin()
