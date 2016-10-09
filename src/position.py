@@ -3,7 +3,8 @@ from geometry_msgs.msg import Point
 
 
 class Position:
-    def get_position_at(self, t):
+    @staticmethod
+    def get_position_at(t):
         position = Point()
         position.x = 0.05 * t
         position.y = 0.05 * t

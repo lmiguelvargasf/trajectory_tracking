@@ -15,6 +15,7 @@ theta_n_minus_1 = 0
 def get_position(pose):
     return pose.position
 
+
 def get_orientation(pose):
     quaternion = (
         pose.orientation.x,
@@ -71,11 +72,9 @@ def compute_control_actions(pose):
     current_position = get_position(pose)
     current_orientation = get_orientation(pose)
 
-    position = Position()
-    
-    current_reference = position.get_position_at(i * DELTA_T)
-    next_reference = position.get_position_at((i + 1) * DELTA_T)
-    
+    current_reference = Position.get_position_at(i * DELTA_T)
+    next_reference = Position.get_position_at((i + 1) * DELTA_T)
+
     theta_ez_n = get_theta_ez_n(next_reference, current_reference, current_position)
     
     V_n = get_V_n(next_reference, current_reference, current_position, theta_ez_n)
@@ -84,7 +83,7 @@ def compute_control_actions(pose):
     twist = Twist()
     twist.linear.x = V_n
     twist.angular.z = w_n
-    
+
     publisher.publish(twist)
 
     i += 1
