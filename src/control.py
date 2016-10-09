@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import rospy
 from gazebo_msgs.msg import ModelStates
-from geometry_msgs.msg import Twist
+from geometry_msgs.msg import Twist, Pose
 
 from constants import DELTA_T, STEPS
 from controller import Controller
@@ -15,11 +15,12 @@ def get_pose(message):
 def compute_control_actions(pose):
     global i
     controller.compute_control_actions(pose, i)
+    pose_publisher.publish(pose)
 
     twist = Twist()
     twist.linear.x = controller.v_n
     twist.angular.z = controller.w_n
-    publisher.publish(twist)
+    twist_publisher.publish(twist)
 
     i += 1
 
@@ -28,7 +29,8 @@ if __name__ == '__main__':
     rospy.init_node('control')
     current_pose = None
     subscriber = rospy.Subscriber('gazebo/model_states', ModelStates, get_pose)
-    publisher = rospy.Publisher('computed_control_actions', Twist, queue_size=1)
+    twist_publisher = rospy.Publisher('computed_control_actions', Twist, queue_size=1)
+    pose_publisher = rospy.Publisher('plot_data', Pose, queue_size=1)
 
     while current_pose is None:
         pass
