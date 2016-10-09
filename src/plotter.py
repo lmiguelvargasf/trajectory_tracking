@@ -1,65 +1,47 @@
 #!/usr/bin/env python
-import rospy
-from geometry_msgs.msg import Pose
-
 import matplotlib.pyplot as plt
-import matplotlib.animation as animation
-import numpy as np
-from wrapt import synchronized
 
 from constants import STEPS, DELTA_T
 from position import Position
 
 
-def add_point(pose):
-    position = Position.get_position_from_pose(pose)
-    x.append(position.x)
-    y.append(position.y)
+class Plotter:
+    def __init__(self):
+        self.t = [i * DELTA_T for i in range(STEPS)]
+        self.x_ref = [Position.get_position_at(i * DELTA_T).x for i in range(STEPS)]
+        self.y_ref = [Position.get_position_at(i * DELTA_T).y for i in range(STEPS)]
+        self.x = []
+        self.y = []
+        self.fig, self.plots = plt.subplots(2, 2, sharex=True)
+
+    def add_point(self, pose):
+        position = Position.get_position_from_pose(pose)
+        self.x.append(position.x)
+        self.y.append(position.y)
+
+    def decorate_plot(self, plot, title, x_label, y_label):
+        plot.set_title(title)
+        plot.legend(loc=4)
+        plot.set_xlabel(x_label)
+        plot.set_ylabel(y_label)
+        plot.grid()
 
 
+    def plot_results(self):
+        zeros = [0 for _ in range(STEPS)]
+        e_x = [(a_i - b_i) for a_i , b_i in zip(self.x, self.x_ref)]
+        e_y = [(a_i - b_i) for a_i , b_i in zip(self.y, self.y_ref)]
+        self.plots[0, 0].plot(self.t, self.x_ref, 'r--', label='ref')
+        self.plots[0, 0].plot(self.t, self.x, 'b', label='real')
+        self.plots[0, 1].plot(self.t, zeros, 'r--', label='e=0')
+        self.plots[0, 1].plot(self.t, e_x, 'b', label='x error')
+        self.plots[1, 0].plot(self.t, self.y_ref, 'r--', label='ref')
+        self.plots[1, 0].plot(self.t, self.y, 'b', label='real')
+        self.plots[1, 1].plot(self.t, zeros, 'r--', label='e=0')
+        self.plots[1, 1].plot(self.t, e_y, 'b', label='y error')
 
-@synchronized
-def animate(k):
-    for k in range(plots.shape[0]):
-        for j in range(plots.shape[1]):
-            plots[k, j].clear()
-
-    tsx = np.array(t[:len(x)])
-    tsy = np.array(t[:len(y)])
-    xs = np.array(x)
-    xs_ref = np.array(x_ref[:len(x)])
-    ys = np.array(y)
-    ys_ref = np.array(y_ref[:len(y)])
-
-    zeros_x = np.array([0 for _ in range(len(x))])
-    zeros_y = np.array([0 for _ in range(len(y))])
-    exs = np.array([b_i - a_i for a_i, b_i in zip(x_ref[:len(x)], x)])
-    eys = np.array([b_i - a_i for a_i, b_i in zip(y_ref[:len(y)], y)])
-
-    plots[0, 0].plot(tsx, xs_ref, 'r--')
-    plots[0, 0].plot(tsx, xs, 'b')
-
-    plots[0, 1].plot(tsx, zeros_x, 'r--')
-    plots[0, 1].plot(tsx, exs, 'b',)
-
-    plots[1, 0].plot(tsy, ys_ref, 'r--')
-    plots[1, 0].plot(tsy, ys, 'b',)
-
-    plots[1, 1].plot(tsy, zeros_y, 'r--')
-    plots[1, 1].plot(tsy, eys, 'b',)
-
-
-if __name__ == '__main__':
-    t = [i * DELTA_T for i in range(STEPS)]
-    x = []
-    y = []
-    x_ref = [Position.get_position_at(i * DELTA_T).x for i in range(STEPS)]
-    y_ref = [Position.get_position_at(i * DELTA_T).y for i in range(STEPS)]
-
-    rospy.init_node('plot')
-    subscriber = rospy.Subscriber('plot_data', Pose, add_point)
-    fig, plots = plt.subplots(2, 2, sharex=True, sharey=True)
-    ani = animation.FuncAnimation(fig, animate, interval=500)
-    plt.show()
-
-    rospy.spin()
+        self.decorate_plot(self.plots[0, 0], 'x and x ref vs. t', 't[s]', 'x[m]')
+        self.decorate_plot(self.plots[0, 1], 'x error vs. t', 't[s]', 'x error')
+        self.decorate_plot(self.plots[1, 0], 'y and y ref vs. t', 't[s]', 'y[m]')
+        self.decorate_plot(self.plots[1, 1], 'y error vs. t', 't[s]', 'y error')
+        plt.show()

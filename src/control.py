@@ -5,6 +5,7 @@ from geometry_msgs.msg import Twist, Pose
 
 from constants import DELTA_T, STEPS
 from controller import Controller
+from plotter import Plotter
 
 
 def get_pose(message):
@@ -15,7 +16,7 @@ def get_pose(message):
 def compute_control_actions(pose):
     global i
     controller.compute_control_actions(pose, i)
-    pose_publisher.publish(pose)
+    plotter.add_point(pose)
 
     twist = Twist()
     twist.linear.x = controller.v_n
@@ -30,16 +31,17 @@ if __name__ == '__main__':
     current_pose = None
     subscriber = rospy.Subscriber('gazebo/model_states', ModelStates, get_pose)
     twist_publisher = rospy.Publisher('computed_control_actions', Twist, queue_size=1)
-    pose_publisher = rospy.Publisher('plot_data', Pose, queue_size=1)
 
     while current_pose is None:
         pass
 
     i = 0
+    plotter = Plotter()
     controller = Controller()
     rate = rospy.Rate(int(1 / DELTA_T))
     while not rospy.is_shutdown() and i < STEPS:
         compute_control_actions(current_pose)
         rate.sleep()
 
+    plotter.plot_results()
     rospy.spin()
