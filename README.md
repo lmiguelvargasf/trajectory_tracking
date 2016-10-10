@@ -6,4 +6,9 @@ People who are interested can test these algorithms in a real robot.
 The algorithms that have been used so far are:
 * Numerical method controller using Euler's approximation.
 
+These algorithms have been tested for the following trajectories:
+* Linear Trajectory
+* Circular Trajectory
+* Squared Trajectory
+
 [1]: http://www.turtlebot.com/
