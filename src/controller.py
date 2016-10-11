@@ -46,14 +46,14 @@ class EulerMethodController(Controller):
         Controller.__init__(self)
 
     def compute_theta_ez_n(self):
-        numerator = self.y_ref_n_plus_1 - K_X * (self.y_ref_n - self.y_n) - self.y_n
-        denominator = self.x_ref_n_plus_1 - K_Y * (self.x_ref_n - self.x_n) - self.x_n
+        numerator = self.get_delta_y_n()
+        denominator = self.get_delta_x_n()
 
         self.theta_ez_n = math.atan2(numerator, denominator)
 
     def compute_v_n(self):
-        operand_0 = self.x_ref_n_plus_1 - K_X * (self.x_ref_n - self.x_n) - self.x_n
-        operand_1 = self.y_ref_n_plus_1 - K_Y * (self.y_ref_n - self.y_n) - self.y_n
+        operand_0 = self.get_delta_x_n()
+        operand_1 = self.get_delta_y_n()
 
         self.v_n = (operand_0 * math.cos(self.theta_ez_n) + operand_1 * math.sin(self.theta_ez_n)) / DELTA_T
 
