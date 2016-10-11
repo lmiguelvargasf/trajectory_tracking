@@ -87,3 +87,33 @@ class EulerMethodController(Controller):
 class TrapezoidalRuleController(Controller):
     def __init__(self):
         Controller.__init__(self)
+        self.v_n_plus_1 = 0
+        self.w_n_plus_1 = 0
+
+    def compute_theta_ez_n(self):
+        numerator = self.get_delta_y_n() * 2 / DELTA_T - self.v_n * sin(self.theta_n)
+        denominator = self.get_delta_x_n() * 2 / DELTA_T - self.v_n * cos(self.theta_n)
+
+        self.theta_ez_n = atan2(numerator, denominator)
+
+    def compute_v_n(self):
+        delta_x_n = self.get_delta_x_n()
+        delta_y_n = self.get_delta_y_n()
+        append_0 = 2 * (delta_x_n * cos(self.theta_ez_n) + delta_y_n * sin(self.theta_ez_n)) / DELTA_T
+        append_1 = -1 * self.v_n * cos(self.theta_ez_n - self.theta_n)
+
+        self.v_n_plus_1 = append_0 + append_1
+
+    def compute_w_n(self):
+        self.w_n_plus_1 = 2 * self.get_delta_theta_n() / DELTA_T - self.w_n
+
+        self.theta_ez_n_minus_1 = self.theta_ez_n
+        self.theta_n_minus_1 = self.theta_n
+
+    def compute_control_actions(self, pose, i):
+        Controller.compute_control_actions(self, pose, i)
+        self.v_n = self.v_n_plus_1
+        self.w_n = self.w_n_plus_1
+        self.compute_theta_ez_n()
+        self.compute_v_n()
+        self.compute_w_n()
