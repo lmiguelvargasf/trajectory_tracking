@@ -16,14 +16,13 @@ def create_controller():
 class Controller:
     def __init__(self):
         self.trajectory = create_trajectory(TRAJECTORY)
+        self.theta_ez_n_minus_1 = 0
+        self.theta_n_minus_1 = 0
 
 
 class EulerMethodController(Controller):
     def __init__(self):
         Controller.__init__(self)
-        self.theta_ez_n_minus_1 = 0
-        self.theta_n_minus_1 = 0
-        self.theta_ez_n = 0
 
     def get_theta_ez_n(self):
         numerator = self.y_ref_n_plus_1 - K_X * (self.y_ref_n - self.y_n) - self.y_n
