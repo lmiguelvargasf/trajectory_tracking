@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 TRAJECTORY_TYPE = 'squared'
+CONTROLLER = 'euler'
 
 if TRAJECTORY_TYPE == 'linear':
     SIMULATION_TIME_IN_SECONDS = 40.0

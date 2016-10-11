@@ -4,7 +4,7 @@ from gazebo_msgs.msg import ModelStates
 from geometry_msgs.msg import Twist, Pose
 
 from constants import DELTA_T, STEPS
-from controller import EulerMethodController
+from controller import EulerMethodController, create_controller
 from plotter import Plotter
 
 
@@ -37,7 +37,7 @@ if __name__ == '__main__':
 
     i = 0
     plotter = Plotter()
-    controller = EulerMethodController()
+    controller = create_controller()
     rate = rospy.Rate(int(1 / DELTA_T))
     while not rospy.is_shutdown() and i < STEPS:
         compute_control_actions(current_pose)

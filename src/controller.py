@@ -1,9 +1,17 @@
 #!/usr/bin/env python
 import math
 
-from constants import K_X, DELTA_T, K_Y, TRAJECTORY_TYPE, K_THETA
+from constants import K_X, DELTA_T, K_Y, TRAJECTORY_TYPE, K_THETA, CONTROLLER
 from orientation import Orientation
 from trajectory import create_trajectory
+
+
+def create_controller():
+    if CONTROLLER == 'euler':
+        return EulerMethodController()
+    elif CONTROLLER == 'trapezoidal':
+        return TrapezoidalRuleController()
+
 
 class EulerMethodController:
     def __init__(self):
@@ -53,3 +61,6 @@ class EulerMethodController:
         self.theta_ez_n = self.get_theta_ez_n()
         self.v_n = self.compute_v_n()
         self.w_n = self.compute_w_n(current_orientation)
+
+class TrapezoidalRuleController:
+    pass
