@@ -38,8 +38,11 @@ class EulerMethodController(Controller):
         return (operand_0 * math.cos(self.theta_ez_n) + operand_1 * math.sin(self.theta_ez_n)) / DELTA_T
 
     def compute_w_n(self, current_orientation):
-        w_n = (self.theta_ez_n - K_THETA * (self.theta_ez_n_minus_1 - self.theta_n_minus_1) - self.theta_n_minus_1) / DELTA_T
-    
+        w_n =(self.theta_ez_n
+               - K_THETA * (self.theta_ez_n_minus_1 - self.theta_n_minus_1)
+               - self.theta_n_minus_1) \
+              / DELTA_T
+
         self.theta_ez_n_minus_1 = self.theta_ez_n
         self.theta_n_minus_1 = current_orientation[2]
 
