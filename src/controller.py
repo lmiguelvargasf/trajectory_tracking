@@ -22,6 +22,9 @@ class Controller:
     def compute_theta_ez_n(self):
         pass
 
+    def set_current_orientation(self, orientation):
+        self.theta_n = get_euler_orientation(orientation)[2]
+
     def set_current_position(self, position):
         self.x_n = position.x
         self.y_n = position.y
