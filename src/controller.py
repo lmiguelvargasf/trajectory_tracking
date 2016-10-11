@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import math
 
-from constants import K_X, DELTA_T, K_Y, TRAJECTORY_TYPE, K_THETA, CONTROLLER
+from constants import K_X, DELTA_T, K_Y, TRAJECTORY, K_THETA, CONTROLLER
 from orientation import Orientation
 from trajectory import create_trajectory
 
@@ -13,7 +13,8 @@ def create_controller():
         return TrapezoidalRuleController()
 
 class Controller:
-    pass
+    def __init__(self):
+        self.trajectory = create_trajectory(TRAJECTORY)
 
 
 class EulerMethodController(Controller):

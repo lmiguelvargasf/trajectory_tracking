@@ -1,13 +1,13 @@
 #!/usr/bin/env python
 import matplotlib.pyplot as plt
 
-from constants import STEPS, DELTA_T, TRAJECTORY_TYPE
+from constants import STEPS, DELTA_T, TRAJECTORY
 from trajectory import create_trajectory
 
 
 class Plotter:
     def __init__(self):
-        trajectory = create_trajectory(TRAJECTORY_TYPE)
+        trajectory = create_trajectory(TRAJECTORY)
         self.t = [i * DELTA_T for i in range(STEPS)]
         self.x_ref = [trajectory.get_position_at(i * DELTA_T).x for i in range(STEPS)]
         self.y_ref = [trajectory.get_position_at(i * DELTA_T).y for i in range(STEPS)]

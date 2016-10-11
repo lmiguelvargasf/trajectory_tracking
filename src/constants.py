@@ -1,12 +1,12 @@
 #!/usr/bin/env python
-TRAJECTORY_TYPE = 'squared'
+TRAJECTORY = 'squared'
 CONTROLLER = 'euler'
 
-if TRAJECTORY_TYPE == 'linear':
+if TRAJECTORY == 'linear':
     SIMULATION_TIME_IN_SECONDS = 40.0
-elif TRAJECTORY_TYPE == 'circular':
+elif TRAJECTORY == 'circular':
     SIMULATION_TIME_IN_SECONDS = 120.0
-elif TRAJECTORY_TYPE == 'squared':
+elif TRAJECTORY == 'squared':
     SIMULATION_TIME_IN_SECONDS = 160.0
 
 DELTA_T = 0.1 # this is the sampling time
