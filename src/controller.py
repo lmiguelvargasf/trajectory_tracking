@@ -22,7 +22,10 @@ class Controller:
         pass
 
     def compute_control_actions(self, pose, i):
-        pass
+        self.set_current_orientation(pose.orientation)
+        self.set_current_position(pose.position)
+        self.set_current_reference(self.trajectory.get_position_at(i * DELTA_T))
+        self.set_next_reference(self.trajectory.get_position_at((i + 1) * DELTA_T))
 
     def set_current_orientation(self, orientation):
         self.theta_n = get_euler_orientation(orientation)[2]
@@ -69,11 +72,7 @@ class EulerMethodController(Controller):
         self.theta_n_minus_1 = self.theta_n
 
     def compute_control_actions(self, pose, i):
-        self.set_current_orientation(pose.orientation)
-        self.set_current_position(pose.position)
-        self.set_current_reference(self.trajectory.get_position_at(i * DELTA_T))
-        self.set_next_reference(self.trajectory.get_position_at((i + 1) * DELTA_T))
-
+        Controller.compute_control_actions(self, pose, i)
         self.compute_theta_ez_n()
         self.compute_v_n()
         self.compute_w_n()
