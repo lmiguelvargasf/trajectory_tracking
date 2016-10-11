@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import math
 
-from constants import K_V, DELTA_T, K_W, TRAJECTORY_TYPE
+from constants import K_X, DELTA_T, K_Y, TRAJECTORY_TYPE, K_THETA
 from orientation import Orientation
 from trajectory import create_trajectory
 
@@ -13,19 +13,19 @@ class Controller:
         self.theta_ez_n = 0
 
     def get_theta_ez_n(self):
-        numerator = self.y_ref_n_plus_1 - K_V * (self.y_ref_n - self.y_n) - self.y_n
-        denominator = self.x_ref_n_plus_1 - K_V * (self.x_ref_n - self.x_n) - self.x_n
+        numerator = self.y_ref_n_plus_1 - K_X * (self.y_ref_n - self.y_n) - self.y_n
+        denominator = self.x_ref_n_plus_1 - K_Y * (self.x_ref_n - self.x_n) - self.x_n
 
         return math.atan2(numerator, denominator)
 
     def compute_v_n(self):
-        operand_0 = self.x_ref_n_plus_1 - K_V * (self.x_ref_n - self.x_n) - self.x_n
-        operand_1 = self.y_ref_n_plus_1 - K_V * (self.y_ref_n - self.y_n) - self.y_n
+        operand_0 = self.x_ref_n_plus_1 - K_X * (self.x_ref_n - self.x_n) - self.x_n
+        operand_1 = self.y_ref_n_plus_1 - K_Y * (self.y_ref_n - self.y_n) - self.y_n
 
         return (operand_0 * math.cos(self.theta_ez_n) + operand_1 * math.sin(self.theta_ez_n)) / DELTA_T
 
     def compute_w_n(self, current_orientation):
-        w_n = (self.theta_ez_n - K_W * (self.theta_ez_n_minus_1 - self.theta_n_minus_1) - self.theta_n_minus_1) / DELTA_T
+        w_n = (self.theta_ez_n - K_THETA * (self.theta_ez_n_minus_1 - self.theta_n_minus_1) - self.theta_n_minus_1) / DELTA_T
 
         self.theta_ez_n_minus_1 = self.theta_ez_n
         self.theta_n_minus_1 = current_orientation[2]

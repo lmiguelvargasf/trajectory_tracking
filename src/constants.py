@@ -10,5 +10,8 @@ elif TRAJECTORY_TYPE == 'squared':
 
 DELTA_T = 0.1 # this is the sampling time
 STEPS = int(SIMULATION_TIME_IN_SECONDS / DELTA_T)
-K_V = 0.90
-K_W = 0.90
+
+# control constants
+K_X = 0.90
+K_Y = 0.90
+K_THETA = 0.90
