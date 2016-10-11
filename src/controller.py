@@ -37,6 +37,9 @@ class Controller:
     def get_delta_x_n(self):
         return self.x_ref_n_plus_1 - K_X * (self.x_ref_n - self.x_n) - self.x_n
 
+    def get_delta_y_n(self):
+        return self.y_ref_n_plus_1 - K_Y * (self.y_ref_n - self.y_n) - self.y_n
+
 
 class EulerMethodController(Controller):
     def __init__(self):
