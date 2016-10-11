@@ -12,8 +12,11 @@ def create_controller():
     elif CONTROLLER == 'trapezoidal':
         return TrapezoidalRuleController()
 
+class Controller:
+    pass
 
-class EulerMethodController:
+
+class EulerMethodController(Controller):
     def __init__(self):
         self.trajectory = create_trajectory(TRAJECTORY_TYPE)
         self.theta_ez_n_minus_1 = 0
@@ -62,5 +65,5 @@ class EulerMethodController:
         self.v_n = self.compute_v_n()
         self.w_n = self.compute_w_n(current_orientation)
 
-class TrapezoidalRuleController:
+class TrapezoidalRuleController(Controller):
     pass
