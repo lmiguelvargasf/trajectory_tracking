@@ -5,7 +5,7 @@ from constants import K_X, DELTA_T, K_Y, TRAJECTORY_TYPE, K_THETA
 from orientation import Orientation
 from trajectory import create_trajectory
 
-class Controller:
+class EulerMethodController:
     def __init__(self):
         self.trajectory = create_trajectory(TRAJECTORY_TYPE)
         self.theta_ez_n_minus_1 = 0
