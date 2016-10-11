@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 TRAJECTORY = 'linear'
-CONTROLLER = 'euler'
+CONTROLLER = 'trapezoidal'
 
 if TRAJECTORY == 'linear':
     SIMULATION_TIME_IN_SECONDS = 40.0
