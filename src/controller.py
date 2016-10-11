@@ -21,6 +21,12 @@ class Controller:
     def compute_theta_ez_n(self):
         pass
 
+    def compute_v_n(self):
+        pass
+
+    def compute_w_n(self):
+        pass
+
     def compute_control_actions(self, pose, i):
         self.set_current_orientation(pose.orientation)
         self.set_current_position(pose.position)
