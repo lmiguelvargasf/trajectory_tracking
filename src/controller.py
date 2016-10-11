@@ -40,6 +40,9 @@ class Controller:
     def get_delta_y_n(self):
         return self.y_ref_n_plus_1 - K_Y * (self.y_ref_n - self.y_n) - self.y_n
 
+    def get_delta_theta_n(self):
+        return self.theta_ez_n - K_THETA * (self.theta_ez_n_minus_1 - self.theta_n_minus_1) - self.theta_n_minus_1
+
 
 class EulerMethodController(Controller):
     def __init__(self):
