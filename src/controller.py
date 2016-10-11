@@ -63,12 +63,10 @@ class EulerMethodController(Controller):
         self.v_n = (delta_x_n * cos(self.theta_ez_n) + delta_y_n * sin(self.theta_ez_n)) / DELTA_T
 
     def compute_w_n(self):
-        w_n = self.get_delta_theta_n() / DELTA_T
+        self.w_n = self.get_delta_theta_n() / DELTA_T
 
         self.theta_ez_n_minus_1 = self.theta_ez_n
         self.theta_n_minus_1 = self.theta_n
-
-        self.w_n = atan2(sin(w_n), cos(w_n))
 
     def compute_control_actions(self, pose, i):
         self.set_current_orientation(pose.orientation)
