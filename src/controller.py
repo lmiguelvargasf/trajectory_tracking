@@ -22,6 +22,17 @@ class Controller:
     def compute_theta_ez_n(self):
         pass
 
+    def set_current_position(self, position):
+        self.x_n = position.x
+        self.y_n = position.y
+
+    def set_current_reference(self, reference):
+        self.x_ref_n = reference.x
+        self.y_ref_n = reference.y
+
+    def set_next_reference(self, reference):
+        self.x_ref_n_plus_1 = reference.x
+        self.y_ref_n_plus_1 = reference.y
 
 class EulerMethodController(Controller):
     def __init__(self):
@@ -49,18 +60,6 @@ class EulerMethodController(Controller):
         self.theta_n_minus_1 = current_orientation[2]
 
         self.w_n = math.atan2(math.sin(w_n), math.cos(w_n))
-
-    def set_current_position(self, position):
-        self.x_n = position.x
-        self.y_n = position.y
-
-    def set_current_reference(self, reference):
-        self.x_ref_n = reference.x
-        self.y_ref_n = reference.y
-
-    def set_next_reference(self, reference):
-        self.x_ref_n_plus_1 = reference.x
-        self.y_ref_n_plus_1 = reference.y
 
     def compute_control_actions(self, pose, i):
         current_orientation = Orientation.get_orientation_from_pose(pose)
