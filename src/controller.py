@@ -2,7 +2,7 @@
 import math
 
 from constants import K_X, DELTA_T, K_Y, TRAJECTORY, K_THETA, CONTROLLER
-from orientation import Orientation
+from orientation import get_euler_orientation
 from trajectory import create_trajectory
 
 
@@ -57,23 +57,23 @@ class EulerMethodController(Controller):
 
         self.v_n = (operand_0 * math.cos(self.theta_ez_n) + operand_1 * math.sin(self.theta_ez_n)) / DELTA_T
 
-    def compute_w_n(self, current_orientation):
+    def compute_w_n(self):
         w_n = self.get_delta_theta_n() / DELTA_T
 
         self.theta_ez_n_minus_1 = self.theta_ez_n
-        self.theta_n_minus_1 = current_orientation[2]
+        self.theta_n_minus_1 = self.theta_n
 
         self.w_n = math.atan2(math.sin(w_n), math.cos(w_n))
 
     def compute_control_actions(self, pose, i):
-        current_orientation = Orientation.get_orientation_from_pose(pose)
+        self.set_current_orientation(pose.orientation)
         self.set_current_position(pose.position)
         self.set_current_reference(self.trajectory.get_position_at(i * DELTA_T))
         self.set_next_reference(self.trajectory.get_position_at((i + 1) * DELTA_T))
 
         self.compute_theta_ez_n()
         self.compute_v_n()
-        self.compute_w_n(current_orientation)
+        self.compute_w_n()
 
 
 class TrapezoidalRuleController(Controller):
