@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 import rospy
 from gazebo_msgs.msg import ModelStates
-from geometry_msgs.msg import Twist, Pose
+from geometry_msgs.msg import Twist
 
 from constants import DELTA_T, STEPS
-from controller import Controller
+from controller import create_controller
 from plotter import Plotter
 
 
@@ -37,7 +37,7 @@ if __name__ == '__main__':
 
     i = 0
     plotter = Plotter()
-    controller = Controller()
+    controller = create_controller()
     rate = rospy.Rate(int(1 / DELTA_T))
     while not rospy.is_shutdown() and i < STEPS:
         compute_control_actions(current_pose)

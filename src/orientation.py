@@ -2,15 +2,12 @@
 import tf.transformations
 
 
-class Orientation:
-    @staticmethod
+def get_euler_orientation(orientation):
+    quaternion = (
+        orientation.x,
+        orientation.y,
+        orientation.z,
+        orientation.w
+    )
 
-    def get_orientation_from_pose(pose):
-        quaternion = (
-            pose.orientation.x,
-            pose.orientation.y,
-            pose.orientation.z,
-            pose.orientation.w
-            )
-
-        return tf.transformations.euler_from_quaternion(quaternion)
+    return tf.transformations.euler_from_quaternion(quaternion)

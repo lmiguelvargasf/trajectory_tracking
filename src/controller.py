@@ -1,36 +1,40 @@
 #!/usr/bin/env python
-import math
-
-from constants import K_V, DELTA_T, K_W, TRAJECTORY_TYPE
-from orientation import Orientation
+from math import sin, cos, atan2
+from constants import K_X, DELTA_T, K_Y, TRAJECTORY, K_THETA, CONTROLLER
+from orientation import get_euler_orientation
 from trajectory import create_trajectory
+
+
+def create_controller():
+    if CONTROLLER == 'euler':
+        return EulerMethodController()
+    elif CONTROLLER == 'trapezoidal':
+        return TrapezoidalRuleController()
+
 
 class Controller:
     def __init__(self):
-        self.trajectory = create_trajectory(TRAJECTORY_TYPE)
+        self.trajectory = create_trajectory(TRAJECTORY)
         self.theta_ez_n_minus_1 = 0
         self.theta_n_minus_1 = 0
-        self.theta_ez_n = 0
 
-    def get_theta_ez_n(self):
-        numerator = self.y_ref_n_plus_1 - K_V * (self.y_ref_n - self.y_n) - self.y_n
-        denominator = self.x_ref_n_plus_1 - K_V * (self.x_ref_n - self.x_n) - self.x_n
-
-        return math.atan2(numerator, denominator)
+    def compute_theta_ez_n(self):
+        pass
 
     def compute_v_n(self):
-        operand_0 = self.x_ref_n_plus_1 - K_V * (self.x_ref_n - self.x_n) - self.x_n
-        operand_1 = self.y_ref_n_plus_1 - K_V * (self.y_ref_n - self.y_n) - self.y_n
+        pass
 
-        return (operand_0 * math.cos(self.theta_ez_n) + operand_1 * math.sin(self.theta_ez_n)) / DELTA_T
+    def compute_w_n(self):
+        pass
 
-    def compute_w_n(self, current_orientation):
-        w_n = (self.theta_ez_n - K_W * (self.theta_ez_n_minus_1 - self.theta_n_minus_1) - self.theta_n_minus_1) / DELTA_T
+    def compute_control_actions(self, pose, i):
+        self.set_current_orientation(pose.orientation)
+        self.set_current_position(pose.position)
+        self.set_current_reference(self.trajectory.get_position_at(i * DELTA_T))
+        self.set_next_reference(self.trajectory.get_position_at((i + 1) * DELTA_T))
 
-        self.theta_ez_n_minus_1 = self.theta_ez_n
-        self.theta_n_minus_1 = current_orientation[2]
-
-        return math.atan2(math.sin(w_n), math.cos(w_n))
+    def set_current_orientation(self, orientation):
+        self.theta_n = get_euler_orientation(orientation)[2]
 
     def set_current_position(self, position):
         self.x_n = position.x
@@ -44,12 +48,72 @@ class Controller:
         self.x_ref_n_plus_1 = reference.x
         self.y_ref_n_plus_1 = reference.y
 
-    def compute_control_actions(self, pose, i):
-        current_orientation = Orientation.get_orientation_from_pose(pose)
-        self.set_current_position(pose.position)
-        self.set_current_reference(self.trajectory.get_position_at(i * DELTA_T))
-        self.set_next_reference(self.trajectory.get_position_at((i + 1) * DELTA_T))
+    def get_delta_x_n(self):
+        return self.x_ref_n_plus_1 - K_X * (self.x_ref_n - self.x_n) - self.x_n
 
-        self.theta_ez_n = self.get_theta_ez_n()
-        self.v_n = self.compute_v_n()
-        self.w_n = self.compute_w_n(current_orientation)
+    def get_delta_y_n(self):
+        return self.y_ref_n_plus_1 - K_Y * (self.y_ref_n - self.y_n) - self.y_n
+
+    def get_delta_theta_n(self):
+        return self.theta_ez_n - K_THETA * (self.theta_ez_n_minus_1 - self.theta_n_minus_1) - self.theta_n_minus_1
+
+
+class EulerMethodController(Controller):
+    def __init__(self):
+        Controller.__init__(self)
+
+    def compute_theta_ez_n(self):
+        self.theta_ez_n = atan2(self.get_delta_y_n(), self.get_delta_x_n())
+
+    def compute_v_n(self):
+        delta_x_n = self.get_delta_x_n()
+        delta_y_n = self.get_delta_y_n()
+
+        self.v_n = (delta_x_n * cos(self.theta_ez_n) + delta_y_n * sin(self.theta_ez_n)) / DELTA_T
+
+    def compute_w_n(self):
+        self.w_n = self.get_delta_theta_n() / DELTA_T
+
+        self.theta_ez_n_minus_1 = self.theta_ez_n
+        self.theta_n_minus_1 = self.theta_n
+
+    def compute_control_actions(self, pose, i):
+        Controller.compute_control_actions(self, pose, i)
+        self.compute_theta_ez_n()
+        self.compute_v_n()
+        self.compute_w_n()
+
+
+class TrapezoidalRuleController(Controller):
+    def __init__(self):
+        Controller.__init__(self)
+        self.v_n_plus_1 = 0
+        self.w_n_plus_1 = 0
+
+    def compute_theta_ez_n(self):
+        numerator = self.get_delta_y_n() * 2 / DELTA_T - self.v_n * sin(self.theta_n)
+        denominator = self.get_delta_x_n() * 2 / DELTA_T - self.v_n * cos(self.theta_n)
+
+        self.theta_ez_n = atan2(numerator, denominator)
+
+    def compute_v_n(self):
+        delta_x_n = self.get_delta_x_n()
+        delta_y_n = self.get_delta_y_n()
+        append_0 = 2 * (delta_x_n * cos(self.theta_ez_n) + delta_y_n * sin(self.theta_ez_n)) / DELTA_T
+        append_1 = -1 * self.v_n * cos(self.theta_ez_n - self.theta_n)
+
+        self.v_n_plus_1 = append_0 + append_1
+
+    def compute_w_n(self):
+        self.w_n_plus_1 = 2 * self.get_delta_theta_n() / DELTA_T - self.w_n
+
+        self.theta_ez_n_minus_1 = self.theta_ez_n
+        self.theta_n_minus_1 = self.theta_n
+
+    def compute_control_actions(self, pose, i):
+        Controller.compute_control_actions(self, pose, i)
+        self.v_n = self.v_n_plus_1
+        self.w_n = self.w_n_plus_1
+        self.compute_theta_ez_n()
+        self.compute_v_n()
+        self.compute_w_n()
