@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 import rospy
 from gazebo_msgs.msg import ModelStates
-from geometry_msgs.msg import Twist, Pose
+from geometry_msgs.msg import Twist
 
 from constants import DELTA_T, STEPS
-from controller import EulerMethodController, create_controller
+from controller import create_controller
 from plotter import Plotter
 
 
