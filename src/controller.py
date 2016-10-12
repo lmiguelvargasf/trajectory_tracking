@@ -49,13 +49,13 @@ class EulerMethodController(Controller):
     def compute_theta_ez_n(self):
          return atan2(self.get_delta_y_n(), self.get_delta_x_n())
 
-    def compute_v_n(self):
+    def compute_v_c_n(self):
         delta_x_n = self.get_delta_x_n()
         delta_y_n = self.get_delta_y_n()
 
         return (delta_x_n * cos(self.theta_ez_n) + delta_y_n * sin(self.theta_ez_n)) / DELTA_T
 
-    def compute_w_n(self):
+    def compute_w_c_n(self):
         w_n = self.get_delta_theta_n() / DELTA_T
 
         self.theta_ez_n_minus_1 = self.theta_ez_n
@@ -71,8 +71,8 @@ class EulerMethodController(Controller):
         self.set_next_reference(self.trajectory.get_position_at((i + 1) * DELTA_T))
 
         self.theta_ez_n = self.compute_theta_ez_n()
-        self.v_n = self.compute_v_n()
-        self.w_n =  self.compute_w_n()
+        self.v_c_n = self.compute_v_c_n()
+        self.w_c_n =  self.compute_w_c_n()
 
 
 class PIDController(Controller):

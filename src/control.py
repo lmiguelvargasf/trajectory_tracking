@@ -20,8 +20,8 @@ def compute_control_actions():
     plotter.add_point(current_pose)
 
     twist = Twist()
-    twist.linear.x = controller.v_n
-    twist.angular.z = controller.w_n
+    twist.linear.x = controller.v_c_n
+    twist.angular.z = controller.w_c_n
     twist_publisher.publish(twist)
 
     i += 1
