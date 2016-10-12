@@ -14,7 +14,6 @@ class EulerMethodController:
         self.trajectory = create_trajectory(TRAJECTORY)
         self.theta_ez_n_minus_1 = 0
         self.theta_n_minus_1 = 0
-        # self.theta_n = 0
 
     def set_current_orientation(self, orientation):
         self.theta_n = get_euler_orientation(orientation)[2]
