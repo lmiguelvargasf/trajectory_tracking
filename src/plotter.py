@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import matplotlib.pyplot as plt
 
-from constants import STEPS, DELTA_T, TRAJECTORY
+from constants import STEPS, DELTA_T
 from trajectory import create_trajectory
 
 

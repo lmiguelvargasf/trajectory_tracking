@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 from math import sin, cos, atan2
-from constants import K_X, DELTA_T, K_Y, TRAJECTORY, K_THETA
+
+from constants import K_X, DELTA_T, K_Y, K_THETA
 from orientation import get_euler_orientation
 from trajectory import create_trajectory
 

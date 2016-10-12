@@ -2,8 +2,8 @@
 import math
 
 from geometry_msgs.msg import Point
+from constants import SIMULATION_TIME_IN_SECONDS, TRAJECTORY
 
-from constants import SIMULATION_TIME_IN_SECONDS
 
 
 def create_trajectory(trajectory_type):
