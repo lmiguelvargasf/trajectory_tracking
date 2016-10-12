@@ -12,7 +12,7 @@ def create_controller():
 
 class EulerMethodController:
     def __init__(self):
-        self.trajectory = create_trajectory(TRAJECTORY)
+        self.trajectory = create_trajectory()
         self.theta_ez_n_minus_1 = 0
         self.theta_n_minus_1 = 0
 
