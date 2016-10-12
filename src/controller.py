@@ -54,7 +54,7 @@ class EulerMethodController:
         self.theta_ez_n_minus_1 = self.theta_ez_n
         self.theta_n_minus_1 = self.theta_n
 
-        # limit angular velocity to be between -pi and pi
+        # limit angular velocity to be between -pi and pi rad/s
         return atan2(sin(w_n), cos(w_n))
 
     def compute_control_actions(self, pose, i):
