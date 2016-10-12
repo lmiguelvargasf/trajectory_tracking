@@ -64,7 +64,7 @@ class EulerMethodController(Controller):
         # limit angular velocity to be between -pi and pi rad/s
         return atan2(sin(w_n), cos(w_n))
 
-    def compute_control_actions(self, pose, i):
+    def compute_control_actions(self, pose, twist, i):
         self.set_current_orientation(pose.orientation)
         self.set_current_position(pose.position)
         self.set_current_reference(self.trajectory.get_position_at(i * DELTA_T))

@@ -16,7 +16,7 @@ def get_pose(message):
 
 def compute_control_actions():
     global i
-    controller.compute_control_actions(current_pose, i)
+    controller.compute_control_actions(current_pose, current_twist, i)
     plotter.add_point(current_pose)
 
     twist = Twist()
