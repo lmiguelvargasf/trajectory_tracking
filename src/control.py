@@ -13,10 +13,10 @@ def get_pose(message):
     current_pose = message.pose[2]
 
 
-def compute_control_actions(pose):
+def compute_control_actions():
     global i
-    controller.compute_control_actions(pose, i)
-    plotter.add_point(pose)
+    controller.compute_control_actions(current_pose, i)
+    plotter.add_point(current_pose)
 
     twist = Twist()
     twist.linear.x = controller.v_n
@@ -40,7 +40,7 @@ if __name__ == '__main__':
     controller = create_controller()
     rate = rospy.Rate(int(1 / DELTA_T))
     while not rospy.is_shutdown() and i < STEPS:
-        compute_control_actions(current_pose)
+        compute_control_actions()
         rate.sleep()
 
     plotter.plot_results()

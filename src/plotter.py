@@ -1,13 +1,13 @@
 #!/usr/bin/env python
 import matplotlib.pyplot as plt
 
-from constants import STEPS, DELTA_T, TRAJECTORY
+from constants import STEPS, DELTA_T
 from trajectory import create_trajectory
 
 
 class Plotter:
     def __init__(self):
-        trajectory = create_trajectory(TRAJECTORY)
+        trajectory = create_trajectory()
         self.t = [i * DELTA_T for i in range(STEPS)]
         self.x_ref = [trajectory.get_position_at(i * DELTA_T).x for i in range(STEPS)]
         self.y_ref = [trajectory.get_position_at(i * DELTA_T).y for i in range(STEPS)]
@@ -40,7 +40,7 @@ class Plotter:
         self.plots[1, 1].plot(self.t, e_y, 'b', label='y error')
 
         self.decorate_plot(self.plots[0, 0], 'x and x ref vs. t', 't[s]', 'x[m]')
-        self.decorate_plot(self.plots[0, 1], 'x error vs. t', 't[s]', 'x error')
+        self.decorate_plot(self.plots[0, 1], 'x error vs. t', 't[s]', 'x-error[m]')
         self.decorate_plot(self.plots[1, 0], 'y and y ref vs. t', 't[s]', 'y[m]')
-        self.decorate_plot(self.plots[1, 1], 'y error vs. t', 't[s]', 'y error')
+        self.decorate_plot(self.plots[1, 1], 'y error vs. t', 't[s]', 'y-error[m]')
         plt.show()

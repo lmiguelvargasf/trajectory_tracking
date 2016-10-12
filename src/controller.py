@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 from math import sin, cos, atan2
-from constants import K_X, DELTA_T, K_Y, TRAJECTORY, K_THETA
+
+from constants import K_X, DELTA_T, K_Y, K_THETA
 from orientation import get_euler_orientation
 from trajectory import create_trajectory
 
@@ -11,10 +12,9 @@ def create_controller():
 
 class EulerMethodController:
     def __init__(self):
-        self.trajectory = create_trajectory(TRAJECTORY)
+        self.trajectory = create_trajectory()
         self.theta_ez_n_minus_1 = 0
         self.theta_n_minus_1 = 0
-        # self.theta_n = 0
 
     def set_current_orientation(self, orientation):
         self.theta_n = get_euler_orientation(orientation)[2]
@@ -55,7 +55,7 @@ class EulerMethodController:
         self.theta_ez_n_minus_1 = self.theta_ez_n
         self.theta_n_minus_1 = self.theta_n
 
-        # limit angular velocity to be between -pi and pi
+        # limit angular velocity to be between -pi and pi rad/s
         return atan2(sin(w_n), cos(w_n))
 
     def compute_control_actions(self, pose, i):
