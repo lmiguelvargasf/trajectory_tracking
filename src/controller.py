@@ -14,14 +14,6 @@ class Controller:
     def __init__(self):
         self.trajectory = create_trajectory()
 
-
-class EulerMethodController(Controller):
-    def __init__(self):
-        Controller.__init__(self)
-        self.trajectory = create_trajectory()
-        self.theta_ez_n_minus_1 = 0
-        self.theta_n_minus_1 = 0
-
     def set_current_orientation(self, orientation):
         self.theta_n = get_euler_orientation(orientation)[2]
 
@@ -32,6 +24,14 @@ class EulerMethodController(Controller):
     def set_current_reference(self, reference):
         self.x_ref_n = reference.x
         self.y_ref_n = reference.y
+
+
+class EulerMethodController(Controller):
+    def __init__(self):
+        Controller.__init__(self)
+        self.trajectory = create_trajectory()
+        self.theta_ez_n_minus_1 = 0
+        self.theta_n_minus_1 = 0
 
     def set_next_reference(self, reference):
         self.x_ref_n_plus_1 = reference.x
