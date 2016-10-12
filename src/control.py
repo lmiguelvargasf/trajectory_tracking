@@ -9,8 +9,9 @@ from plotter import Plotter
 
 
 def get_pose(message):
-    global current_pose
+    global current_pose, current_twist
     current_pose = message.pose[2]
+    current_twist = message.twist[2]
 
 
 def compute_control_actions():
@@ -29,10 +30,11 @@ def compute_control_actions():
 if __name__ == '__main__':
     rospy.init_node('control')
     current_pose = None
+    current_twist = None
     subscriber = rospy.Subscriber('gazebo/model_states', ModelStates, get_pose)
     twist_publisher = rospy.Publisher('computed_control_actions', Twist, queue_size=1)
 
-    while current_pose is None:
+    while current_pose is None or current_twist is None:
         pass
 
     i = 0
