@@ -1,37 +1,20 @@
 #!/usr/bin/env python
 from math import sin, cos, atan2
-from constants import K_X, DELTA_T, K_Y, TRAJECTORY, K_THETA, CONTROLLER
+from constants import K_X, DELTA_T, K_Y, TRAJECTORY, K_THETA
 from orientation import get_euler_orientation
 from trajectory import create_trajectory
 
 
 def create_controller():
-    if CONTROLLER == 'euler':
-        return EulerMethodController()
-    elif CONTROLLER == 'trapezoidal':
-        return TrapezoidalRuleController()
+    return EulerMethodController()
 
 
-class Controller:
+class EulerMethodController:
     def __init__(self):
         self.trajectory = create_trajectory(TRAJECTORY)
         self.theta_ez_n_minus_1 = 0
         self.theta_n_minus_1 = 0
-
-    def compute_theta_ez_n(self):
-        pass
-
-    def compute_v_n(self):
-        pass
-
-    def compute_w_n(self):
-        pass
-
-    def compute_control_actions(self, pose, i):
-        self.set_current_orientation(pose.orientation)
-        self.set_current_position(pose.position)
-        self.set_current_reference(self.trajectory.get_position_at(i * DELTA_T))
-        self.set_next_reference(self.trajectory.get_position_at((i + 1) * DELTA_T))
+        # self.theta_n = 0
 
     def set_current_orientation(self, orientation):
         self.theta_n = get_euler_orientation(orientation)[2]
@@ -57,63 +40,30 @@ class Controller:
     def get_delta_theta_n(self):
         return self.theta_ez_n - K_THETA * (self.theta_ez_n_minus_1 - self.theta_n_minus_1) - self.theta_n_minus_1
 
-
-class EulerMethodController(Controller):
-    def __init__(self):
-        Controller.__init__(self)
-
     def compute_theta_ez_n(self):
-        self.theta_ez_n = atan2(self.get_delta_y_n(), self.get_delta_x_n())
+         return atan2(self.get_delta_y_n(), self.get_delta_x_n())
 
     def compute_v_n(self):
         delta_x_n = self.get_delta_x_n()
         delta_y_n = self.get_delta_y_n()
 
-        self.v_n = (delta_x_n * cos(self.theta_ez_n) + delta_y_n * sin(self.theta_ez_n)) / DELTA_T
+        return (delta_x_n * cos(self.theta_ez_n) + delta_y_n * sin(self.theta_ez_n)) / DELTA_T
 
     def compute_w_n(self):
-        self.w_n = self.get_delta_theta_n() / DELTA_T
+        w_n = self.get_delta_theta_n() / DELTA_T
 
         self.theta_ez_n_minus_1 = self.theta_ez_n
         self.theta_n_minus_1 = self.theta_n
 
-    def compute_control_actions(self, pose, i):
-        Controller.compute_control_actions(self, pose, i)
-        self.compute_theta_ez_n()
-        self.compute_v_n()
-        self.compute_w_n()
-
-
-class TrapezoidalRuleController(Controller):
-    def __init__(self):
-        Controller.__init__(self)
-        self.v_n_plus_1 = 0
-        self.w_n_plus_1 = 0
-
-    def compute_theta_ez_n(self):
-        numerator = self.get_delta_y_n() * 2 / DELTA_T - self.v_n * sin(self.theta_n)
-        denominator = self.get_delta_x_n() * 2 / DELTA_T - self.v_n * cos(self.theta_n)
-
-        self.theta_ez_n = atan2(numerator, denominator)
-
-    def compute_v_n(self):
-        delta_x_n = self.get_delta_x_n()
-        delta_y_n = self.get_delta_y_n()
-        append_0 = 2 * (delta_x_n * cos(self.theta_ez_n) + delta_y_n * sin(self.theta_ez_n)) / DELTA_T
-        append_1 = -1 * self.v_n * cos(self.theta_ez_n - self.theta_n)
-
-        self.v_n_plus_1 = append_0 + append_1
-
-    def compute_w_n(self):
-        self.w_n_plus_1 = 2 * self.get_delta_theta_n() / DELTA_T - self.w_n
-
-        self.theta_ez_n_minus_1 = self.theta_ez_n
-        self.theta_n_minus_1 = self.theta_n
+        # limit angular velocity to be between -pi and pi
+        return atan2(sin(w_n), cos(w_n))
 
     def compute_control_actions(self, pose, i):
-        Controller.compute_control_actions(self, pose, i)
-        self.v_n = self.v_n_plus_1
-        self.w_n = self.w_n_plus_1
-        self.compute_theta_ez_n()
-        self.compute_v_n()
-        self.compute_w_n()
+        self.set_current_orientation(pose.orientation)
+        self.set_current_position(pose.position)
+        self.set_current_reference(self.trajectory.get_position_at(i * DELTA_T))
+        self.set_next_reference(self.trajectory.get_position_at((i + 1) * DELTA_T))
+
+        self.theta_ez_n = self.compute_theta_ez_n()
+        self.v_n = self.compute_v_n()
+        self.w_n =  self.compute_w_n()
