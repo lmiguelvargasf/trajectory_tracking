@@ -10,8 +10,14 @@ def create_controller():
     return EulerMethodController()
 
 
-class EulerMethodController:
+class Controller:
     def __init__(self):
+        self.trajectory = create_trajectory()
+
+
+class EulerMethodController(Controller):
+    def __init__(self):
+        Controller.__init__(self)
         self.trajectory = create_trajectory()
         self.theta_ez_n_minus_1 = 0
         self.theta_n_minus_1 = 0
@@ -67,3 +73,9 @@ class EulerMethodController:
         self.theta_ez_n = self.compute_theta_ez_n()
         self.v_n = self.compute_v_n()
         self.w_n =  self.compute_w_n()
+
+
+class PIDController(Controller):
+    def __init__(self):
+        Controller.__init__(self)
+
