@@ -16,6 +16,12 @@ class Plotter:
         self.theta = []
         self.theta_ref = []
         self.fig_part_0, self.plots_part_0 = plt.subplots(2, 2, sharex=True)
+        self.fig_part_1 = plt.figure()
+        self.plots_part_1 = [
+            plt.subplot(121),
+            plt.subplot(222),
+            plt.subplot(224),
+        ]
 
     def add_point(self, pose):
         self.x.append(pose.position.x)
