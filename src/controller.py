@@ -88,3 +88,12 @@ class PIDController(Controller):
         self.K_P_W = K_P_W
         self.K_I_W = K_I_W
         self.K_D_W = K_D_W
+
+        self.v_c_nm1 = 0
+        self.w_c_nm1 = 0
+
+        self.e_v_nm1 = 0
+        self.e_w_nm1 = 0
+        self.e_v_nm2 = 0
+        self.e_w_nm2 = 0
+
