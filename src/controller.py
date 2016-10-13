@@ -16,6 +16,7 @@ def create_controller():
 class Controller:
     def __init__(self):
         self.trajectory = create_trajectory()
+        self.theta_ref_n = 0
 
     def set_current_orientation(self, orientation):
         self.theta_n = get_euler_orientation(orientation)[2]
@@ -74,6 +75,7 @@ class EulerMethodController(Controller):
         self.set_next_reference(self.trajectory.get_position_at((i + 1) * DELTA_T))
 
         self.theta_ez_n = self.compute_theta_ez_n()
+        self.theta_ref_n = self.theta_ez_n
         self.v_c_n = self.compute_v_c_n()
         self.w_c_n =  self.compute_w_c_n()
 
@@ -174,6 +176,7 @@ class PIDController(Controller):
     def compute_angular_speed_reference(self):
         theta_ref = atan2(self.y_ref_n - self.y_n, self.x_ref_n - self.x_n)
         self.theta_n = atan2(sin(self.theta_n), cos(self.theta_n))
+        self.theta_ref_n = theta_ref
         w_ref_n = (theta_ref - self.theta_n) / DELTA_T
         return w_ref_n
 
