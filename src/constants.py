@@ -2,7 +2,7 @@
 TRAJECTORY = 'linear'
 
 if TRAJECTORY == 'linear':
-    SIMULATION_TIME_IN_SECONDS = 40.0
+    SIMULATION_TIME_IN_SECONDS = 80.0
 elif TRAJECTORY == 'circular':
     SIMULATION_TIME_IN_SECONDS = 120.0
 elif TRAJECTORY == 'squared':
