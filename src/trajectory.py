@@ -7,7 +7,7 @@ from constants import SIMULATION_TIME_IN_SECONDS, TRAJECTORY
 
 def create_trajectory():
     if TRAJECTORY == 'linear':
-        return LinearTrajectory(0.05, 0, 0.05, 0)
+        return LinearTrajectory(0.05, 0.01, 0.05, 0.01)
     elif TRAJECTORY == 'circular':
         return CircularTrajectory(2.0, 120)
     elif TRAJECTORY == 'squared':
