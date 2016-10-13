@@ -104,3 +104,9 @@ class PIDController(Controller):
         self.set_current_orientation(pose.orientation)
         self.set_current_position(pose.position)
         self.set_current_reference(self.trajectory.get_position_at((i + 1) * DELTA_T))
+
+        w = twist.angular.z
+        v_x = twist.linear.x
+        v_y = twist.linear.y
+        v = (v_x ** 2 + v_y ** 2) ** 0.5
+
