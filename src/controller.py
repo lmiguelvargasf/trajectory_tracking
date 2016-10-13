@@ -97,3 +97,6 @@ class PIDController(Controller):
         self.e_v_nm2 = 0
         self.e_w_nm2 = 0
 
+        self.MAX_V = 0.075
+        self.MAX_W = 1.25
+
