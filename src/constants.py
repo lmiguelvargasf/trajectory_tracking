@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 TRAJECTORY = 'linear'
+CONTROLLER = 'pid'
 
 if TRAJECTORY == 'linear':
     SIMULATION_TIME_IN_SECONDS = 80.0
