@@ -154,3 +154,11 @@ class PIDController(Controller):
         elif self.w_c_n < -self.MAX_W:
             self.w_c_n = -self.MAX_W
 
+        self.v_c_nm1 = self.v_c_n
+        self.w_c_nm1 = self.w_c_n
+
+        self.e_v_nm2 = self.e_v_nm1
+        self.e_w_nm2 = self.e_w_nm1
+
+        self.e_v_nm1 = self.e_v_n
+        self.e_w_nm1 = self.e_w_n
