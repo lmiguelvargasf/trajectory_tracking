@@ -128,3 +128,7 @@ class PIDController(Controller):
         elif w_ref_n < -self.MAX_W:
             w_ref_n = -self.MAX_W
 
+        self.e_v_n = v_ref_n - v
+        self.e_w_n = w_ref_n - w
+        self.e_w_n = atan2(sin(self.e_w_n), cos(self.e_w_n))
+
