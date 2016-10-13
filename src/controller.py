@@ -110,3 +110,11 @@ class PIDController(Controller):
         v_y = twist.linear.y
         v = (v_x ** 2 + v_y ** 2) ** 0.5
 
+        v_x_ref = (self.x_ref_n - self.x_n) / DELTA_T
+        v_y_ref = (self.y_ref_n - self.y_n) / DELTA_T
+        v_ref_n = (v_x_ref ** 2 + v_y_ref ** 2) ** 0.5
+
+        if v_ref_n > self.MAX_V:
+            v_ref_n = self.MAX_V
+        elif v_ref_n < -self.MAX_V:
+            v_ref_n = -self.MAX_V
