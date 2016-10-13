@@ -18,9 +18,9 @@ class Plotter:
         self.fig_part_0, self.plots_part_0 = plt.subplots(2, 2, sharex=True)
         self.fig_part_1 = plt.figure()
         self.plots_part_1 = [
-            plt.subplot(121),
-            plt.subplot(222),
-            plt.subplot(224),
+            plt.subplot(122),
+            plt.subplot(221),
+            plt.subplot(223),
         ]
 
     def add_point(self, pose):
