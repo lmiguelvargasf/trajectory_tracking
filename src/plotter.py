@@ -33,6 +33,10 @@ class Plotter:
         self.y.append(pose.position.y)
 
     def decorate_plot(self, plot, title, x_label, y_label):
+        plot.title.set_fontsize(self.PLOT_TITLE_SIZE)
+        plot.xaxis.label.set_fontsize(self.PLOT_AXIS_LABEL_SIZE)
+        plot.yaxis.label.set_fontsize(self.PLOT_AXIS_LABEL_SIZE)
+
         plot.set_title(title)
         plot.legend(loc=0)
         plot.set_xlabel(x_label)
