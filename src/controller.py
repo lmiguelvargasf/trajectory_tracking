@@ -118,3 +118,13 @@ class PIDController(Controller):
             v_ref_n = self.MAX_V
         elif v_ref_n < -self.MAX_V:
             v_ref_n = -self.MAX_V
+
+        theta_ref = atan2(self.y_ref_n - self.y_n, self.x_ref_n - self.x_n)
+        self.theta_n = atan2(sin(self.theta_n), cos(self.theta_n))
+        w_ref_n = (theta_ref - self.theta_n) / DELTA_T
+
+        if w_ref_n > self.MAX_W:
+            w_ref_n = self.MAX_W
+        elif w_ref_n < -self.MAX_W:
+            w_ref_n = -self.MAX_W
+
