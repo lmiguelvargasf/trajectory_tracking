@@ -18,6 +18,8 @@ def compute_control_actions():
     global i
     controller.compute_control_actions(current_pose, current_twist, i)
     plotter.add_point(current_pose)
+    plotter.theta.append(controller.theta_n)
+    plotter.theta_ref.append(controller.theta_ref_n)
 
     twist = Twist()
     twist.linear.x = controller.v_c_n
