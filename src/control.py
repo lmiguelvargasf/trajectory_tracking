@@ -10,8 +10,8 @@ from plotter import Plotter
 
 def get_pose(message):
     global current_pose, current_twist
-    current_pose = message.pose[2]
-    current_twist = message.twist[2]
+    current_pose = message.pose[-1]
+    current_twist = message.twist[-1]
 
 
 def compute_control_actions():
