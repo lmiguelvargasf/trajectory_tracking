@@ -49,14 +49,14 @@ class Plotter:
         zeros = [0 for _ in range(STEPS)]
         e_x = [(b_i - a_i) for a_i , b_i in zip(self.x, self.x_ref)]
         e_y = [(b_i - a_i) for a_i , b_i in zip(self.y, self.y_ref)]
-        self.plots_part_0[0, 0].plot(self.t, self.x_ref, 'r--', label='ref', lw=self.LINE_WIDTH)
-        self.plots_part_0[0, 0].plot(self.t, self.x, 'b', label='real')
-        self.plots_part_0[0, 1].plot(self.t, zeros, 'r--', label='e=0', lw=self.LINE_WIDTH)
-        self.plots_part_0[0, 1].plot(self.t, e_x, 'b', label='x error')
-        self.plots_part_0[1, 0].plot(self.t, self.y_ref, 'r--', label='ref', lw=self.LINE_WIDTH)
-        self.plots_part_0[1, 0].plot(self.t, self.y, 'b', label='real')
-        self.plots_part_0[1, 1].plot(self.t, zeros, 'r--', label='e=0', lw=self.LINE_WIDTH)
-        self.plots_part_0[1, 1].plot(self.t, e_y, 'b', label='y error')
+        self.plots_part_0[0, 0].plot(self.t, self.x_ref, 'r--', label=r'$x_{ref}$', lw=self.LINE_WIDTH)
+        self.plots_part_0[0, 0].plot(self.t, self.x, 'b', label=r'$x$')
+        self.plots_part_0[0, 1].plot(self.t, zeros, 'r--', label=r'$e=0$', lw=self.LINE_WIDTH)
+        self.plots_part_0[0, 1].plot(self.t, e_x, 'b', label=r'$x_{error}$')
+        self.plots_part_0[1, 0].plot(self.t, self.y_ref, 'r--', label=r'$y_{ref}$', lw=self.LINE_WIDTH)
+        self.plots_part_0[1, 0].plot(self.t, self.y, 'b', label=r'$y$')
+        self.plots_part_0[1, 1].plot(self.t, zeros, 'r--', label=r'$e=0$', lw=self.LINE_WIDTH)
+        self.plots_part_0[1, 1].plot(self.t, e_y, 'b', label=r'$y_{error}$')
 
         e_theta = [(b_i - a_i) for a_i , b_i in zip(self.theta, self.theta_ref)]
         self.plots_part_1[0].plot(self.t, self.theta_ref, 'r--', label=r'$\theta_{ref}$', lw=self.LINE_WIDTH)
@@ -66,10 +66,10 @@ class Plotter:
         self.plots_part_1[2].plot(self.x_ref, self.y_ref, 'r--', label=r'${\rm reference}$', lw=self.LINE_WIDTH)
         self.plots_part_1[2].plot(self.x, self.y, 'b', label=r'${\rm followed}$')
 
-        self.decorate_plot(self.plots_part_0[0, 0], 'x and x ref vs. t', 't[s]', 'x[m]')
-        self.decorate_plot(self.plots_part_0[0, 1], 'x error vs. t', 't[s]', 'x-error[m]')
-        self.decorate_plot(self.plots_part_0[1, 0], 'y and y ref vs. t', 't[s]', 'y[m]')
-        self.decorate_plot(self.plots_part_0[1, 1], 'y error vs. t', 't[s]', 'y-error[m]')
+        self.decorate_plot(self.plots_part_0[0, 0], r'$x\ {\rm and}\ x_{ref}\ {\rm vs}\ t$', r'$t[{\rm s}]$', r'$x[{\rm m}]$')
+        self.decorate_plot(self.plots_part_0[0, 1], r'$x_{error}\ {\rm vs}\ t$', r'$t[{\rm s}]$', r'$x_{error}[{\rm m}]$')
+        self.decorate_plot(self.plots_part_0[1, 0], r'$y\ {\rm and}\ y_{ref}\ {\rm vs}\ t$', r'$t[{\rm s}]$', r'$y[{\rm m}]$')
+        self.decorate_plot(self.plots_part_0[1, 1], r'$y_{error}\ {\rm vs}\ t$', r'$t[{\rm s}]$', r'$y_{error}[{\rm m}]$')
 
         self.decorate_plot(self.plots_part_1[0], r'$\theta,\ \theta_{ez}\ {\rm vs}\ t$', r'$t[{\rm s}]$', r'$\theta[{\rm rad}]$')
         self.decorate_plot(self.plots_part_1[1], r'$\theta_{error}\ {\rm vs}\ t$', r'$t[{\rm s}]$', r'$\theta_{error}[{\rm rad}]$')
