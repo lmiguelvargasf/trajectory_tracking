@@ -36,8 +36,8 @@ class Plotter:
 
     def plot_results(self):
         zeros = [0 for _ in range(STEPS)]
-        e_x = [(a_i - b_i) for a_i , b_i in zip(self.x, self.x_ref)]
-        e_y = [(a_i - b_i) for a_i , b_i in zip(self.y, self.y_ref)]
+        e_x = [(b_i - a_i) for a_i , b_i in zip(self.x, self.x_ref)]
+        e_y = [(b_i - a_i) for a_i , b_i in zip(self.y, self.y_ref)]
         self.plots_part_0[0, 0].plot(self.t, self.x_ref, 'r--', label='ref', lw=3)
         self.plots_part_0[0, 0].plot(self.t, self.x, 'b', label='real')
         self.plots_part_0[0, 1].plot(self.t, zeros, 'r--', label='e=0', lw=2)
