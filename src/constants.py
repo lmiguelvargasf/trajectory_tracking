@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 TRAJECTORY = 'linear'
+CONTROLLER = 'pid'
 
 if TRAJECTORY == 'linear':
-    SIMULATION_TIME_IN_SECONDS = 40.0
+    SIMULATION_TIME_IN_SECONDS = 60.0
 elif TRAJECTORY == 'circular':
     SIMULATION_TIME_IN_SECONDS = 120.0
 elif TRAJECTORY == 'squared':
@@ -15,3 +16,12 @@ STEPS = int(SIMULATION_TIME_IN_SECONDS / DELTA_T)
 K_X = 0.90
 K_Y = 0.90
 K_THETA = 0.90
+
+# PID control constants
+K_P_V = 0.2
+K_I_V = 1.905
+K_D_V = 0.00
+
+K_P_W = 0.45
+K_I_W = 1.25
+K_D_W = 0.000
