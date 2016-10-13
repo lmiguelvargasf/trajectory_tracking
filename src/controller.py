@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 from math import sin, cos, atan2
 
-from constants import K_X, DELTA_T, K_Y, K_THETA, K_P_V, K_I_V, K_D_V, K_P_W, K_I_W, K_D_W, CONTROLLER
 from orientation import get_euler_orientation
 from trajectory import create_trajectory
 
@@ -99,7 +98,7 @@ class PIDController(Controller):
         self.e_v_nm2 = 0
         self.e_w_nm2 = 0
 
-        self.MAX_V = 0.075
+        self.MAX_V = MAX_V
         self.MAX_W = 1.25
 
     def compute_control_actions(self, pose, twist, i):
