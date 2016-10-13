@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-TRAJECTORY = 'linear'
+TRAJECTORY = 'circular'
 CONTROLLER = 'pid'
 
 if TRAJECTORY == 'linear':
