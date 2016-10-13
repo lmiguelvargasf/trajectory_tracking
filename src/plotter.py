@@ -81,4 +81,8 @@ class Plotter:
         elif CONTROLLER == 'pid':
             title = r'${\rm PID\ controller}\ $'
 
+        self.fig_part_0.suptitle(title + r'${\rm results - }\ x\ {\rm and}\ y$', fontsize=self.FIGURE_TITLE_SIZE)
+        self.fig_part_1.suptitle(title + r'${\rm results - }\ \theta\ {\rm and\ trajectory}$',
+                                 fontsize=self.FIGURE_TITLE_SIZE)
+
         plt.show()
