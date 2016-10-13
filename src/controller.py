@@ -1,6 +1,7 @@
 #!/usr/bin/env python
-from math import sin, cos, atan2
+from math import sin, cos, atan2, pi
 
+from constants import K_X, DELTA_T, K_Y, K_THETA, K_P_V, K_I_V, K_D_V, K_P_W, K_I_W, K_D_W, CONTROLLER, MAX_V
 from orientation import get_euler_orientation
 from trajectory import create_trajectory
 
@@ -175,7 +176,12 @@ class PIDController(Controller):
     def compute_angular_speed_reference(self):
         theta_ref = atan2(self.y_ref_n - self.y_n, self.x_ref_n - self.x_n)
         self.theta_ref_n = theta_ref
+
         w_ref_n = (theta_ref - self.theta_n) / DELTA_T
+
+        if -pi < theta_ref < -pi / 2  and pi / 2 < self.theta_n < pi:
+            w_ref_n = (2 * pi + theta_ref - self.theta_n) / DELTA_T
+
         return w_ref_n
 
     def limit_linear_speed_reference(self, v_ref_n):
