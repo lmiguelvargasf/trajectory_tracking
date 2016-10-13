@@ -47,10 +47,14 @@ class Plotter:
         self.plots_part_0[1, 1].plot(self.t, zeros, 'r--', label='e=0', lw=2)
         self.plots_part_0[1, 1].plot(self.t, e_y, 'b', label='y error')
 
+        e_theta = [(b_i - a_i) for a_i , b_i in zip(self.theta, self.theta_ref)]
         self.plots_part_1[0].plot(self.x_ref, self.y_ref, 'r--', label='ref', lw=2)
         self.plots_part_1[0].plot(self.x, self.y, 'b', label='real')
         self.plots_part_1[1].plot(self.t, self.theta_ref, 'r--', label='ref', lw=2)
         self.plots_part_1[1].plot(self.t, self.theta, 'b', label='real')
+        self.plots_part_1[2].plot(self.t, zeros, 'r--', label='e=0', lw=2)
+        self.plots_part_1[2].plot(self.t, e_theta, 'b', label='th error')
+
         self.decorate_plot(self.plots_part_0[0, 0], 'x and x ref vs. t', 't[s]', 'x[m]')
         self.decorate_plot(self.plots_part_0[0, 1], 'x error vs. t', 't[s]', 'x-error[m]')
         self.decorate_plot(self.plots_part_0[1, 0], 'y and y ref vs. t', 't[s]', 'y[m]')
@@ -58,4 +62,6 @@ class Plotter:
 
         self.decorate_plot(self.plots_part_1[0], 'followed vs reference trajectory', 'x[m]', 'y[m]')
         self.decorate_plot(self.plots_part_1[1], 'theta and theta-ez vs t', 't[s]', 'theta[rad]')
+        self.decorate_plot(self.plots_part_1[2], 'theta error vs t', 't[s]', 'theta-error[rad]')
+
         plt.show()
