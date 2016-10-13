@@ -23,6 +23,11 @@ class Plotter:
             plt.subplot(223),
         ]
 
+        self.LINE_WIDTH = 2
+        self.FIGURE_TITLE_SIZE = 21
+        self.PLOT_TITLE_SIZE = 19
+        self.PLOT_AXIS_LABEL_SIZE = 17
+
     def add_point(self, pose):
         self.x.append(pose.position.x)
         self.y.append(pose.position.y)
