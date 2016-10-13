@@ -47,21 +47,21 @@ class Plotter:
         zeros = [0 for _ in range(STEPS)]
         e_x = [(b_i - a_i) for a_i , b_i in zip(self.x, self.x_ref)]
         e_y = [(b_i - a_i) for a_i , b_i in zip(self.y, self.y_ref)]
-        self.plots_part_0[0, 0].plot(self.t, self.x_ref, 'r--', label='ref', lw=3)
+        self.plots_part_0[0, 0].plot(self.t, self.x_ref, 'r--', label='ref', lw=self.LINE_WIDTH)
         self.plots_part_0[0, 0].plot(self.t, self.x, 'b', label='real')
-        self.plots_part_0[0, 1].plot(self.t, zeros, 'r--', label='e=0', lw=2)
+        self.plots_part_0[0, 1].plot(self.t, zeros, 'r--', label='e=0', lw=self.LINE_WIDTH)
         self.plots_part_0[0, 1].plot(self.t, e_x, 'b', label='x error')
-        self.plots_part_0[1, 0].plot(self.t, self.y_ref, 'r--', label='ref', lw=2)
+        self.plots_part_0[1, 0].plot(self.t, self.y_ref, 'r--', label='ref', lw=self.LINE_WIDTH)
         self.plots_part_0[1, 0].plot(self.t, self.y, 'b', label='real')
-        self.plots_part_0[1, 1].plot(self.t, zeros, 'r--', label='e=0', lw=2)
+        self.plots_part_0[1, 1].plot(self.t, zeros, 'r--', label='e=0', lw=self.LINE_WIDTH)
         self.plots_part_0[1, 1].plot(self.t, e_y, 'b', label='y error')
 
         e_theta = [(b_i - a_i) for a_i , b_i in zip(self.theta, self.theta_ref)]
-        self.plots_part_1[0].plot(self.x_ref, self.y_ref, 'r--', label='ref', lw=2)
+        self.plots_part_1[0].plot(self.x_ref, self.y_ref, 'r--', label='ref', lw=self.LINE_WIDTH)
         self.plots_part_1[0].plot(self.x, self.y, 'b', label='real')
-        self.plots_part_1[1].plot(self.t, self.theta_ref, 'r--', label='ref', lw=2)
+        self.plots_part_1[1].plot(self.t, self.theta_ref, 'r--', label='ref', lw=self.LINE_WIDTH)
         self.plots_part_1[1].plot(self.t, self.theta, 'b', label='real')
-        self.plots_part_1[2].plot(self.t, zeros, 'r--', label='e=0', lw=2)
+        self.plots_part_1[2].plot(self.t, zeros, 'r--', label='e=0', lw=self.LINE_WIDTH)
         self.plots_part_1[2].plot(self.t, e_theta, 'b', label='th error')
 
         self.decorate_plot(self.plots_part_0[0, 0], 'x and x ref vs. t', 't[s]', 'x[m]')
