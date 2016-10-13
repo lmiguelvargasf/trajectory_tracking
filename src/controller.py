@@ -175,7 +175,6 @@ class PIDController(Controller):
 
     def compute_angular_speed_reference(self):
         theta_ref = atan2(self.y_ref_n - self.y_n, self.x_ref_n - self.x_n)
-        self.theta_n = atan2(sin(self.theta_n), cos(self.theta_n))
         self.theta_ref_n = theta_ref
         w_ref_n = (theta_ref - self.theta_n) / DELTA_T
         return w_ref_n
