@@ -81,4 +81,10 @@ class EulerMethodController(Controller):
 class PIDController(Controller):
     def __init__(self):
         Controller.__init__(self)
+        self.K_P_V = K_P_V
+        self.K_I_V = K_I_V
+        self.K_D_V = K_D_V
 
+        self.K_P_W = K_P_W
+        self.K_I_W = K_I_W
+        self.K_D_W = K_D_W
