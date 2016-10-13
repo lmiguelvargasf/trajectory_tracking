@@ -29,7 +29,7 @@ class Plotter:
 
     def decorate_plot(self, plot, title, x_label, y_label):
         plot.set_title(title)
-        plot.legend(loc=4)
+        plot.legend(loc=0)
         plot.set_xlabel(x_label)
         plot.set_ylabel(y_label)
         plot.grid()
