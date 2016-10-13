@@ -132,3 +132,15 @@ class PIDController(Controller):
         self.e_w_n = w_ref_n - w
         self.e_w_n = atan2(sin(self.e_w_n), cos(self.e_w_n))
 
+        a_v = self.K_P_V + self.K_I_V * DELTA_T / 2 + self.K_D_V / DELTA_T
+        b_v = -self.K_P_V + self.K_I_V * DELTA_T / 2 - 2 * self.K_D_V / DELTA_T
+        c_v = self.K_D_V / DELTA_T
+
+        a_w = self.K_P_W + self.K_I_W * DELTA_T / 2 + self.K_D_W / DELTA_T
+        b_w = - self.K_P_W + self.K_I_W * DELTA_T / 2 - 2 * self.K_D_W / DELTA_T
+        c_w = self.K_D_W / DELTA_T
+
+        self.v_c_n = self.v_c_nm1 + a_v * self.e_v_n + b_v * self.e_v_nm1 + c_v * self.e_v_nm2
+        self.w_c_n = self.w_c_nm1 + a_w * self.e_w_n + b_w * self.e_w_nm1 + c_w * self.e_w_nm2
+
+
