@@ -7,7 +7,10 @@ from trajectory import create_trajectory
 
 
 def create_controller():
-    return EulerMethodController()
+    if CONTROLLER == 'euler':
+        return EulerMethodController()
+    elif CONTROLLER == 'pid':
+        return PIDController()
 
 
 class Controller:
