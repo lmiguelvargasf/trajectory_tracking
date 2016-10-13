@@ -3,7 +3,7 @@
 from __future__ import unicode_literals
 import matplotlib.pyplot as plt
 
-from constants import STEPS, DELTA_T
+from constants import STEPS, DELTA_T, CONTROLLER
 from trajectory import create_trajectory
 
 
@@ -74,5 +74,11 @@ class Plotter:
         self.decorate_plot(self.plots_part_1[0], 'followed vs reference trajectory', 'x[m]', 'y[m]')
         self.decorate_plot(self.plots_part_1[1], r'$\theta,\ \theta_{ez}\ {\rm vs}\ t$', r'$t[{\rm s}]$', r'$\theta$[rad]')
         self.decorate_plot(self.plots_part_1[2], 'theta error vs t', 't[s]', 'theta-error[rad]')
+
+        title = ''
+        if CONTROLLER == 'euler':
+            title = r'${\rm Euler\ method\ controller}\ $'
+        elif CONTROLLER == 'pid':
+            title = r'${\rm PID\ controller}\ $'
 
         plt.show()
