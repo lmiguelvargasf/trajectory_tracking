@@ -105,10 +105,8 @@ class PIDController(Controller):
         self.set_current_position(pose.position)
         self.set_current_reference(self.trajectory.get_position_at((i + 1) * DELTA_T))
 
-        w = twist.angular.z
-        v_x = twist.linear.x
-        v_y = twist.linear.y
-        v = (v_x ** 2 + v_y ** 2) ** 0.5
+        w = self.get_angular_speed(twist)
+        v = self.get_linear_speed(twist)
 
         v_x_ref = (self.x_ref_n - self.x_n) / DELTA_T
         v_y_ref = (self.y_ref_n - self.y_n) / DELTA_T
@@ -162,3 +160,12 @@ class PIDController(Controller):
 
         self.e_v_nm1 = self.e_v_n
         self.e_w_nm1 = self.e_w_n
+
+    def get_linear_speed(self, twist):
+        v_x = twist.linear.x
+        v_y = twist.linear.y
+        v = (v_x ** 2 + v_y ** 2) ** 0.5
+        return v
+
+    def get_angular_speed(self, twist):
+        return twist.angular.z
