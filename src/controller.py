@@ -108,23 +108,11 @@ class PIDController(Controller):
         w = self.get_angular_speed(twist)
         v = self.get_linear_speed(twist)
 
-        v_x_ref = (self.x_ref_n - self.x_n) / DELTA_T
-        v_y_ref = (self.y_ref_n - self.y_n) / DELTA_T
-        v_ref_n = (v_x_ref ** 2 + v_y_ref ** 2) ** 0.5
+        v_ref_n = self.compute_linear_speed_reference()
+        v_ref_n = self.limit_linear_speed_reference(v_ref_n)
 
-        if v_ref_n > self.MAX_V:
-            v_ref_n = self.MAX_V
-        elif v_ref_n < -self.MAX_V:
-            v_ref_n = -self.MAX_V
-
-        theta_ref = atan2(self.y_ref_n - self.y_n, self.x_ref_n - self.x_n)
-        self.theta_n = atan2(sin(self.theta_n), cos(self.theta_n))
-        w_ref_n = (theta_ref - self.theta_n) / DELTA_T
-
-        if w_ref_n > self.MAX_W:
-            w_ref_n = self.MAX_W
-        elif w_ref_n < -self.MAX_W:
-            w_ref_n = -self.MAX_W
+        w_ref_n = self.compute_angular_speed_reference()
+        w_ref_n = self.limit_angular_speed_reference(w_ref_n)
 
         self.e_v_n = v_ref_n - v
         self.e_w_n = w_ref_n - w
@@ -160,6 +148,32 @@ class PIDController(Controller):
 
         self.e_v_nm1 = self.e_v_n
         self.e_w_nm1 = self.e_w_n
+
+    def limit_angular_speed_reference(self, w_ref_n):
+        if w_ref_n > self.MAX_W:
+            w_ref_n = self.MAX_W
+        elif w_ref_n < -self.MAX_W:
+            w_ref_n = -self.MAX_W
+        return w_ref_n
+
+    def compute_angular_speed_reference(self):
+        theta_ref = atan2(self.y_ref_n - self.y_n, self.x_ref_n - self.x_n)
+        self.theta_n = atan2(sin(self.theta_n), cos(self.theta_n))
+        w_ref_n = (theta_ref - self.theta_n) / DELTA_T
+        return w_ref_n
+
+    def limit_linear_speed_reference(self, v_ref_n):
+        if v_ref_n > self.MAX_V:
+            v_ref_n = self.MAX_V
+        elif v_ref_n < -self.MAX_V:
+            v_ref_n = -self.MAX_V
+        return v_ref_n
+
+    def compute_linear_speed_reference(self):
+        v_x_ref = (self.x_ref_n - self.x_n) / DELTA_T
+        v_y_ref = (self.y_ref_n - self.y_n) / DELTA_T
+        v_ref_n = (v_x_ref ** 2 + v_y_ref ** 2) ** 0.5
+        return v_ref_n
 
     def get_linear_speed(self, twist):
         v_x = twist.linear.x
