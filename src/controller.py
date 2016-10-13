@@ -144,3 +144,13 @@ class PIDController(Controller):
         self.w_c_n = self.w_c_nm1 + a_w * self.e_w_n + b_w * self.e_w_nm1 + c_w * self.e_w_nm2
 
 
+        if self.v_c_n > self.MAX_V:
+            self.v_c_n = self.MAX_V
+        elif self.v_c_n < -self.MAX_V:
+            self.v_c_n = -self.MAX_V
+
+        if self.w_c_n > self.MAX_W:
+            self.w_c_n = self.MAX_W
+        elif self.w_c_n < -self.MAX_W:
+            self.w_c_n = -self.MAX_W
+
