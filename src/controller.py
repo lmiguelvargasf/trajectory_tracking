@@ -100,3 +100,7 @@ class PIDController(Controller):
         self.MAX_V = 0.075
         self.MAX_W = 1.25
 
+    def compute_control_actions(self, pose, twist, i):
+        self.set_current_orientation(pose.orientation)
+        self.set_current_position(pose.position)
+        self.set_current_reference(self.trajectory.get_position_at((i + 1) * DELTA_T))
