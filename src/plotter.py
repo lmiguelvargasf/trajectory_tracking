@@ -1,4 +1,6 @@
 #!/usr/bin/env python
+# coding=utf-8
+from __future__ import unicode_literals
 import matplotlib.pyplot as plt
 
 from constants import STEPS, DELTA_T
@@ -70,7 +72,7 @@ class Plotter:
         self.decorate_plot(self.plots_part_0[1, 1], 'y error vs. t', 't[s]', 'y-error[m]')
 
         self.decorate_plot(self.plots_part_1[0], 'followed vs reference trajectory', 'x[m]', 'y[m]')
-        self.decorate_plot(self.plots_part_1[1], 'theta and theta-ez vs t', 't[s]', 'theta[rad]')
+        self.decorate_plot(self.plots_part_1[1], r'$\theta,\ \theta_{ez}\ {\rm vs}\ t$', r'$t[{\rm s}]$', r'$\theta$[rad]')
         self.decorate_plot(self.plots_part_1[2], 'theta error vs t', 't[s]', 'theta-error[rad]')
 
         plt.show()
