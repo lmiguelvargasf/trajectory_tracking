@@ -13,6 +13,8 @@ class Plotter:
         self.y_ref = [trajectory.get_position_at(i * DELTA_T).y for i in range(STEPS)]
         self.x = []
         self.y = []
+        self.theta = []
+        self.theta_ref = []
         self.fig_part_0, self.plots_part_0 = plt.subplots(2, 2, sharex=True)
 
     def add_point(self, pose):
