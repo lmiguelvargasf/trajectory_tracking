@@ -106,3 +106,7 @@ fabric.properties
 # version control
 .idea/vcs.xml
 .idea/dictionaries/
+.idea/inspectionProfiles/*
+
+# file for testing scripts
+src/tester.py
