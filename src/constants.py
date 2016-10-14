@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-TRAJECTORY = 'circular'
+TRAJECTORY = 'squared'
 CONTROLLER = 'pid'
 
 # control constants
