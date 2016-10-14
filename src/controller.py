@@ -180,6 +180,7 @@ class PIDController(Controller):
         w_ref_n = (theta_ref - self.theta_n) / DELTA_T
 
         if -pi < theta_ref < -pi / 2  and pi / 2 < self.theta_n < pi:
+            self.theta_ref_n = -theta_ref
             w_ref_n = (2 * pi + theta_ref - self.theta_n) / DELTA_T
 
         return w_ref_n
