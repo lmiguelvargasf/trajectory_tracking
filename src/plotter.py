@@ -67,7 +67,7 @@ class Plotter:
         self.decorate_plot(self.plots_part_0[1, 0], r'$y\ {\rm and}\ y_{ref}\ {\rm vs}\ t$', r'$t[{\rm s}]$', r'$y[{\rm m}]$')
         self.decorate_plot(self.plots_part_0[1, 1], r'$y_{error}\ {\rm vs}\ t$', r'$t[{\rm s}]$', r'$y_{error}[{\rm m}]$')
 
-        self.decorate_plot(self.plots_part_1[0], r'$\theta,\ \theta_{ez}\ {\rm vs}\ t$', r'$t[{\rm s}]$', r'$\theta[{\rm rad}]$')
+        self.decorate_plot(self.plots_part_1[0], r'$\theta,\ \theta_{ref}\ {\rm vs}\ t$', r'$t[{\rm s}]$', r'$\theta[{\rm rad}]$')
         self.decorate_plot(self.plots_part_1[1], r'$\theta_{error}\ {\rm vs}\ t$', r'$t[{\rm s}]$', r'$\theta_{error}[{\rm rad}]$')
         self.decorate_plot(self.plots_part_1[2], r'${\rm followed\ trajectory\ vs\ reference\ trajectory}$',
                            r'$x[{\rm m}]$', r'$y[{\rm m}]$')

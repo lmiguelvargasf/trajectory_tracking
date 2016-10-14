@@ -11,7 +11,7 @@ def create_trajectory():
     elif TRAJECTORY == 'circular':
         return CircularTrajectory(2.0, 120)
     elif TRAJECTORY == 'squared':
-        return SquaredTrajectory(2.0, 0.25, 0.25)
+        return SquaredTrajectory(2.0, 0.01, 0.01)
 
 
 class Trajectory:

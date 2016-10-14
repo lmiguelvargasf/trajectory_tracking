@@ -1,7 +1,8 @@
 #!/usr/bin/env python
-from math import sin, cos, atan2, pi
+from math import sin, cos, atan2, pi, fabs
 
-from constants import K_X, DELTA_T, K_Y, K_THETA, K_P_V, K_I_V, K_D_V, K_P_W, K_I_W, K_D_W, CONTROLLER, MAX_V
+from constants import K_X, DELTA_T, K_Y, K_THETA, K_P_V, K_I_V, K_D_V, K_P_W, K_I_W, K_D_W, CONTROLLER, MAX_V, MAX_W, \
+    TRAJECTORY, SIMULATION_TIME_IN_SECONDS
 from orientation import get_euler_orientation
 from trajectory import create_trajectory
 
@@ -80,6 +81,11 @@ class EulerMethodController(Controller):
         self.w_c_n =  self.compute_w_c_n()
 
 
+def get_angle_between_0_and_2_pi(theta):
+    if -pi <= theta < 0:
+        return 2 * pi + theta
+    return theta
+
 class PIDController(Controller):
     def __init__(self):
         Controller.__init__(self)
@@ -100,9 +106,10 @@ class PIDController(Controller):
         self.e_w_nm2 = 0
 
         self.MAX_V = MAX_V
-        self.MAX_W = 1.25
+        self.MAX_W = MAX_W
 
     def compute_control_actions(self, pose, twist, i):
+        self.i = i
         self.set_current_orientation(pose.orientation)
         self.set_current_position(pose.position)
         self.set_current_reference(self.trajectory.get_position_at((i + 1) * DELTA_T))
@@ -175,13 +182,20 @@ class PIDController(Controller):
 
     def compute_angular_speed_reference(self):
         theta_ref = atan2(self.y_ref_n - self.y_n, self.x_ref_n - self.x_n)
-        self.theta_ref_n = theta_ref
-
         w_ref_n = (theta_ref - self.theta_n) / DELTA_T
 
-        if -pi < theta_ref < -pi / 2  and pi / 2 < self.theta_n < pi:
-            self.theta_ref_n = -theta_ref
-            w_ref_n = (2 * pi + theta_ref - self.theta_n) / DELTA_T
+        if TRAJECTORY == 'circular':
+            if -pi < theta_ref < -pi / 2  and pi / 2 < self.theta_n < pi:
+                self.theta_ref_n = -theta_ref
+                w_ref_n = (2 * pi + theta_ref - self.theta_n) / DELTA_T
+        elif TRAJECTORY == 'squared':
+            if not (0 <= self.i * DELTA_T <= SIMULATION_TIME_IN_SECONDS / 4):
+                theta_ref = get_angle_between_0_and_2_pi(theta_ref)
+                self.theta_n = get_angle_between_0_and_2_pi(self.theta_n)
+
+            w_ref_n = (theta_ref - self.theta_n) / DELTA_T
+
+        self.theta_ref_n = theta_ref
 
         return w_ref_n
 
