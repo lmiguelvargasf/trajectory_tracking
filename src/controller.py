@@ -1,7 +1,8 @@
 #!/usr/bin/env python
-from math import sin, cos, atan2, pi
+from math import sin, cos, atan2, pi, fabs
 
-from constants import K_X, DELTA_T, K_Y, K_THETA, K_P_V, K_I_V, K_D_V, K_P_W, K_I_W, K_D_W, CONTROLLER, MAX_V, MAX_W
+from constants import K_X, DELTA_T, K_Y, K_THETA, K_P_V, K_I_V, K_D_V, K_P_W, K_I_W, K_D_W, CONTROLLER, MAX_V, MAX_W, \
+    TRAJECTORY, SIMULATION_TIME_IN_SECONDS
 from orientation import get_euler_orientation
 from trajectory import create_trajectory
 
@@ -103,6 +104,7 @@ class PIDController(Controller):
         self.MAX_W = MAX_W
 
     def compute_control_actions(self, pose, twist, i):
+        self.i = i
         self.set_current_orientation(pose.orientation)
         self.set_current_position(pose.position)
         self.set_current_reference(self.trajectory.get_position_at((i + 1) * DELTA_T))
@@ -179,9 +181,20 @@ class PIDController(Controller):
 
         w_ref_n = (theta_ref - self.theta_n) / DELTA_T
 
-        if -pi < theta_ref < -pi / 2  and pi / 2 < self.theta_n < pi:
-            self.theta_ref_n = -theta_ref
-            w_ref_n = (2 * pi + theta_ref - self.theta_n) / DELTA_T
+
+        if TRAJECTORY == 'circular':
+            if -pi < theta_ref < -pi / 2  and pi / 2 < self.theta_n < pi:
+                self.theta_ref_n = -theta_ref
+                w_ref_n = (2 * pi + theta_ref - self.theta_n) / DELTA_T
+        elif TRAJECTORY == 'squared':
+            if pi / 4 < self.theta_n < pi and -pi < theta_ref < -pi / 2:
+                w_ref_n = (2 * pi + theta_ref - self.theta_n) / DELTA_T
+            elif -pi < self.theta_n < -pi / 2 and pi / 2 < theta_ref < pi:
+                w_ref_n = (2 * pi - theta_ref + self.theta_n) / DELTA_T
+            elif - pi / 2 < self.theta_n < 0 and -pi < theta_ref < -pi /2:
+                w_ref_n = (self.theta_n - theta_ref) / DELTA_T
+            elif (self.theta_n == pi or self.theta_n == -pi) and (theta_ref == pi or theta_ref == -pi):
+                w_ref_n = 0
 
         return w_ref_n
 
