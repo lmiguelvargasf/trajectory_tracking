@@ -28,7 +28,7 @@ elif TRAJECTORY == 'circular':
 elif TRAJECTORY == 'squared':
     SIMULATION_TIME_IN_SECONDS = 160.0
     MAX_V = 0.055
-    MAX_W = 0.20
+    MAX_W = 1.20
 
 DELTA_T = 0.1 # this is the sampling time
 STEPS = int(SIMULATION_TIME_IN_SECONDS / DELTA_T)
