@@ -81,6 +81,11 @@ class EulerMethodController(Controller):
         self.w_c_n =  self.compute_w_c_n()
 
 
+def get_angle_between_0_and_2_pi(theta):
+    if -pi <= theta < 0:
+        return 2 * pi + theta
+    return theta
+
 class PIDController(Controller):
     def __init__(self):
         Controller.__init__(self)
