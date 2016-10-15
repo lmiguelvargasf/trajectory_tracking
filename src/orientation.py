@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-import tf.transformations
+from tf.transformations import euler_from_quaternion
 
 
 def get_euler_orientation(orientation):
@@ -10,4 +10,4 @@ def get_euler_orientation(orientation):
         orientation.w
     )
 
-    return tf.transformations.euler_from_quaternion(quaternion)
+    return euler_from_quaternion(quaternion)
