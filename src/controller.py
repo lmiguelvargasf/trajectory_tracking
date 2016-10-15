@@ -179,11 +179,7 @@ class PIDController(Controller):
         theta_ref = atan2(self.y_ref_n - self.y_n, self.x_ref_n - self.x_n)
         w_ref_n = (theta_ref - self.theta_n) / DELTA_T
 
-        if TRAJECTORY == 'circular':
-            if -pi < theta_ref < -pi / 2  and pi / 2 < self.theta_n < pi:
-                self.theta_ref_n = -theta_ref
-                w_ref_n = (2 * pi + theta_ref - self.theta_n) / DELTA_T
-        elif TRAJECTORY == 'squared':
+        if TRAJECTORY == 'squared' or TRAJECTORY == 'circular':
             if not (0 <= self.i * DELTA_T <= SIMULATION_TIME_IN_SECONDS / 4):
                 theta_ref = get_angle_between_0_and_2_pi(theta_ref)
                 self.theta_n = get_angle_between_0_and_2_pi(self.theta_n)
