@@ -2,8 +2,12 @@
 # coding=utf-8
 from __future__ import unicode_literals
 import matplotlib.pyplot as plt
+from errno import EEXIST
+from os import makedirs
 
-from constants import STEPS, DELTA_T, CONTROLLER
+from os.path import exists, dirname
+
+from constants import STEPS, DELTA_T, CONTROLLER, RESULTS_DIRECTORY, TRAJECTORY
 from trajectory import create_trajectory
 
 
@@ -84,8 +88,6 @@ class Plotter:
 
         plt.show()
 
-    def export_list(self, a_list, file_name):
-        with open(file_name, 'w') as file:
     def export_list(self, path_to_file, a_list):
         if not exists(dirname(path_to_file)):
             try:
