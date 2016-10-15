@@ -1,6 +1,6 @@
 #!/usr/bin/env python
-TRAJECTORY = 'squared'
-CONTROLLER = 'pid'
+TRAJECTORY = 'linear'
+CONTROLLER = 'euler'
 
 # control constants
 K_X = 0.90
