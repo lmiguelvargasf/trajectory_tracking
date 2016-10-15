@@ -43,8 +43,8 @@ class CircularTrajectory(Trajectory):
         self. period = period
 
     def get_position_at(self, t):
-        self.position.x = self.radius * math.cos(2 * math.pi * t / self.period)
-        self.position.y = self.radius * math.sin(2 * math.pi * t / self.period)
+        self.position.x = self.radius * math.sin(2 * math.pi * t / self.period)
+        self.position.y = -self.radius * math.cos(2 * math.pi * t / self.period)
 
         return self.position
 
