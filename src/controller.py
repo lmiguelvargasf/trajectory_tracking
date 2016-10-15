@@ -66,17 +66,23 @@ class EulerMethodController(Controller):
         self.theta_ez_n_minus_1 = self.theta_ez_n
         self.theta_n_minus_1 = self.theta_n
 
+        if TRAJECTORY == 'circular' or TRAJECTORY == 'squared':
+            self.theta_ref_n = self.theta_ez_n
+            if not 0 <= self.i * DELTA_T < SIMULATION_TIME_IN_SECONDS / 4 + 10 * DELTA_T:
+                self.theta_ref_n = get_angle_between_0_and_2_pi(self.theta_ez_n)
+                self.theta_n = get_angle_between_0_and_2_pi(self.theta_n)
+
         # limit angular velocity to be between -pi and pi rad/s
         return atan2(sin(w_n), cos(w_n))
 
     def compute_control_actions(self, pose, twist, i):
+        self.i = i
         self.set_current_orientation(pose.orientation)
         self.set_current_position(pose.position)
         self.set_current_reference(self.trajectory.get_position_at(i * DELTA_T))
         self.set_next_reference(self.trajectory.get_position_at((i + 1) * DELTA_T))
 
         self.theta_ez_n = self.compute_theta_ez_n()
-        self.theta_ref_n = self.theta_ez_n
         self.v_c_n = self.compute_v_c_n()
         self.w_c_n =  self.compute_w_c_n()
 
