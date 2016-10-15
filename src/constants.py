@@ -1,6 +1,6 @@
 #!/usr/bin/env python
-TRAJECTORY = 'squared'
-CONTROLLER = 'pid'
+TRAJECTORY = 'linear'
+CONTROLLER = 'euler'
 
 # control constants
 K_X = 0.90
@@ -32,3 +32,4 @@ elif TRAJECTORY == 'squared':
 
 DELTA_T = 0.1 # this is the sampling time
 STEPS = int(SIMULATION_TIME_IN_SECONDS / DELTA_T)
+RESULTS_DIRECTORY = '../last_results/'

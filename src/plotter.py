@@ -2,8 +2,12 @@
 # coding=utf-8
 from __future__ import unicode_literals
 import matplotlib.pyplot as plt
+from errno import EEXIST
+from os import makedirs
 
-from constants import STEPS, DELTA_T, CONTROLLER
+from os.path import exists, dirname
+
+from constants import STEPS, DELTA_T, CONTROLLER, RESULTS_DIRECTORY, TRAJECTORY
 from trajectory import create_trajectory
 
 
@@ -83,3 +87,30 @@ class Plotter:
                                  fontsize=self.FIGURE_TITLE_SIZE)
 
         plt.show()
+
+    def export_results(self):
+        data_to_export = {
+            't.txt': self.t,
+            'x.txt': self.x,
+            'x_ref.txt': self.x_ref,
+            'y.txt': self.y,
+            'y_ref.txt': self.y_ref,
+            'theta.txt': self.theta,
+            'theta_ref.txt': self.theta_ref,
+        }
+
+        path = RESULTS_DIRECTORY + CONTROLLER + '/' + TRAJECTORY + '/'
+        for file_name, a_list in data_to_export.items():
+            self.export_list(path + file_name, a_list)
+
+    def export_list(self, path_to_file, a_list):
+        if not exists(dirname(path_to_file)):
+            try:
+                makedirs(dirname(path_to_file))
+            except OSError as exc:  # Guard against race condition
+                if exc.errno != EEXIST:
+                    raise
+
+        with open(path_to_file, 'w') as file:
+            for e in a_list:
+                file.write(str(e) + '\n')

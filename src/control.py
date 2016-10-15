@@ -48,4 +48,5 @@ if __name__ == '__main__':
         rate.sleep()
 
     plotter.plot_results()
+    plotter.export_results()
     rospy.spin()
