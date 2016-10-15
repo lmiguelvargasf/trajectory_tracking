@@ -86,5 +86,14 @@ class Plotter:
 
     def export_list(self, a_list, file_name):
         with open(file_name, 'w') as file:
+    def export_list(self, path_to_file, a_list):
+        if not exists(dirname(path_to_file)):
+            try:
+                makedirs(dirname(path_to_file))
+            except OSError as exc:  # Guard against race condition
+                if exc.errno != EEXIST:
+                    raise
+
+        with open(path_to_file, 'w') as file:
             for e in a_list:
-                file.write(e + '\n')
+                file.write(str(e) + '\n')
