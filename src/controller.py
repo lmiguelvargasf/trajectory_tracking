@@ -3,7 +3,7 @@ from math import sin, cos, atan2, pi, fabs
 
 from constants import K_X, DELTA_T, K_Y, K_THETA, K_P_V, K_I_V, K_D_V, K_P_W, K_I_W, K_D_W, CONTROLLER, MAX_V, MAX_W, \
     TRAJECTORY, SIMULATION_TIME_IN_SECONDS
-from orientation import get_euler_orientation
+from orientation import get_euler_orientation, get_angle_between_0_and_2_pi
 from trajectory import create_trajectory
 
 
@@ -80,11 +80,6 @@ class EulerMethodController(Controller):
         self.v_c_n = self.compute_v_c_n()
         self.w_c_n =  self.compute_w_c_n()
 
-
-def get_angle_between_0_and_2_pi(theta):
-    if -pi <= theta < 0:
-        return 2 * pi + theta
-    return theta
 
 class PIDController(Controller):
     def __init__(self):
