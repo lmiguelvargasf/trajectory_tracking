@@ -83,3 +83,8 @@ class Plotter:
                                  fontsize=self.FIGURE_TITLE_SIZE)
 
         plt.show()
+
+    def export_list(self, a_list, file_name):
+        with open(file_name, 'w') as file:
+            for e in a_list:
+                file.write(e + '\n')
