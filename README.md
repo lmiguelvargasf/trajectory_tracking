@@ -12,4 +12,32 @@ These algorithms have been tested, and are properly working for the following tr
 * Circular Trajectory
 * Squared Trajectory
 
+### Trajectories
+Three trajectories have been used to test each controller.
+
+#### Linear Trajectory
+This trajectory has been defined by the following parametric equations:
+
+#### Circular Trajectory
+
+#### Squared Trajectory
+
+### Results
+
+#### Euler Method Controller
+
+##### Linear Trajectory
+
+##### Circular Trajectory
+
+##### Squared Trajectory
+
+#### PID Controller
+
+##### Linear Trajectory
+
+##### Circular Trajectory
+
+##### Squared Trajectory
+
 [1]: http://www.turtlebot.com/
