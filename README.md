@@ -18,7 +18,6 @@ Three trajectories have been used to test each controller.
 #### Linear Trajectory
 This trajectory has been defined by the following parametric equations:
 
-<img src="images/equations/linear_trajectory.png" alt="Linear Trajectory" width="300">
 <img src="images/equations/linear_trajectory.png" alt="Linear Trajectory" width="280">
 
 where (x, y) represent the position of the robot at time t, v_x and v_y is the linear velocities for the x and y axes,
@@ -36,7 +35,6 @@ the robot takes in order to complete the circular trajectory.
 #### Squared Trajectory
 This trajectory has been defined by the following equations:
 
-<img src="images/equations/squared_trajectory.png" alt="Squared Trajectory" width="300">
 <img src="images/equations/squared_trajectory.png" alt="Squared Trajectory" width="500">
 
 where (x, y) represent the position of the robot at time t, v_x and v_y is the linear velocities for the x and y axes,
