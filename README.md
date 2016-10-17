@@ -56,6 +56,11 @@ set to 0.00000 in **_worlds/room.world_**.
 
 ##### Squared Trajectory
 
+**Video:** [Euler: Squared Trajectory Test][4]
+
+<img src="images/results/euler/squared/squared_trajectory_euler_x_y.png" alt="Results for x and y" width="1000">
+<img src="images/results/euler/squared/squared_trajectory_euler_theta_trajectory.png" alt="Results for theta and trajectory" width="1000">
+
 #### PID Controller
 
 ##### Linear Trajectory
