@@ -37,14 +37,16 @@ class LinearTrajectory(Trajectory):
         return self.position
 
 class CircularTrajectory(Trajectory):
-    def __init__(self, radius, period):
+    def __init__(self, radius, period, x_0=0, y_0=0):
         Trajectory.__init__(self)
         self.radius = radius
         self. period = period
+        self.x_0 = x_0
+        self.y_0 = y_0
 
     def get_position_at(self, t):
-        self.position.x = self.radius * math.sin(2 * math.pi * t / self.period)
-        self.position.y = -self.radius * math.cos(2 * math.pi * t / self.period)
+        self.position.x = self.radius * math.sin(2 * math.pi * t / self.period) + self.x_0
+        self.position.y = -self.radius * math.cos(2 * math.pi * t / self.period) + self.y_0
 
         return self.position
 
