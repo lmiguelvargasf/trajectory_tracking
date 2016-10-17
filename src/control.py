@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 from __future__ import print_function
 import rospy
+import time
 from gazebo_msgs.msg import ModelStates
 from geometry_msgs.msg import Twist
 
@@ -49,6 +50,9 @@ if __name__ == '__main__':
         rate.sleep()
 
     print('Simulation was completed successfully!')
+
+    # wait before plotting after simulation is completed
+    time.sleep(2)
 
     plotter.plot_results()
     plotter.export_results()
