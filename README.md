@@ -79,6 +79,15 @@ set to 0.00000 in **_worlds/room.world_**.
 
 ##### Squared Trajectory
 
+**Video:** [PID: Squared Trajectory Test][7]
+
+<img src="images/results/pid/squared/squared_trajectory_pid_x_y.png" alt="Results for x and y" width="1000">
+<img src="images/results/pid/squared/squared_trajectory_pid_theta_trajectory.png" alt="Results for theta and trajectory" width="1000">
 
 [1]: http://www.turtlebot.com/
 [2]: https://www.google.com/
+[3]: https://www.google.com/
+[4]: https://www.google.com/
+[5]: https://www.google.com/
+[6]: https://www.google.com/
+[7]: https://www.google.com/
