@@ -26,7 +26,7 @@ and x_0 and y_0 are the initial values for x and y positions.
 #### Circular Trajectory
 This trajectory has been defined by the following parametric equations:
 
-<img src="images/equations/circular_trajectory.png" alt="Circular Trajectory" width="250">
+<img src="images/equations/circular_trajectory.png" alt="Circular Trajectory" width="265">
 
 where (x, y) represent the position of the robot at time t, v is the linear velocity of the robot,
 and x_0 and y_0 are the initial values for x and y positions, R represents the radius of the circle, and T the time that
@@ -48,9 +48,7 @@ For each experiment a video and its corresponding results are shown. In order to
 simulation as fast as possible for Gazebo, the parameter **_real_time_update_rate_** has been
 set to 0.00000 in **_worlds/room.world_**.
 
-#### Euler Method Controller
-
-##### Linear Trajectory
+#### Euler Method Controller - Linear Trajectory
 
 **Video:** [Euler: Linear Trajectory Test][2]
 
@@ -58,14 +56,14 @@ set to 0.00000 in **_worlds/room.world_**.
 <img src="images/results/euler/linear/linear_trajectory_euler_theta_trajectory.png" alt="Results for theta and trajectory" width="1000">
 
 
-##### Circular Trajectory
+#### Euler Method Controller - Circular Trajectory
 
 **Video:** [Euler: Circular Trajectory Test][3]
 
 <img src="images/results/euler/circular/circular_trajectory_euler_x_y.png" alt="Results for x and y" width="1000">
 <img src="images/results/euler/circular/circular_trajectory_euler_theta_trajectory.png" alt="Results for theta and trajectory" width="1000">
 
-##### Squared Trajectory
+#### Euler Method Controller - Squared Trajectory
 
 **Video:** [Euler: Squared Trajectory Test][4]
 
@@ -74,21 +72,21 @@ set to 0.00000 in **_worlds/room.world_**.
 
 #### PID Controller
 
-##### Linear Trajectory
+#### PID Controller - Linear Trajectory
 
 **Video:** [PID: Linear Trajectory Test][5]
 
 <img src="images/results/pid/linear/linear_trajectory_pid_x_y.png" alt="Results for x and y" width="1000">
 <img src="images/results/pid/linear/linear_trajectory_pid_theta_trajectory.png" alt="Results for theta and trajectory" width="1000">
 
-##### Circular Trajectory
+#### PID Controller - Circular Trajectory
 
 **Video:** [PID: Circular Trajectory Test][6]
 
 <img src="images/results/pid/circular/circular_trajectory_pid_x_y.png" alt="Results for x and y" width="1000">
 <img src="images/results/pid/circular/circular_trajectory_pid_theta_trajectory.png" alt="Results for theta and trajectory" width="1000">
 
-##### Squared Trajectory
+#### PID Controller - Squared Trajectory
 
 **Video:** [PID: Squared Trajectory Test][7]
 
