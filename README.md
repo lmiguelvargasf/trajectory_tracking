@@ -18,7 +18,8 @@ Three trajectories have been used to test each controller.
 #### Linear Trajectory
 This trajectory has been defined by the following parametric equations:
 
-![Alt][linear_trajectory]
+![Linear Trajectory][linear_trajectory]
+<img src="images/equations/linear_trajectory.png" width="48">
 
 #### Circular Trajectory
 
