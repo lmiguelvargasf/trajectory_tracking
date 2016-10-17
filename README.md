@@ -7,7 +7,7 @@ The algorithms that have been used so far are:
 * Numerical method controller using Euler's approximation.
 * PID controller
 
-These algorithms have been tested for the following trajectories:
+These algorithms have been tested, and are properly working for the following trajectories:
 * Linear Trajectory
 * Circular Trajectory
 * Squared Trajectory
