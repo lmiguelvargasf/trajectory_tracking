@@ -52,7 +52,7 @@ class CircularTrajectory(Trajectory):
 
 
 class SquaredTrajectory(Trajectory):
-    def __init__(self, side, x_0, y_0):
+    def __init__(self, side, x_0=0, y_0=0):
         Trajectory.__init__(self)
         self.side = side
         self.v = 4.0 * side / SIMULATION_TIME_IN_SECONDS
