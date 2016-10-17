@@ -18,7 +18,7 @@ Three trajectories have been used to test each controller.
 #### Linear Trajectory
 This trajectory has been defined by the following parametric equations:
 
-<img src="images/equations/linear_trajectory.png" alt="Linear Trajectory" width="200">
+<img src="images/equations/linear_trajectory.png" alt="Linear Trajectory" width="190">
 
 where (x, y) represent the position of the robot at time t, v_x and v_y is the linear velocities for the x and y axes,
 and x_0 and y_0 are the initial values for x and y positions.
@@ -26,7 +26,7 @@ and x_0 and y_0 are the initial values for x and y positions.
 #### Circular Trajectory
 This trajectory has been defined by the following parametric equations:
 
-<img src="images/equations/circular_trajectory.png" alt="Circular Trajectory" width="260">
+<img src="images/equations/circular_trajectory.png" alt="Circular Trajectory" width="250">
 
 where (x, y) represent the position of the robot at time t, v is the linear velocity of the robot,
 and x_0 and y_0 are the initial values for x and y positions, R represents the radius of the circle, and T the time that
