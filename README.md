@@ -41,6 +41,13 @@ set to 0.00000 in **_worlds/room.world_**.
 
 ##### Linear Trajectory
 
+**Video:** [Euler: Linear Trajectory Test][2]
+
+###### Results
+<img src="images/results/linear_trajectory_euler_x_y.png" alt="Results for x and y" width="600">
+<img src="images/results/linear_trajectory_euler_theta_trajectory.png" alt="Results for theta and trajectory" width="600">
+
+
 ##### Circular Trajectory
 
 ##### Squared Trajectory
@@ -55,3 +62,4 @@ set to 0.00000 in **_worlds/room.world_**.
 
 
 [1]: http://www.turtlebot.com/
+[2]: https://www.google.com/
