@@ -21,6 +21,9 @@ This trajectory has been defined by the following parametric equations:
 <img src="images/equations/linear_trajectory.png" alt="Linear Trajectory" width="300">
 
 #### Circular Trajectory
+This trajectory has been defined by the following parametric equations:
+
+<img src="images/equations/circular_trajectory.png" alt="Circular Trajectory" width="300">
 
 #### Squared Trajectory
 
