@@ -32,6 +32,10 @@ This trajectory has been defined by the following equations:
 
 
 ### Experiments and Results
+The performance of both controllers was excellent, and this is shown in the obtained results.
+For each experiment a video and its corresponding results are shown. In order to run the
+simulation as fast as possible for Gazebo, the parameter **_real_time_update_rate_** has been
+set to 0.00000 in **_worlds/room.world_**.
 
 #### Euler Method Controller
 
