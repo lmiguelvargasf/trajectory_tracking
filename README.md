@@ -31,7 +31,7 @@ This trajectory has been defined by the following equations:
 <img src="images/equations/squared_trajectory.png" alt="Squared Trajectory" width="300">
 
 
-### Results
+### Experiments and Results
 
 #### Euler Method Controller
 
@@ -48,5 +48,6 @@ This trajectory has been defined by the following equations:
 ##### Circular Trajectory
 
 ##### Squared Trajectory
+
 
 [1]: http://www.turtlebot.com/
