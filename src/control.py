@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+from __future__ import print_function
 import rospy
 from gazebo_msgs.msg import ModelStates
 from geometry_msgs.msg import Twist
@@ -47,6 +48,10 @@ if __name__ == '__main__':
         compute_control_actions()
         rate.sleep()
 
+    print('Simulation was completed successfully!')
+
     plotter.plot_results()
     plotter.export_results()
+    print ('Data was exported successfully!')
+
     rospy.spin()
