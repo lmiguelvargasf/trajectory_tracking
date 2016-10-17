@@ -18,8 +18,7 @@ Three trajectories have been used to test each controller.
 #### Linear Trajectory
 This trajectory has been defined by the following parametric equations:
 
-![Linear Trajectory][linear_trajectory]
-<img src="images/equations/linear_trajectory.png" width="48">
+<img src="images/equations/linear_trajectory.png" alt="Linear Trajectory" width="300">
 
 #### Circular Trajectory
 
@@ -44,4 +43,3 @@ This trajectory has been defined by the following parametric equations:
 ##### Squared Trajectory
 
 [1]: http://www.turtlebot.com/
-[linear_trajectory]: images/equations/linear_trajectory.png
