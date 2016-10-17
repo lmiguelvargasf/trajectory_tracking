@@ -43,8 +43,8 @@ set to 0.00000 in **_worlds/room.world_**.
 
 **Video:** [Euler: Linear Trajectory Test][2]
 
-<img src="images/results/euler/linear/linear_trajectory_euler_x_y.png" alt="Results for x and y" width="1200">
-<img src="images/results/euler/linear/linear_trajectory_euler_theta_trajectory.png" alt="Results for theta and trajectory" width="1200">
+<img src="images/results/euler/linear/linear_trajectory_euler_x_y.png" alt="Results for x and y" width="1000">
+<img src="images/results/euler/linear/linear_trajectory_euler_theta_trajectory.png" alt="Results for theta and trajectory" width="1000">
 
 
 ##### Circular Trajectory
