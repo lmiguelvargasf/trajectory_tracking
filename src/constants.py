@@ -16,7 +16,7 @@ K_P_W = 0.45
 K_I_W = 1.25
 K_D_W = 0.000
 
-
+SIMULATION_TIME_IN_SECONDS = 0.0
 if TRAJECTORY == 'linear':
     SIMULATION_TIME_IN_SECONDS = 60.0
     MAX_V = 0.075
@@ -32,4 +32,4 @@ elif TRAJECTORY == 'squared':
 
 DELTA_T = 0.1 # this is the sampling time
 STEPS = int(SIMULATION_TIME_IN_SECONDS / DELTA_T)
-RESULTS_DIRECTORY = '../last_results/'
+RESULTS_DIRECTORY = '../txt_results/'
