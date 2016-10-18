@@ -94,9 +94,9 @@ set to 0.00000 in **_worlds/room.world_**.
 <img src="images/results/pid/squared/squared_trajectory_pid_theta_trajectory.png" alt="Results for theta and trajectory" width="1000">
 
 [1]: http://www.turtlebot.com/
-[2]: https://www.google.com/
-[3]: https://www.google.com/
-[4]: https://www.google.com/
-[5]: https://www.google.com/
-[6]: https://www.google.com/
-[7]: https://www.google.com/
+[2]: https://www.youtube.com/watch?v=WLiILRsv9n4
+[3]: https://www.youtube.com/watch?v=8eaEPQzavvk
+[4]: https://www.youtube.com/watch?v=M4-E_W8IbYI
+[5]: https://www.youtube.com/watch?v=3AXAvi5Tdq8
+[6]: https://www.youtube.com/watch?v=ZDh1iNf1wvU
+[7]: https://www.youtube.com/watch?v=nGBi5b4sPTA
