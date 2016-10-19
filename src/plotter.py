@@ -32,6 +32,8 @@ class Plotter:
             plt.subplot(122),
         ]
 
+        self.fig_part_2, self.plots_part_2 = plt.subplots(1, 2)
+
         self.LINE_WIDTH = 2
         self.FIGURE_TITLE_SIZE = 21
         self.PLOT_TITLE_SIZE = 19
@@ -69,6 +71,9 @@ class Plotter:
         self.plots_part_1[2].plot(self.x_ref, self.y_ref, 'r--', label=r'${\rm reference}$', lw=self.LINE_WIDTH)
         self.plots_part_1[2].plot(self.x, self.y, 'b', label=r'${\rm followed}$')
 
+        self.plots_part_2[0].plot(self.t, self.v_c, 'b', label=r'$v_{c}$', lw=self.LINE_WIDTH)
+        self.plots_part_2[1].plot(self.t, self.w_c, 'b', label=r'$\omega_{c}$', lw=self.LINE_WIDTH)
+
         self.decorate_plot(self.plots_part_0[0, 0], r'$x\ {\rm and}\ x_{ref}\ {\rm vs}\ t$', r'$t[{\rm s}]$', r'$x[{\rm m}]$')
         self.decorate_plot(self.plots_part_0[0, 1], r'$x_{error}\ {\rm vs}\ t$', r'$t[{\rm s}]$', r'$x_{error}[{\rm m}]$')
         self.decorate_plot(self.plots_part_0[1, 0], r'$y\ {\rm and}\ y_{ref}\ {\rm vs}\ t$', r'$t[{\rm s}]$', r'$y[{\rm m}]$')
@@ -79,6 +84,9 @@ class Plotter:
         self.decorate_plot(self.plots_part_1[2], r'${\rm followed\ trajectory\ vs\ reference\ trajectory}$',
                            r'$x[{\rm m}]$', r'$y[{\rm m}]$')
 
+        self.decorate_plot(self.plots_part_2[0], r'$v_{c}\ {\rm vs}\ t$', r'$t[{\rm s}]$', r'$v_{c}[{\rm m/s}]$')
+        self.decorate_plot(self.plots_part_2[1], r'$\omega_{c}\ {\rm vs}\ t$', r'$t[{\rm s}]$', r'$\omega_{c}[{\rm rad/s}]$')
+
         title = ''
         if CONTROLLER == 'euler':
             title = r'${\rm Euler\ method\ controller}\ $'
@@ -87,6 +95,8 @@ class Plotter:
 
         self.fig_part_0.suptitle(title + r'${\rm results - }\ x\ {\rm and}\ y$', fontsize=self.FIGURE_TITLE_SIZE)
         self.fig_part_1.suptitle(title + r'${\rm results - }\ \theta\ {\rm and\ trajectory}$',
+                                 fontsize=self.FIGURE_TITLE_SIZE)
+        self.fig_part_2.suptitle(title + r'${\rm results - }\ v_{c}\ {\rm and}\ \omega_{c}$',
                                  fontsize=self.FIGURE_TITLE_SIZE)
 
         plt.show()
@@ -100,6 +110,8 @@ class Plotter:
             'y_ref.txt': self.y_ref,
             'theta.txt': self.theta,
             'theta_ref.txt': self.theta_ref,
+            'v_c.txt': self.v_c,
+            'w_c.txt':self.w_c,
         }
 
         path = RESULTS_DIRECTORY + CONTROLLER + '/' + TRAJECTORY + '/'
