@@ -25,12 +25,7 @@ class Plotter:
         self.w_c = []
 
         self.fig_part_0, self.plots_part_0 = plt.subplots(2, 2, sharex=True)
-        # self.fig_part_1 = plt.figure()
         self.fig_part_1, self.plots_part_1 = plt.subplots(2, 2, sharex = True)
-        #     plt.subplot(221),
-        #     plt.subplot(223),
-        #     plt.subplot(122),
-        # ]
 
         self.fig_part_2, self.plots_part_2 = plt.subplots(1, 2)
 
