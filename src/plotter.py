@@ -58,9 +58,6 @@ class Plotter:
         self.plots_part_0[1, 1].plot(self.t, zeros, 'r--', label=r'$e=0$', lw=self.LINE_WIDTH)
         self.plots_part_0[1, 1].plot(self.t, e_y, 'b', label=r'$y_{error}$')
 
-        self.plots_part_2[0].plot(self.t, self.v_c, 'b', label=r'$v_{c}$', lw=self.LINE_WIDTH)
-        self.plots_part_2[1].plot(self.t, self.w_c, 'b', label=r'$\omega_{c}$', lw=self.LINE_WIDTH)
-
         e_theta = [(b_i - a_i) for a_i, b_i in zip(self.theta, self.theta_ref)]
         self.plots_part_1[0, 0].plot(self.t, self.theta_ref, 'r--', label=r'$\theta_{ref}$', lw=self.LINE_WIDTH)
         self.plots_part_1[0, 0].plot(self.t, self.theta, 'b', label=r'$\theta$')
@@ -71,6 +68,9 @@ class Plotter:
         trajectory_plot = plt.subplot(122)
         trajectory_plot.plot(self.x_ref, self.y_ref, 'r--', label=r'${\rm reference}$', lw=self.LINE_WIDTH)
         trajectory_plot.plot(self.x, self.y, 'b', label=r'${\rm followed}$')
+
+        self.plots_part_2[0].plot(self.t, self.v_c, 'b', label=r'$v_{c}$', lw=self.LINE_WIDTH)
+        self.plots_part_2[1].plot(self.t, self.w_c, 'b', label=r'$\omega_{c}$', lw=self.LINE_WIDTH)
 
         self.decorate_plot(self.plots_part_0[0, 0], r'$x\ {\rm and}\ x_{ref}\ {\rm vs}\ t$', r'$t[{\rm s}]$', r'$x[{\rm m}]$')
         self.decorate_plot(self.plots_part_0[0, 1], r'$x_{error}\ {\rm vs}\ t$', r'$t[{\rm s}]$', r'$x_{error}[{\rm m}]$')
