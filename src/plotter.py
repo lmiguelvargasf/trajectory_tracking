@@ -21,6 +21,9 @@ class Plotter:
         self.y = []
         self.theta = []
         self.theta_ref = []
+        self.v_c = []
+        self.w_c = []
+
         self.fig_part_0, self.plots_part_0 = plt.subplots(2, 2, sharex=True)
         self.fig_part_1 = plt.figure()
         self.plots_part_1 = [
