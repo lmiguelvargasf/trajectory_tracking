@@ -25,12 +25,12 @@ class Plotter:
         self.w_c = []
 
         self.fig_part_0, self.plots_part_0 = plt.subplots(2, 2, sharex=True)
-        self.fig_part_1 = plt.figure()
-        self.plots_part_1 = [
-            plt.subplot(221),
-            plt.subplot(223),
-            plt.subplot(122),
-        ]
+        # self.fig_part_1 = plt.figure()
+        self.fig_part_1, self.plots_part_1 = plt.subplots(2, 2, sharex = True)
+        #     plt.subplot(221),
+        #     plt.subplot(223),
+        #     plt.subplot(122),
+        # ]
 
         self.fig_part_2, self.plots_part_2 = plt.subplots(1, 2)
 
@@ -63,25 +63,28 @@ class Plotter:
         self.plots_part_0[1, 1].plot(self.t, zeros, 'r--', label=r'$e=0$', lw=self.LINE_WIDTH)
         self.plots_part_0[1, 1].plot(self.t, e_y, 'b', label=r'$y_{error}$')
 
-        e_theta = [(b_i - a_i) for a_i , b_i in zip(self.theta, self.theta_ref)]
-        self.plots_part_1[0].plot(self.t, self.theta_ref, 'r--', label=r'$\theta_{ref}$', lw=self.LINE_WIDTH)
-        self.plots_part_1[0].plot(self.t, self.theta, 'b', label=r'$\theta$')
-        self.plots_part_1[1].plot(self.t, zeros, 'r--', label=r'$e=0$', lw=self.LINE_WIDTH)
-        self.plots_part_1[1].plot(self.t, e_theta, 'b', label=r'$\theta_{error}$')
-        self.plots_part_1[2].plot(self.x_ref, self.y_ref, 'r--', label=r'${\rm reference}$', lw=self.LINE_WIDTH)
-        self.plots_part_1[2].plot(self.x, self.y, 'b', label=r'${\rm followed}$')
-
         self.plots_part_2[0].plot(self.t, self.v_c, 'b', label=r'$v_{c}$', lw=self.LINE_WIDTH)
         self.plots_part_2[1].plot(self.t, self.w_c, 'b', label=r'$\omega_{c}$', lw=self.LINE_WIDTH)
+
+        e_theta = [(b_i - a_i) for a_i, b_i in zip(self.theta, self.theta_ref)]
+        self.plots_part_1[0, 0].plot(self.t, self.theta_ref, 'r--', label=r'$\theta_{ref}$', lw=self.LINE_WIDTH)
+        self.plots_part_1[0, 0].plot(self.t, self.theta, 'b', label=r'$\theta$')
+        self.plots_part_1[1, 0].plot(self.t, zeros, 'r--', label=r'$e=0$', lw=self.LINE_WIDTH)
+        self.plots_part_1[1, 0].plot(self.t, e_theta, 'b', label=r'$\theta_{error}$')
+
+        plt.figure(self.fig_part_1.number)
+        trajectory_plot = plt.subplot(122)
+        trajectory_plot.plot(self.x_ref, self.y_ref, 'r--', label=r'${\rm reference}$', lw=self.LINE_WIDTH)
+        trajectory_plot.plot(self.x, self.y, 'b', label=r'${\rm followed}$')
 
         self.decorate_plot(self.plots_part_0[0, 0], r'$x\ {\rm and}\ x_{ref}\ {\rm vs}\ t$', r'$t[{\rm s}]$', r'$x[{\rm m}]$')
         self.decorate_plot(self.plots_part_0[0, 1], r'$x_{error}\ {\rm vs}\ t$', r'$t[{\rm s}]$', r'$x_{error}[{\rm m}]$')
         self.decorate_plot(self.plots_part_0[1, 0], r'$y\ {\rm and}\ y_{ref}\ {\rm vs}\ t$', r'$t[{\rm s}]$', r'$y[{\rm m}]$')
         self.decorate_plot(self.plots_part_0[1, 1], r'$y_{error}\ {\rm vs}\ t$', r'$t[{\rm s}]$', r'$y_{error}[{\rm m}]$')
 
-        self.decorate_plot(self.plots_part_1[0], r'$\theta,\ \theta_{ref}\ {\rm vs}\ t$', r'$t[{\rm s}]$', r'$\theta[{\rm rad}]$')
-        self.decorate_plot(self.plots_part_1[1], r'$\theta_{error}\ {\rm vs}\ t$', r'$t[{\rm s}]$', r'$\theta_{error}[{\rm rad}]$')
-        self.decorate_plot(self.plots_part_1[2], r'${\rm followed\ trajectory\ vs\ reference\ trajectory}$',
+        self.decorate_plot(self.plots_part_1[0, 0], r'$\theta,\ \theta_{ref}\ {\rm vs}\ t$', r'$t[{\rm s}]$', r'$\theta[{\rm rad}]$')
+        self.decorate_plot(self.plots_part_1[1, 0], r'$\theta_{error}\ {\rm vs}\ t$', r'$t[{\rm s}]$', r'$\theta_{error}[{\rm rad}]$')
+        self.decorate_plot(trajectory_plot, r'${\rm followed\ trajectory\ vs\ reference\ trajectory}$',
                            r'$x[{\rm m}]$', r'$y[{\rm m}]$')
 
         self.decorate_plot(self.plots_part_2[0], r'$v_{c}\ {\rm vs}\ t$', r'$t[{\rm s}]$', r'$v_{c}[{\rm m/s}]$')
@@ -94,9 +97,9 @@ class Plotter:
             title = r'${\rm PID\ controller}\ $'
 
         self.fig_part_0.suptitle(title + r'${\rm results - }\ x\ {\rm and}\ y$', fontsize=self.FIGURE_TITLE_SIZE)
-        self.fig_part_1.suptitle(title + r'${\rm results - }\ \theta\ {\rm and\ trajectory}$',
-                                 fontsize=self.FIGURE_TITLE_SIZE)
         self.fig_part_2.suptitle(title + r'${\rm results - }\ v_{c}\ {\rm and}\ \omega_{c}$',
+                                 fontsize=self.FIGURE_TITLE_SIZE)
+        self.fig_part_1.suptitle(title + r'${\rm results - }\ \theta\ {\rm and\ trajectory}$',
                                  fontsize=self.FIGURE_TITLE_SIZE)
 
         plt.show()
