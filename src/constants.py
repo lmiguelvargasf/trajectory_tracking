@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-TRAJECTORY = 'squared'
+TRAJECTORY = 'linear'
 CONTROLLER = 'euler'
 
 # control constants
