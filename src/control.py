@@ -7,7 +7,7 @@ from geometry_msgs.msg import Twist
 
 from constants import DELTA_T, STEPS
 from controller import create_controller
-from plotter import Plotter
+from plotter import SimulationPlotter
 
 
 def get_pose(message):
@@ -44,7 +44,7 @@ if __name__ == '__main__':
         pass
 
     i = 0
-    plotter = Plotter()
+    plotter = SimulationPlotter()
     controller = create_controller()
     rate = rospy.Rate(int(1 / DELTA_T))
     while not rospy.is_shutdown() and i < STEPS:

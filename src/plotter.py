@@ -12,6 +12,7 @@ from trajectory import create_trajectory
 
 
 class Plotter:
+class SimulationPlotter(Plotter):
     def __init__(self):
         trajectory = create_trajectory()
         self.t = [i * DELTA_T for i in range(STEPS)]
