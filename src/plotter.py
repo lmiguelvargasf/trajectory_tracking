@@ -163,3 +163,12 @@ class PaperPlotter(Plotter):
         self.fig_part_2, self.plots_part_2 = plt.subplots(3, 1, sharex=True)
         self.fig_part_3, self.plots_part_3 = plt.subplots(2, 1, sharex=True)
 
+    def plot_results(self):
+        e_euler_x = get_error(self.euler_plot_data.x_ref, self.euler_plot_data.x)
+        e_euler_y = get_error(self.euler_plot_data.y_ref, self.euler_plot_data.y)
+        e_euler_theta = get_error(self.euler_plot_data.theta_ref, self.euler_plot_data.theta)
+
+        e_pid_x = get_error(self.pid_plot_data.x_ref, self.pid_plot_data.x)
+        e_pid_y = get_error(self.pid_plot_data.y_ref, self.pid_plot_data.y)
+        e_pid_theta = get_error(self.pid_plot_data.theta_ref, self.pid_plot_data.theta)
+
