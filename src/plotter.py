@@ -200,3 +200,10 @@ class PaperPlotter(Plotter):
         self.plots_part_2[2].plot(self.euler_plot_data.t, e_euler_theta, 'g', label=r'$\theta_{error}-{\rm euler}$')
         self.plots_part_2[2].plot(self.pid_plot_data.t, e_pid_theta, 'b', label=r'$\theta_{error}-{\rm pid}$')
 
+        self.plots_part_3[0].plot(self.euler_plot_data.t, self.euler_plot_data.v_c, 'b', label=r'$v_{c}-{\rm euler}$')
+        self.plots_part_3[0].plot(self.pid_plot_data.t, self.pid_plot_data.v_c, 'g', label=r'$v_{c}-{\rm pid}$')
+
+        self.plots_part_3[1].plot(self.euler_plot_data.t, self.euler_plot_data.w_c, 'b', label=r'$\omega_{c}-{\rm euler}$')
+        self.plots_part_3[1].plot(self.pid_plot_data.t, self.pid_plot_data.w_c, 'g', label=r'$\omega_{c}-{\rm pid}$')
+
+
