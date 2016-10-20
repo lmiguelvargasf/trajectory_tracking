@@ -23,6 +23,18 @@ class Plotter:
         self.v_c = []
         self.w_c = []
 
+        self.file_array_name = {
+            't.txt': self.t,
+            'x.txt': self.x,
+            'x_ref.txt': self.x_ref,
+            'y.txt': self.y,
+            'y_ref.txt': self.y_ref,
+            'theta.txt': self.theta,
+            'theta_ref.txt': self.theta_ref,
+            'v_c.txt': self.v_c,
+            'w_c.txt': self.w_c,
+        }
+
         self.LINE_WIDTH = 2
         self.FIGURE_TITLE_SIZE = 21
         self.PLOT_TITLE_SIZE = 19
@@ -107,18 +119,6 @@ class SimulationPlotter(Plotter):
         plt.show()
 
     def export_results(self):
-        data_to_export = {
-            't.txt': self.t,
-            'x.txt': self.x,
-            'x_ref.txt': self.x_ref,
-            'y.txt': self.y,
-            'y_ref.txt': self.y_ref,
-            'theta.txt': self.theta,
-            'theta_ref.txt': self.theta_ref,
-            'v_c.txt': self.v_c,
-            'w_c.txt':self.w_c,
-        }
-
         path = RESULTS_DIRECTORY + CONTROLLER + '/' + TRAJECTORY + '/'
         for file_name, a_list in data_to_export.items():
             self.export_list(path + file_name, a_list)
