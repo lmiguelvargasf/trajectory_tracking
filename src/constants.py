@@ -32,4 +32,9 @@ elif TRAJECTORY == 'squared':
 
 DELTA_T = 0.1 # this is the sampling time
 STEPS = int(SIMULATION_TIME_IN_SECONDS / DELTA_T)
+
+# directory from where data is imported to or exported from
 RESULTS_DIRECTORY = '../txt_results/'
+PATH_TO_EXPORT_DATA = RESULTS_DIRECTORY + CONTROLLER + '/' + TRAJECTORY + '/'
+PATH_TO_IMPORT_EULER_DATA = RESULTS_DIRECTORY + 'euler' + '/' + TRAJECTORY + '/'
+PATH_TO_IMPORT_PID_DATA = RESULTS_DIRECTORY + 'pid' + '/' + TRAJECTORY + '/'

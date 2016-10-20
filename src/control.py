@@ -7,7 +7,7 @@ from geometry_msgs.msg import Twist
 
 from constants import DELTA_T, STEPS
 from controller import create_controller
-from plotter import Plotter
+from plotter import SimulationPlotter
 
 
 def get_pose(message):
@@ -20,8 +20,10 @@ def compute_control_actions():
     global i
     controller.compute_control_actions(current_pose, current_twist, i)
     plotter.add_point(current_pose)
-    plotter.theta.append(controller.theta_n)
-    plotter.theta_ref.append(controller.theta_ref_n)
+    plotter.plot_data.theta.append(controller.theta_n)
+    plotter.plot_data.theta_ref.append(controller.theta_ref_n)
+    plotter.plot_data.v_c.append(controller.v_c_n)
+    plotter.plot_data.w_c.append(controller.w_c_n)
 
     twist = Twist()
     twist.linear.x = controller.v_c_n
@@ -42,7 +44,7 @@ if __name__ == '__main__':
         pass
 
     i = 0
-    plotter = Plotter()
+    plotter = SimulationPlotter()
     controller = create_controller()
     rate = rospy.Rate(int(1 / DELTA_T))
     while not rospy.is_shutdown() and i < STEPS:
