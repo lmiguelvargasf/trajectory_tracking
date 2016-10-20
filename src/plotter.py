@@ -119,9 +119,8 @@ class SimulationPlotter(Plotter):
         plt.show()
 
     def export_results(self):
-        path = RESULTS_DIRECTORY + CONTROLLER + '/' + TRAJECTORY + '/'
-        for file_name, a_list in data_to_export.items():
-            self.export_list(path + file_name, a_list)
+        for file_name, a_list in self.file_array_name.items():
+            self.export_list(PATH + file_name, a_list)
 
     def export_list(self, path_to_file, a_list):
         if not exists(dirname(path_to_file)):
