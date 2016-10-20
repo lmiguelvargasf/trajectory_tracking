@@ -207,3 +207,7 @@ class PaperPlotter(Plotter):
         self.plots_part_3[1].plot(self.pid_plot_data.t, self.pid_plot_data.w_c, 'g', label=r'$\omega_{c}-{\rm pid}$')
 
 
+    def import_data(self, path_to_file, a_list):
+        with open(path_to_file)  as file:
+            for line in file:
+                a_list.append(float(line))
