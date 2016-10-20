@@ -7,7 +7,8 @@ from errno import EEXIST
 from os import makedirs
 from os.path import exists, dirname
 
-from constants import STEPS, DELTA_T, CONTROLLER, PATH_TO_EXPORT_DATA
+from constants import STEPS, DELTA_T, CONTROLLER, PATH_TO_EXPORT_DATA, PATH_TO_IMPORT_EULER_DATA, \
+    PATH_TO_IMPORT_PID_DATA
 from trajectory import create_trajectory
 
 
