@@ -8,7 +8,7 @@ from os.path import exists, dirname
 
 from constants import DELTA_T, CONTROLLER, PATH_TO_EXPORT_DATA
 from constants import STEPS
-from plotter.plotter import Plotter, PlotData, get_error
+from plotter import Plotter, PlotData, get_error
 from trajectory import create_trajectory
 
 
