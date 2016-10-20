@@ -77,31 +77,30 @@ class SimulationPlotter(Plotter):
         self.plot_data.y.append(pose.position.y)
 
     def plot_results(self):
-        zeros = [0 for _ in range(STEPS)]
-        e_x = [(b_i - a_i) for a_i , b_i in zip(self.x, self.x_ref)]
-        e_y = [(b_i - a_i) for a_i , b_i in zip(self.y, self.y_ref)]
-        self.plots_part_0[0, 0].plot(self.t, self.x_ref, 'r--', label=r'$x_{ref}$', lw=self.LINE_WIDTH)
-        self.plots_part_0[0, 0].plot(self.t, self.x, 'b', label=r'$x$')
-        self.plots_part_0[0, 1].plot(self.t, zeros, 'r--', label=r'$e=0$', lw=self.LINE_WIDTH)
-        self.plots_part_0[0, 1].plot(self.t, e_x, 'b', label=r'$x_{error}$')
-        self.plots_part_0[1, 0].plot(self.t, self.y_ref, 'r--', label=r'$y_{ref}$', lw=self.LINE_WIDTH)
-        self.plots_part_0[1, 0].plot(self.t, self.y, 'b', label=r'$y$')
-        self.plots_part_0[1, 1].plot(self.t, zeros, 'r--', label=r'$e=0$', lw=self.LINE_WIDTH)
-        self.plots_part_0[1, 1].plot(self.t, e_y, 'b', label=r'$y_{error}$')
+        e_x = get_error(self.plot_data.x_ref, self.plot_data.x)
+        e_y = get_error(self.plot_data.y_ref, self.plot_data.y)
+        self.plots_part_0[0, 0].plot(self.plot_data.t, self.plot_data.x_ref, 'r--', label=r'$x_{ref}$', lw=self.LINE_WIDTH)
+        self.plots_part_0[0, 0].plot(self.plot_data.t, self.plot_data.x, 'b', label=r'$x$')
+        self.plots_part_0[0, 1].plot(self.plot_data.t, self.zeros, 'r--', label=r'$e=0$', lw=self.LINE_WIDTH)
+        self.plots_part_0[0, 1].plot(self.plot_data.t, e_x, 'b', label=r'$x_{error}$')
+        self.plots_part_0[1, 0].plot(self.plot_data.t, self.plot_data.y_ref, 'r--', label=r'$y_{ref}$', lw=self.LINE_WIDTH)
+        self.plots_part_0[1, 0].plot(self.plot_data.t, self.plot_data.y, 'b', label=r'$y$')
+        self.plots_part_0[1, 1].plot(self.plot_data.t, self.zeros, 'r--', label=r'$e=0$', lw=self.LINE_WIDTH)
+        self.plots_part_0[1, 1].plot(self.plot_data.t, e_y, 'b', label=r'$y_{error}$')
 
-        e_theta = [(b_i - a_i) for a_i, b_i in zip(self.theta, self.theta_ref)]
-        self.plots_part_1[0, 0].plot(self.t, self.theta_ref, 'r--', label=r'$\theta_{ref}$', lw=self.LINE_WIDTH)
-        self.plots_part_1[0, 0].plot(self.t, self.theta, 'b', label=r'$\theta$')
-        self.plots_part_1[1, 0].plot(self.t, zeros, 'r--', label=r'$e=0$', lw=self.LINE_WIDTH)
-        self.plots_part_1[1, 0].plot(self.t, e_theta, 'b', label=r'$\theta_{error}$')
+        e_theta = get_error(self.plot_data.theta_ref, self.plot_data.theta)
+        self.plots_part_1[0, 0].plot(self.plot_data.t, self.plot_data.theta_ref, 'r--', label=r'$\theta_{ref}$', lw=self.LINE_WIDTH)
+        self.plots_part_1[0, 0].plot(self.plot_data.t, self.plot_data.theta, 'b', label=r'$\theta$')
+        self.plots_part_1[1, 0].plot(self.plot_data.t, self.zeros, 'r--', label=r'$e=0$', lw=self.LINE_WIDTH)
+        self.plots_part_1[1, 0].plot(self.plot_data.t, e_theta, 'b', label=r'$\theta_{error}$')
 
         plt.figure(self.fig_part_1.number)
         trajectory_plot = plt.subplot(122)
-        trajectory_plot.plot(self.x_ref, self.y_ref, 'r--', label=r'${\rm reference}$', lw=self.LINE_WIDTH)
-        trajectory_plot.plot(self.x, self.y, 'b', label=r'${\rm followed}$')
+        trajectory_plot.plot(self.plot_data.x_ref, self.plot_data.y_ref, 'r--', label=r'${\rm reference}$', lw=self.LINE_WIDTH)
+        trajectory_plot.plot(self.plot_data.x, self.plot_data.y, 'b', label=r'${\rm followed}$')
 
-        self.plots_part_2[0].plot(self.t, self.v_c, 'b', label=r'$v_{c}$', lw=self.LINE_WIDTH)
-        self.plots_part_2[1].plot(self.t, self.w_c, 'b', label=r'$\omega_{c}$', lw=self.LINE_WIDTH)
+        self.plots_part_2[0].plot(self.plot_data.t, self.plot_data.v_c, 'b', label=r'$v_{c}$')
+        self.plots_part_2[1].plot(self.plot_data.t, self.plot_data.w_c, 'b', label=r'$\omega_{c}$')
 
         self.decorate_plot(self.plots_part_0[0, 0], r'$x\ {\rm and}\ x_{ref}\ {\rm vs}\ t$', r'$t[{\rm s}]$', r'$x[{\rm m}]$')
         self.decorate_plot(self.plots_part_0[0, 1], r'$x_{error}\ {\rm vs}\ t$', r'$t[{\rm s}]$', r'$x_{error}[{\rm m}]$')
