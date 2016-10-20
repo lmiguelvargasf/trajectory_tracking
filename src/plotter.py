@@ -13,21 +13,15 @@ from trajectory import create_trajectory
 
 class Plotter:
     def __init__(self):
-        trajectory = create_trajectory()
-        self.t = [i * DELTA_T for i in range(STEPS)]
-        self.x_ref = [trajectory.get_position_at(i * DELTA_T).x for i in range(STEPS)]
-        self.y_ref = [trajectory.get_position_at(i * DELTA_T).y for i in range(STEPS)]
+        self.t = []
+        self.x_ref = []
+        self.y_ref = []
         self.x = []
         self.y = []
         self.theta = []
         self.theta_ref = []
         self.v_c = []
         self.w_c = []
-
-        self.fig_part_0, self.plots_part_0 = plt.subplots(2, 2, sharex=True)
-        self.fig_part_1, self.plots_part_1 = plt.subplots(2, 2, sharex=True)
-
-        self.fig_part_2, self.plots_part_2 = plt.subplots(1, 2)
 
         self.LINE_WIDTH = 2
         self.FIGURE_TITLE_SIZE = 21
@@ -38,6 +32,14 @@ class Plotter:
 class SimulationPlotter(Plotter):
     def __init__(self):
         Plotter.__init__(self)
+        trajectory = create_trajectory()
+        self.t = [i * DELTA_T for i in range(STEPS)]
+        self.x_ref = [trajectory.get_position_at(i * DELTA_T).x for i in range(STEPS)]
+        self.y_ref = [trajectory.get_position_at(i * DELTA_T).y for i in range(STEPS)]
+
+        self.fig_part_0, self.plots_part_0 = plt.subplots(2, 2, sharex=True)
+        self.fig_part_1, self.plots_part_1 = plt.subplots(2, 2, sharex=True)
+        self.fig_part_2, self.plots_part_2 = plt.subplots(1, 2)
 
     def add_point(self, pose):
         self.x.append(pose.position.x)
