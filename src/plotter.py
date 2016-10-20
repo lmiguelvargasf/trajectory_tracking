@@ -39,6 +39,11 @@ class PlotData:
             'w_c.txt': self.w_c,
         }
 
+
+class Plotter:
+    def __init__(self):
+        self.zeros = [0 for _ in range(STEPS)]
+
         self.LINE_WIDTH = 2
         self.FIGURE_TITLE_SIZE = 21
         self.PLOT_TITLE_SIZE = 19
