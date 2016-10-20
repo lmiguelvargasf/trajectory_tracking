@@ -207,6 +207,25 @@ class PaperPlotter(Plotter):
         self.plots_part_3[1].plot(self.pid_plot_data.t, self.pid_plot_data.w_c, 'g', label=r'$\omega_{c}-{\rm pid}$')
 
 
+        self.decorate_plot(self.plots_part_0, r'${\rm followed\ trajectories\ vs\ reference\ trajectory}$',
+                           r'$x[{\rm m}]$', r'$y[{\rm m}]$')
+
+        self.decorate_plot(self.plots_part_1[0], r'$x\ {\rm and}\ x_{ref}\ {\rm vs}\ t$', r'',
+                           r'$x[{\rm m}]$')
+        self.decorate_plot(self.plots_part_1[1], r'$y\ {\rm and}\ y_{ref}\ {\rm vs}\ t$', r'',
+                           r'$y[{\rm m}]$')
+        self.decorate_plot(self.plots_part_1[2], r'$\theta\ {\rm and}\ \theta_{ref}\ {\rm vs}\ t$', r'$t[{\rm s}]$',
+                           r'$\theta[{\rm rad}]$')
+
+        self.decorate_plot(self.plots_part_2[0], r'$x_{error}\ {\rm vs}\ t$', r'', r'$x_{error}[{\rm m}]$')
+        self.decorate_plot(self.plots_part_2[1], r'$y_{error}\ {\rm vs}\ t$', r'', r'$y_{error}[{\rm m}]$')
+        self.decorate_plot(self.plots_part_2[2], r'$\theta_{error}\ {\rm vs}\ t$', r'$t[{\rm s}]$', r'$\theta_{error}[{\rm m}]$')
+
+        self.decorate_plot(self.plots_part_3[0], r'$v_{c}\ {\rm vs}\ t$', r'', r'$v_{c}[{\rm m/s}]$')
+        self.decorate_plot(self.plots_part_3[1], r'$\omega_{c}\ {\rm vs}\ t$', r'$t[{\rm s}]$', r'$\omega_{c}[{\rm m/s}]$')
+
+        plt.show()
+
     def import_data(self, path_to_file, a_list):
         with open(path_to_file)  as file:
             for line in file:
