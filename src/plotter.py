@@ -152,3 +152,9 @@ class PaperPlotter(Plotter):
         self.euler_plot_data = PlotData()
         self.pid_plot_data = PlotData()
 
+        for file_name, a_list in self.euler_plot_data.file_array_name.items():
+            self.import_data(PATH_TO_IMPORT_EULER_DATA + file_name, a_list)
+
+        for file_name, a_list in self.pid_plot_data.file_array_name.items():
+            self.import_data(PATH_TO_IMPORT_PID_DATA + file_name, a_list)
+
