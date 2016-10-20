@@ -149,6 +149,7 @@ class SimulationPlotter(Plotter):
 class PaperPlotter(Plotter):
     def __init__(self):
         Plotter.__init__(self)
+        self.LINE_WIDTH = 3
         self.euler_plot_data = PlotData()
         self.pid_plot_data = PlotData()
 
@@ -172,31 +173,31 @@ class PaperPlotter(Plotter):
         e_pid_y = get_error(self.pid_plot_data.y_ref, self.pid_plot_data.y)
         e_pid_theta = get_error(self.pid_plot_data.theta_ref, self.pid_plot_data.theta)
 
-        self.plots_part_0.plot(self.euler_plot_data.x_ref, self.euler_plot_data.y_ref, 'r--', label=r'${\rm reference}$', lw=3)
+        self.plots_part_0.plot(self.euler_plot_data.x_ref, self.euler_plot_data.y_ref, 'r--', label=r'${\rm reference}$', lw=self.LINE_WIDTH)
         self.plots_part_0.plot(self.euler_plot_data.x, self.euler_plot_data.y, 'g', label=r'${\rm euler}$')
         self.plots_part_0.plot(self.pid_plot_data.x, self.pid_plot_data.y, 'b', label=r'${\rm pid}$')
 
-        self.plots_part_1[0].plot(self.euler_plot_data.t, self.euler_plot_data.x_ref, 'r--', label=r'$x_{ref}$', lw=3)
+        self.plots_part_1[0].plot(self.euler_plot_data.t, self.euler_plot_data.x_ref, 'r--', label=r'$x_{ref}$', lw=self.LINE_WIDTH)
         self.plots_part_1[0].plot(self.euler_plot_data.t, self.euler_plot_data.x, 'g', label=r'$x-{\rm euler}$')
         self.plots_part_1[0].plot(self.pid_plot_data.t, self.pid_plot_data.x, 'b', label=r'$x-{\rm pid}$')
 
-        self.plots_part_1[1].plot(self.euler_plot_data.t, self.euler_plot_data.y_ref, 'r--', label=r'$y_{ref}$', lw=3)
+        self.plots_part_1[1].plot(self.euler_plot_data.t, self.euler_plot_data.y_ref, 'r--', label=r'$y_{ref}$', lw=self.LINE_WIDTH)
         self.plots_part_1[1].plot(self.euler_plot_data.t, self.euler_plot_data.y, 'g', label=r'$y-{\rm euler}$')
         self.plots_part_1[1].plot(self.pid_plot_data.t, self.pid_plot_data.y, 'b', label=r'$y-{\rm pid}$')
 
-        self.plots_part_1[2].plot(self.euler_plot_data.t, self.euler_plot_data.theta_ref, 'r--', label=r'$\theta_{ref}$', lw=3)
+        self.plots_part_1[2].plot(self.euler_plot_data.t, self.euler_plot_data.theta_ref, 'r--', label=r'$\theta_{ref}$', lw=self.LINE_WIDTH)
         self.plots_part_1[2].plot(self.euler_plot_data.t, self.euler_plot_data.theta, 'g', label=r'$\theta-{\rm euler}$')
         self.plots_part_1[2].plot(self.pid_plot_data.t, self.pid_plot_data.theta, 'b', label=r'$\theta-{\rm pid}$')
 
-        self.plots_part_2[0].plot(self.euler_plot_data.t, self.zeros, 'r--', label=r'$e=0$', lw=3)
+        self.plots_part_2[0].plot(self.euler_plot_data.t, self.zeros, 'r--', label=r'$e=0$', lw=self.LINE_WIDTH)
         self.plots_part_2[0].plot(self.euler_plot_data.t, e_euler_x, 'g', label=r'$x_{error}-{\rm euler}$')
         self.plots_part_2[0].plot(self.pid_plot_data.t, e_pid_x, 'b', label=r'$x_{error}-{\rm pid}$')
 
-        self.plots_part_2[1].plot(self.euler_plot_data.t, self.zeros, 'r--', label=r'$e=0$', lw=3)
+        self.plots_part_2[1].plot(self.euler_plot_data.t, self.zeros, 'r--', label=r'$e=0$', lw=self.LINE_WIDTH)
         self.plots_part_2[1].plot(self.euler_plot_data.t, e_euler_y, 'g', label=r'$y_{error}-{\rm euler}$')
         self.plots_part_2[1].plot(self.pid_plot_data.t, e_pid_y, 'b', label=r'$y_{error}-{\rm pid}$')
 
-        self.plots_part_2[2].plot(self.euler_plot_data.t, self.zeros, 'r--', label=r'$e=0$', lw=3)
+        self.plots_part_2[2].plot(self.euler_plot_data.t, self.zeros, 'r--', label=r'$e=0$', lw=self.LINE_WIDTH)
         self.plots_part_2[2].plot(self.euler_plot_data.t, e_euler_theta, 'g', label=r'$\theta_{error}-{\rm euler}$')
         self.plots_part_2[2].plot(self.pid_plot_data.t, e_pid_theta, 'b', label=r'$\theta_{error}-{\rm pid}$')
 
