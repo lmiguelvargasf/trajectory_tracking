@@ -149,3 +149,6 @@ class SimulationPlotter(Plotter):
 class PaperPlotter(Plotter):
     def __init__(self):
         Plotter.__init__(self)
+        self.euler_plot_data = PlotData()
+        self.pid_plot_data = PlotData()
+
