@@ -1,13 +1,13 @@
 #!/usr/bin/env python
 # coding=utf-8
 from __future__ import unicode_literals
+
 import matplotlib.pyplot as plt
 from errno import EEXIST
 from os import makedirs
-
 from os.path import exists, dirname
 
-from constants import STEPS, DELTA_T, CONTROLLER, RESULTS_DIRECTORY, TRAJECTORY
+from constants import STEPS, DELTA_T, CONTROLLER, PATH
 from trajectory import create_trajectory
 
 
