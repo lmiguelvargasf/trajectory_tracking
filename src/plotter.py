@@ -11,6 +11,8 @@ from constants import STEPS, DELTA_T, CONTROLLER, PATH_TO_EXPORT_DATA, PATH_TO_I
     PATH_TO_IMPORT_PID_DATA
 from trajectory import create_trajectory
 
+def get_error(reference, actual):
+    return [(b_i - a_i) for b_i , a_i in zip(reference, actual)]
 
 class Plotter:
     def __init__(self):
