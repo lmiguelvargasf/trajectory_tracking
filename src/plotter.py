@@ -12,7 +12,6 @@ from trajectory import create_trajectory
 
 
 class Plotter:
-class SimulationPlotter(Plotter):
     def __init__(self):
         trajectory = create_trajectory()
         self.t = [i * DELTA_T for i in range(STEPS)]
@@ -26,7 +25,7 @@ class SimulationPlotter(Plotter):
         self.w_c = []
 
         self.fig_part_0, self.plots_part_0 = plt.subplots(2, 2, sharex=True)
-        self.fig_part_1, self.plots_part_1 = plt.subplots(2, 2, sharex = True)
+        self.fig_part_1, self.plots_part_1 = plt.subplots(2, 2, sharex=True)
 
         self.fig_part_2, self.plots_part_2 = plt.subplots(1, 2)
 
@@ -34,6 +33,11 @@ class SimulationPlotter(Plotter):
         self.FIGURE_TITLE_SIZE = 21
         self.PLOT_TITLE_SIZE = 19
         self.PLOT_AXIS_LABEL_SIZE = 17
+
+
+class SimulationPlotter(Plotter):
+    def __init__(self):
+        Plotter.__init__(self)
 
     def add_point(self, pose):
         self.x.append(pose.position.x)
@@ -128,3 +132,8 @@ class SimulationPlotter(Plotter):
         with open(path_to_file, 'w') as file:
             for e in a_list:
                 file.write(str(e) + '\n')
+
+
+class PaperPlotter(Plotter):
+    def __init__(self):
+        Plotter.__init__(self)
