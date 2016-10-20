@@ -49,10 +49,20 @@ class Plotter:
         self.PLOT_TITLE_SIZE = 19
         self.PLOT_AXIS_LABEL_SIZE = 17
 
+    def decorate_plot(self, plot, title, x_label, y_label):
+        plot.set_title(title, fontsize=self.PLOT_TITLE_SIZE)
+        plot.set_xlabel(x_label, fontsize=self.PLOT_AXIS_LABEL_SIZE)
+        plot.set_ylabel(y_label, fontsize=self.PLOT_AXIS_LABEL_SIZE)
+        plot.legend(loc=0)
+        plot.grid()
+
+    def plot_results(self):
+        pass
 
 class SimulationPlotter(Plotter):
     def __init__(self):
         Plotter.__init__(self)
+        self.plot_data = PlotData()
         trajectory = create_trajectory()
         self.t = [i * DELTA_T for i in range(STEPS)]
         self.x_ref = [trajectory.get_position_at(i * DELTA_T).x for i in range(STEPS)]
@@ -63,15 +73,8 @@ class SimulationPlotter(Plotter):
         self.fig_part_2, self.plots_part_2 = plt.subplots(1, 2)
 
     def add_point(self, pose):
-        self.x.append(pose.position.x)
-        self.y.append(pose.position.y)
-
-    def decorate_plot(self, plot, title, x_label, y_label):
-        plot.set_title(title, fontsize=self.PLOT_TITLE_SIZE)
-        plot.set_xlabel(x_label, fontsize=self.PLOT_AXIS_LABEL_SIZE)
-        plot.set_ylabel(y_label, fontsize=self.PLOT_AXIS_LABEL_SIZE)
-        plot.legend(loc=0)
-        plot.grid()
+        self.plot_data.x.append(pose.position.x)
+        self.plot_data.y.append(pose.position.y)
 
     def plot_results(self):
         zeros = [0 for _ in range(STEPS)]
