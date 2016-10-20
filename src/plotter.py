@@ -14,7 +14,8 @@ from trajectory import create_trajectory
 def get_error(reference, actual):
     return [(b_i - a_i) for b_i , a_i in zip(reference, actual)]
 
-class Plotter:
+
+class PlotData:
     def __init__(self):
         self.t = []
         self.x_ref = []
