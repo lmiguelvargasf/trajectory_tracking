@@ -158,3 +158,8 @@ class PaperPlotter(Plotter):
         for file_name, a_list in self.pid_plot_data.file_array_name.items():
             self.import_data(PATH_TO_IMPORT_PID_DATA + file_name, a_list)
 
+        self.fig_part_0, self.plots_part_0 = plt.subplots(1, 1)
+        self.fig_part_1, self.plots_part_1 = plt.subplots(3, 1, sharex=True)
+        self.fig_part_2, self.plots_part_2 = plt.subplots(3, 1, sharex=True)
+        self.fig_part_3, self.plots_part_3 = plt.subplots(2, 1, sharex=True)
+
