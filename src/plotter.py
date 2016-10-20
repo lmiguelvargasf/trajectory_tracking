@@ -176,3 +176,15 @@ class PaperPlotter(Plotter):
         self.plots_part_0.plot(self.euler_plot_data.x, self.euler_plot_data.y, 'g', label=r'${\rm euler}$')
         self.plots_part_0.plot(self.pid_plot_data.x, self.pid_plot_data.y, 'b', label=r'${\rm pid}$')
 
+        self.plots_part_1[0].plot(self.euler_plot_data.t, self.euler_plot_data.x_ref, 'r--', label=r'$x_{ref}$', lw=3)
+        self.plots_part_1[0].plot(self.euler_plot_data.t, self.euler_plot_data.x, 'g', label=r'$x-{\rm euler}$')
+        self.plots_part_1[0].plot(self.pid_plot_data.t, self.pid_plot_data.x, 'b', label=r'$x-{\rm pid}$')
+
+        self.plots_part_1[1].plot(self.euler_plot_data.t, self.euler_plot_data.y_ref, 'r--', label=r'$y_{ref}$', lw=3)
+        self.plots_part_1[1].plot(self.euler_plot_data.t, self.euler_plot_data.y, 'g', label=r'$y-{\rm euler}$')
+        self.plots_part_1[1].plot(self.pid_plot_data.t, self.pid_plot_data.y, 'b', label=r'$y-{\rm pid}$')
+
+        self.plots_part_1[2].plot(self.euler_plot_data.t, self.euler_plot_data.theta_ref, 'r--', label=r'$\theta_{ref}$', lw=3)
+        self.plots_part_1[2].plot(self.euler_plot_data.t, self.euler_plot_data.theta, 'g', label=r'$\theta-{\rm euler}$')
+        self.plots_part_1[2].plot(self.pid_plot_data.t, self.pid_plot_data.theta, 'b', label=r'$\theta-{\rm pid}$')
+
