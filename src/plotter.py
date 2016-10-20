@@ -188,3 +188,15 @@ class PaperPlotter(Plotter):
         self.plots_part_1[2].plot(self.euler_plot_data.t, self.euler_plot_data.theta, 'g', label=r'$\theta-{\rm euler}$')
         self.plots_part_1[2].plot(self.pid_plot_data.t, self.pid_plot_data.theta, 'b', label=r'$\theta-{\rm pid}$')
 
+        self.plots_part_2[0].plot(self.euler_plot_data.t, self.zeros, 'r--', label=r'$e=0$', lw=3)
+        self.plots_part_2[0].plot(self.euler_plot_data.t, e_euler_x, 'g', label=r'$x_{error}-{\rm euler}$')
+        self.plots_part_2[0].plot(self.pid_plot_data.t, e_pid_x, 'b', label=r'$x_{error}-{\rm pid}$')
+
+        self.plots_part_2[1].plot(self.euler_plot_data.t, self.zeros, 'r--', label=r'$e=0$', lw=3)
+        self.plots_part_2[1].plot(self.euler_plot_data.t, e_euler_y, 'g', label=r'$y_{error}-{\rm euler}$')
+        self.plots_part_2[1].plot(self.pid_plot_data.t, e_pid_y, 'b', label=r'$y_{error}-{\rm pid}$')
+
+        self.plots_part_2[2].plot(self.euler_plot_data.t, self.zeros, 'r--', label=r'$e=0$', lw=3)
+        self.plots_part_2[2].plot(self.euler_plot_data.t, e_euler_theta, 'g', label=r'$\theta_{error}-{\rm euler}$')
+        self.plots_part_2[2].plot(self.pid_plot_data.t, e_pid_theta, 'b', label=r'$\theta_{error}-{\rm pid}$')
+
