@@ -172,3 +172,7 @@ class PaperPlotter(Plotter):
         e_pid_y = get_error(self.pid_plot_data.y_ref, self.pid_plot_data.y)
         e_pid_theta = get_error(self.pid_plot_data.theta_ref, self.pid_plot_data.theta)
 
+        self.plots_part_0.plot(self.euler_plot_data.x_ref, self.euler_plot_data.y_ref, 'r--', label=r'${\rm reference}$', lw=3)
+        self.plots_part_0.plot(self.euler_plot_data.x, self.euler_plot_data.y, 'g', label=r'${\rm euler}$')
+        self.plots_part_0.plot(self.pid_plot_data.x, self.pid_plot_data.y, 'b', label=r'${\rm pid}$')
+
