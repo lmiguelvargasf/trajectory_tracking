@@ -7,7 +7,7 @@ from geometry_msgs.msg import Twist
 
 from constants import DELTA_T, STEPS
 from controller import create_controller
-from plotter import SimulationPlotter
+from plotter.simulation_plotter import SimulationPlotter
 
 
 def get_pose(message):
