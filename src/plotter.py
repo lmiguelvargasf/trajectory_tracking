@@ -7,7 +7,7 @@ from errno import EEXIST
 from os import makedirs
 from os.path import exists, dirname
 
-from constants import STEPS, DELTA_T, CONTROLLER, PATH
+from constants import STEPS, DELTA_T, CONTROLLER, PATH_TO_EXPORT_DATA
 from trajectory import create_trajectory
 
 
@@ -119,8 +119,8 @@ class SimulationPlotter(Plotter):
         plt.show()
 
     def export_results(self):
-        for file_name, a_list in self.file_array_name.items():
-            self.export_list(PATH + file_name, a_list)
+        for file_name, a_list in self.plot_data.file_array_name.items():
+            self.export_list(PATH_TO_EXPORT_DATA + file_name, a_list)
 
     def export_list(self, path_to_file, a_list):
         if not exists(dirname(path_to_file)):
