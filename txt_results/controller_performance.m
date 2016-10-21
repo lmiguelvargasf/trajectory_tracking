@@ -48,10 +48,9 @@ for i = 1:size(controllers, 1)
             ita = ITAE(error, t);
             itse = ITSE(error, t);
 
-            temp_axis(axis) = Performance(ise, iae, ita, itse);
-            temp_performance_axis = temp_axis(axis);
+            temp_perf_axis(axis) = Performance(ise, iae, ita, itse);
+            temp_performance_axis = temp_perf_axis(axis);
             
-            results(strcat(controller(1), trajectory(1), axis, '-', 'iae'))...
                 = temp_performance_axis.IAE.compute_integral();
             
             results(strcat(controller(1), trajectory(1), axis, '-', 'ise'))...
