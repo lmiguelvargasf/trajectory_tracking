@@ -32,16 +32,17 @@ for i = 1:size(controllers, 1)
             
             t = temp_sim_trajectory.data.t;
             
-            if strcmp(axis, 'x')
-                reference = temp_simulation.data.x_ref;
-                actual = temp_simulation.data.x;
-            else
-                reference = temp_simulation.data.y_ref;
-                actual = temp_simulation.data.y;
+            switch axis
+                case 'x'
+                    reference = temp_sim_trajectory.data.x_ref;
+                    actual = temp_sim_trajectory.data.x;
+                case 'y'
+                    reference = temp_sim_trajectory.data.y_ref;
+                    actual = temp_sim_trajectory.data.y;
             end
-            
+
             error = Error(reference, actual);
-            
+
             ise = ISE(error, t);
             iae = IAE(error, t);
             ita = ITAE(error, t);
