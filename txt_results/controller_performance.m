@@ -11,11 +11,11 @@ performances = containers.Map;
 results = containers.Map;
 
 for i = 1:size(controllers, 1)
-    simulations(char(controllers(i))) = containers.Map;
-    performances(char(controllers(i))) = containers.Map;
+    controller = char(controllers(i));
+    simulations(controller) = containers.Map;
+    performances(controller) = containers.Map;
 
     for j = 1:size(trajectories,1)
-        controller = char(controllers(i));
         trajectory = char(trajectories(j));
 
         temp_controller = simulations(controller);
