@@ -18,19 +18,19 @@ for i = 1:size(controllers, 1)
     for j = 1:size(trajectories,1)
         trajectory = char(trajectories(j));
 
-        temp_controller = simulations(controller);
-        temp_controller(trajectory) = ...
+        temp_sim_controller = simulations(controller);
+        temp_sim_controller(trajectory) = ...
             Simulation(controller, trajectory);
-        temp_simulation = temp_controller(trajectory);
+        temp_sim_trajectory = temp_sim_controller(trajectory);
         
-        temp_performance = performances(controller);
-        temp_performance(trajectory) = containers.Map;
-        temp_axis = temp_performance(trajectory);
-        
+        temp_perf_controller = performances(controller);
+        temp_perf_controller(trajectory) = containers.Map;
+        temp_perf_axis = temp_perf_controller(trajectory);
+
         for k = 1:size(axes, 1)
             axis = char(axes(k));
             
-            t = temp_simulation.data.t;
+            t = temp_sim_trajectory.data.t;
             
             if strcmp(axis, 'x')
                 reference = temp_simulation.data.x_ref;
