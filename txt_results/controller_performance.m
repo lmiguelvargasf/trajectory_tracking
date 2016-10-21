@@ -1,3 +1,6 @@
+clear;
+clc;
+
 controllers = cellstr(['euler'; 'pid  ']);
 trajectories = cellstr(['linear  '; 'circular'; 'squared ']);
 axes = cellstr(['x'; 'y']);
