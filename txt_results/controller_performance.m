@@ -1,3 +1,6 @@
+clear;
+clc;
+
 controllers = cellstr(['euler'; 'pid  ']);
 trajectories = cellstr(['linear  '; 'circular'; 'squared ']);
 axes = cellstr(['x'; 'y']);
@@ -8,55 +11,58 @@ performances = containers.Map;
 results = containers.Map;
 
 for i = 1:size(controllers, 1)
-    simulations(char(controllers(i))) = containers.Map;
-    performances(char(controllers(i))) = containers.Map;
+    controller = char(controllers(i));
+    simulations(controller) = containers.Map;
+    performances(controller) = containers.Map;
 
     for j = 1:size(trajectories,1)
-        controller = char(controllers(i));
         trajectory = char(trajectories(j));
 
-        temp_controller = simulations(controller);
-        temp_controller(trajectory) = ...
+        temp_sim_controller = simulations(controller);
+        temp_sim_controller(trajectory) = ...
             Simulation(controller, trajectory);
-        temp_simulation = temp_controller(trajectory);
+        temp_sim_trajectory = temp_sim_controller(trajectory);
         
-        temp_performance = performances(controller);
-        temp_performance(trajectory) = containers.Map;
-        temp_axis = temp_performance(trajectory);
-        
+        temp_perf_controller = performances(controller);
+        temp_perf_controller(trajectory) = containers.Map;
+        temp_perf_axis = temp_perf_controller(trajectory);
+
         for k = 1:size(axes, 1)
             axis = char(axes(k));
             
-            t = temp_simulation.data.t;
+            t = temp_sim_trajectory.data.t;
             
-            if strcmp(axis, 'x')
-                reference = temp_simulation.data.x_ref;
-                actual = temp_simulation.data.x;
-            else
-                reference = temp_simulation.data.y_ref;
-                actual = temp_simulation.data.y;
+            switch axis
+                case 'x'
+                    reference = temp_sim_trajectory.data.x_ref;
+                    actual = temp_sim_trajectory.data.x;
+                case 'y'
+                    reference = temp_sim_trajectory.data.y_ref;
+                    actual = temp_sim_trajectory.data.y;
             end
-            
+
             error = Error(reference, actual);
-            
+
             ise = ISE(error, t);
             iae = IAE(error, t);
             ita = ITAE(error, t);
             itse = ITSE(error, t);
 
-            temp_axis(axis) = Performance(ise, iae, ita, itse);
-            temp_performance_axis = temp_axis(axis);
+            temp_perf_axis(axis) = Performance(ise, iae, ita, itse);
+            temp_performance_axis = temp_perf_axis(axis);
             
-            results(strcat(controller(1), trajectory(1), axis, '-', 'iae'))...
+            prefix_key = strcat(controller(1), trajectory(1), axis, '-');
+
+            results(strcat(prefix_key, 'iae'))...
                 = temp_performance_axis.IAE.compute_integral();
             
-            results(strcat(controller(1), trajectory(1), axis, '-', 'ise'))...
+            results(strcat(prefix_key, 'ise'))...
                 = temp_performance_axis.ISE.compute_integral();
             
-            results(strcat(controller(1), trajectory(1), axis, '-', 'itae'))...
+            results(strcat(prefix_key, 'itae'))...
                 = temp_performance_axis.ITAE.compute_integral();
             
-            results(strcat(controller(1), trajectory(1), axis, '-', 'itse'))...
+            results(strcat(prefix_key, 'itse'))...
                 = temp_performance_axis.ITSE.compute_integral();
         end
     end
