@@ -1,9 +1,9 @@
 # trajectory_tracking
 This is a ROS application to test trajectory tracking algorithms for mobile robots using Gazebo as simulator.
-The robot that has been used for this project is [Turtlebot 2][1] which is an affordable mobile robot widely used for research.
-People who are interested can test these algorithms in a real robot.
+The robot that has been used for this project is [Turtlebot 2][1] which is an affordable mobile robot widely used for
+research.
 
-The algorithms that have been used so far are:
+Algorithms that have been used and are working properly so far:
 * Numerical method controller using Euler's approximation.
 * PID controller
 
@@ -11,6 +11,52 @@ These algorithms have been tested, and are properly working for the following tr
 * Linear Trajectory
 * Circular Trajectory
 * Squared Trajectory
+
+## Installation
+Before cloning this repository, you should install ROS and Gazebo. It is highly recommended to use Ubuntu as OS.
+
+### Installing ROS
+In order to install ROS, you can follow the instruction in [this tutorial][8].
+The ROS version used in this project is `kinect`.
+
+### Installing Gazebo
+In order to install Gazebo, you can follow the instructions provided in [this tutorial][9].
+
+### Cloning repository
+
+Once you have installed ROS and Gazebo, you can clone this repository:
+
+```
+$ git clone https://github.com/bit0001/trajectory_tracking.git
+```
+
+## Usage
+First, you need to source the workspace, and execute a launch file:
+
+```
+$ source turtlebot_ws/devel/setup.bash
+$ roslaunch trajectory_tracking turtlebot_world.launch
+```
+
+This will open Gazebo in a world where a turtlebot is shown in the middle of a room.
+Now, open up a new terminal, source again the workspace, and run the file `trajectory_tracking twist.py`:
+
+```
+$ source turtlebot_ws/devel/setup.bash
+$ rosrun trajectory_tracking twist.py cmd_vel:=cmd_vel_mux/input/teleop
+```
+
+Finally, to run an experiment, open a new terminal, source the workspace and run the file `control.py`:
+```
+$ source turtlebot_ws/devel/setup.bash
+$ rosrun trajectory_tracking control.py
+```
+
+By default, turtlebot will follow a linear trajectory using the numerical method controller, but you can change it
+by changing the values of `TRAJECTORY` and `CONTROLLER` constants inside `src/constants.py`.
+The possible values that `CONTROLLER` can take are: `'pid'` and `'euler'`, while the possible values of `TRAJECTORY` are
+`'linear'`, `'circular'`, and `'squared'`.
+
 
 ### Trajectories
 Three trajectories have been used to test each controller.
@@ -100,3 +146,5 @@ set to 0.00000 in **_worlds/room.world_**.
 [5]: https://www.youtube.com/watch?v=3AXAvi5Tdq8
 [6]: https://www.youtube.com/watch?v=ZDh1iNf1wvU
 [7]: https://www.youtube.com/watch?v=nGBi5b4sPTA
+[8]: http://wiki.ros.org/ROS/Installation
+[9]: http://gazebosim.org/tutorials?cat=install
