@@ -58,7 +58,7 @@ The possible values that `CONTROLLER` can take are: `'pid'` and `'euler'`, while
 `'linear'`, `'circular'`, and `'squared'`.
 
 
-### Trajectories
+## Trajectories
 Three trajectories have been used to test each controller.
 
 #### Linear Trajectory
