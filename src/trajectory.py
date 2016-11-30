@@ -14,6 +14,9 @@ def create_trajectory():
         return SquaredTrajectory(2.0, 0.01, 0.01)
 
 
+class NegativeTimeException(Exception):
+    pass
+
 class Trajectory:
     def __init__(self):
         self.position = Point()
@@ -23,7 +26,7 @@ class Trajectory:
 
 
 class LinearTrajectory(Trajectory):
-    def __init__(self, v_x, x_0, v_y, y_0):
+    def __init__(self, v_x, x_0=0, v_y=0, y_0=0):
         Trajectory.__init__(self)
         self.v_x = v_x
         self.v_y = v_y
@@ -31,6 +34,10 @@ class LinearTrajectory(Trajectory):
         self.y_0 = y_0
 
     def get_position_at(self, t):
+        if t < 0:
+            raise NegativeTimeException()
+
+
         self.position.x = self.v_x * t + self.x_0
         self.position.y = self.v_y * t + self.y_0
 
