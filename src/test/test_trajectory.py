@@ -3,7 +3,7 @@ import unittest
 
 from geometry_msgs.msg import Point
 
-from trajectory import LinearTrajectory, NegativeTimeException, CircularTrajectory, Trajectory, SquaredTrajectory
+from trajectory.trajectory import LinearTrajectory, NegativeTimeException, CircularTrajectory, Trajectory, SquaredTrajectory
 
 
 class TrajectoryTest(unittest.TestCase):
