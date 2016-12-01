@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 from constants import TRAJECTORY, SIMULATION_TIME_IN_SECONDS
+from trajectory.circular_trajectory import CircularTrajectory
 from trajectory.linear_trajectory import LinearTrajectory
-from trajectory.trajectory import CircularTrajectory, SquaredTrajectory
+from trajectory.trajectory import SquaredTrajectory
 
 
 def create_trajectory():
