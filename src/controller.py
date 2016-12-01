@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-from math import sin, cos, atan2
+from math import sin, cos, atan2, pi
 
 from constants import K_X, DELTA_T, K_Y, K_THETA, K_P_V, K_I_V, K_D_V, K_P_W, K_I_W, K_D_W, CONTROLLER, MAX_V, MAX_W, \
     TRAJECTORY, SIMULATION_TIME_IN_SECONDS
@@ -49,7 +49,19 @@ class EulerMethodController(Controller):
         return self.y_ref_n_plus_1 - K_Y * (self.y_ref_n - self.y_n) - self.y_n
 
     def get_delta_theta_n(self):
-        return self.theta_ez_n - K_THETA * (self.theta_ez_n_minus_1 - self.theta_n_minus_1) - self.theta_n_minus_1
+        self.theta_ez_n = get_angle_between_0_and_2_pi(self.theta_ez_n)
+        self.theta_n = get_angle_between_0_and_2_pi(self.theta_n)
+        self.theta_ez_n_minus_1 = get_angle_between_0_and_2_pi(self.theta_ez_n_minus_1)
+
+        alpha = self.theta_ez_n - K_THETA * (self.theta_ez_n_minus_1 - self.theta_n) - self.theta_n
+
+        if alpha == 2 * pi:
+            alpha = 0
+
+        if abs(alpha) > pi:
+            alpha = -(2 * pi - alpha)
+
+        return alpha
 
     def compute_theta_ez_n(self):
          return atan2(self.get_delta_y_n(), self.get_delta_x_n())
