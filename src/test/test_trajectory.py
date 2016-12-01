@@ -4,7 +4,8 @@ import unittest
 from geometry_msgs.msg import Point
 
 from trajectory.circular_trajectory import CircularTrajectory
-from trajectory.trajectory import NegativeTimeException, Trajectory, SquaredTrajectory
+from trajectory.squared_trajectory import SquaredTrajectory
+from trajectory.trajectory import NegativeTimeException, Trajectory
 from trajectory.linear_trajectory import LinearTrajectory
 
 

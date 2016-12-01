@@ -2,7 +2,7 @@
 from constants import TRAJECTORY, SIMULATION_TIME_IN_SECONDS
 from trajectory.circular_trajectory import CircularTrajectory
 from trajectory.linear_trajectory import LinearTrajectory
-from trajectory.trajectory import SquaredTrajectory
+from trajectory.squared_trajectory import SquaredTrajectory
 
 
 def create_trajectory():
