@@ -2,16 +2,6 @@
 import math
 
 from geometry_msgs.msg import Point
-from constants import SIMULATION_TIME_IN_SECONDS, TRAJECTORY
-
-
-def create_trajectory():
-    if TRAJECTORY == 'linear':
-        return LinearTrajectory(0.05, 0.01, 0.05, 0.01)
-    elif TRAJECTORY == 'circular':
-        return CircularTrajectory(2.0, SIMULATION_TIME_IN_SECONDS)
-    elif TRAJECTORY == 'squared':
-        return SquaredTrajectory(2.0, SIMULATION_TIME_IN_SECONDS, 0.01, 0.01)
 
 
 class NegativeTimeException(Exception):
@@ -24,23 +14,6 @@ class Trajectory:
     def get_position_at(self, t):
         if t < 0:
             raise NegativeTimeException()
-
-
-class LinearTrajectory(object, Trajectory):
-    def __init__(self, v_x, x_0=0, v_y=0, y_0=0):
-        Trajectory.__init__(self)
-        self.v_x = v_x
-        self.v_y = v_y
-        self.x_0 = x_0
-        self.y_0 = y_0
-
-    def get_position_at(self, t):
-        super(LinearTrajectory, self).get_position_at(t)
-
-        self.position.x = self.v_x * t + self.x_0
-        self.position.y = self.v_y * t + self.y_0
-
-        return self.position
 
 class CircularTrajectory(object, Trajectory):
     def __init__(self, radius, period, x_0=0, y_0=0):
