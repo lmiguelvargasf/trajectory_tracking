@@ -3,7 +3,10 @@ import unittest
 
 from geometry_msgs.msg import Point
 
-from trajectory import LinearTrajectory, NegativeTimeException, CircularTrajectory, Trajectory, SquaredTrajectory
+from trajectory.circular_trajectory import CircularTrajectory
+from trajectory.squared_trajectory import SquaredTrajectory
+from trajectory.trajectory import NegativeTimeException, Trajectory
+from trajectory.linear_trajectory import LinearTrajectory
 
 
 class TrajectoryTest(unittest.TestCase):
@@ -42,7 +45,6 @@ class CircularTrajectoryTest(unittest.TestCase):
     def test_given_circular_trajectory_centered_at_origin_when_getting_position_then_position_is_returned(self):
         self.expected_position.x = 5
         self.expected_position.y = 0
-        self.trajectory = CircularTrajectory(5, 4)
         self.assertPositionAlmostEqual(self.expected_position, self.trajectory.get_position_at(1), 0.01)
 
     def test_given_circular_trajectory_not_centered_at_origin_when_getting_position_then_position_is_returned(self):

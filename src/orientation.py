@@ -13,7 +13,9 @@ def get_euler_orientation(orientation):
 
     return euler_from_quaternion(quaternion)
 
-def get_angle_between_0_and_2_pi(theta):
-    if -pi <= theta < 0:
-        return 2 * pi + theta
-    return theta
+def get_angle_between_0_and_2_pi(angle):
+    angle %= 2 * pi
+
+    if -pi <= angle < 0:
+        return 2 * pi + angle
+    return angle
