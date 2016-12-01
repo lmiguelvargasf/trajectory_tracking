@@ -67,7 +67,7 @@ class EulerMethodController(Controller):
         self.theta_n_minus_1 = self.theta_n
         self.theta_ref_n = self.theta_ez_n
 
-        if TRAJECTORY == 'circular' or TRAJECTORY == 'squared':
+        if TRAJECTORY == 'circular' or TRAJECTORY == 'squared' or TRAJECTORY == 'astroid':
             if not 0 <= self.i * DELTA_T < SIMULATION_TIME_IN_SECONDS / 4 + 10 * DELTA_T:
                 self.theta_ref_n = get_angle_between_0_and_2_pi(self.theta_ez_n)
                 self.theta_n = get_angle_between_0_and_2_pi(self.theta_n)
