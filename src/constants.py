@@ -31,7 +31,7 @@ elif TRAJECTORY == 'squared':
     MAX_W = 1.20
 elif TRAJECTORY == 'astroid':
     SIMULATION_TIME_IN_SECONDS = 120.0
-    MAX_V = 0.11
+    MAX_V = 0.105
     MAX_W = 1.25
 
 DELTA_T = 0.1 # this is the sampling time
