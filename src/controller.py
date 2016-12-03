@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-from math import sin, cos, atan2
+from math import sin, cos, atan2, pi
 
 from constants import K_X, DELTA_T, K_Y, K_THETA, K_P_V, K_I_V, K_D_V, K_P_W, K_I_W, K_D_W, CONTROLLER, MAX_V, MAX_W, \
     TRAJECTORY, SIMULATION_TIME_IN_SECONDS
@@ -49,7 +49,23 @@ class EulerMethodController(Controller):
         return self.y_ref_n_plus_1 - K_Y * (self.y_ref_n - self.y_n) - self.y_n
 
     def get_delta_theta_n(self):
-        return self.theta_ez_n - K_THETA * (self.theta_ez_n_minus_1 - self.theta_n_minus_1) - self.theta_n_minus_1
+        self.theta_ez_n = get_angle_between_0_and_2_pi(self.theta_ez_n)
+        self.theta_n = get_angle_between_0_and_2_pi(self.theta_n)
+        self.theta_ez_n_minus_1 = get_angle_between_0_and_2_pi(self.theta_ez_n_minus_1)
+
+        epsilon = 4 * DELTA_T
+
+        alpha = self.theta_ez_n - K_THETA * (self.theta_ez_n_minus_1 - self.theta_n) - self.theta_n
+
+        if alpha == 2 * pi:
+            alpha = 0
+
+        if TRAJECTORY == 'astroid' and (abs(SIMULATION_TIME_IN_SECONDS / 4 - self.i * DELTA_T) < epsilon or \
+                        abs(SIMULATION_TIME_IN_SECONDS / 2 - self.i * DELTA_T) < epsilon or \
+                        abs(3 * SIMULATION_TIME_IN_SECONDS / 4 - self.i * DELTA_T) < epsilon):
+            alpha = abs(alpha) * 2
+
+        return alpha
 
     def compute_theta_ez_n(self):
          return atan2(self.get_delta_y_n(), self.get_delta_x_n())
@@ -67,7 +83,7 @@ class EulerMethodController(Controller):
         self.theta_n_minus_1 = self.theta_n
         self.theta_ref_n = self.theta_ez_n
 
-        if TRAJECTORY == 'circular' or TRAJECTORY == 'squared':
+        if TRAJECTORY == 'circular' or TRAJECTORY == 'squared' or TRAJECTORY == 'astroid':
             if not 0 <= self.i * DELTA_T < SIMULATION_TIME_IN_SECONDS / 4 + 10 * DELTA_T:
                 self.theta_ref_n = get_angle_between_0_and_2_pi(self.theta_ez_n)
                 self.theta_n = get_angle_between_0_and_2_pi(self.theta_n)

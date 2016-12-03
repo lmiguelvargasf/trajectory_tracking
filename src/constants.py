@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-TRAJECTORY = 'linear'
+TRAJECTORY = 'astroid'
 CONTROLLER = 'euler'
 
 # control constants
@@ -29,6 +29,10 @@ elif TRAJECTORY == 'squared':
     SIMULATION_TIME_IN_SECONDS = 160.0
     MAX_V = 0.055
     MAX_W = 1.20
+elif TRAJECTORY == 'astroid':
+    SIMULATION_TIME_IN_SECONDS = 120.0
+    MAX_V = 0.105
+    MAX_W = 1.25
 
 DELTA_T = 0.1 # this is the sampling time
 STEPS = int(SIMULATION_TIME_IN_SECONDS / DELTA_T)
