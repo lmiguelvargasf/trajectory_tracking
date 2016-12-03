@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 from math import sin, cos, atan2, pi
 
+import rospy
+
 from constants import K_X, DELTA_T, K_Y, K_THETA, K_P_V, K_I_V, K_D_V, K_P_W, K_I_W, K_D_W, CONTROLLER, MAX_V, MAX_W, \
     TRAJECTORY, SIMULATION_TIME_IN_SECONDS
 from orientation import get_euler_orientation, get_angle_between_0_and_2_pi
@@ -52,6 +54,16 @@ class EulerMethodController(Controller):
         self.theta_ez_n = get_angle_between_0_and_2_pi(self.theta_ez_n)
         self.theta_n = get_angle_between_0_and_2_pi(self.theta_n)
         self.theta_ez_n_minus_1 = get_angle_between_0_and_2_pi(self.theta_ez_n_minus_1)
+
+        epsilon = 3
+
+        if abs(SIMULATION_TIME_IN_SECONDS / 4 - self.i * DELTA_T) < epsilon or \
+                        abs(SIMULATION_TIME_IN_SECONDS / 2 - self.i * DELTA_T) < epsilon or \
+                        abs(3 * SIMULATION_TIME_IN_SECONDS / 4 - self.i * DELTA_T) < epsilon:
+            rospy.loginfo("\ntheta: %s\ntheta_ez: %s\n",
+                          self.theta_n * 180 / pi,
+                          self.theta_ez_n * 180 / pi)
+
 
         alpha = self.theta_ez_n - K_THETA * (self.theta_ez_n_minus_1 - self.theta_n) - self.theta_n
 
