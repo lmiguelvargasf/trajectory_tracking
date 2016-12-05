@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-TRAJECTORY = 'astroid'
+TRAJECTORY = 'lemniscate'
 CONTROLLER = 'euler'
 
 # control constants
@@ -32,6 +32,10 @@ elif TRAJECTORY == 'squared':
 elif TRAJECTORY == 'astroid':
     SIMULATION_TIME_IN_SECONDS = 120.0
     MAX_V = 0.105
+    MAX_W = 1.25
+elif TRAJECTORY == 'lemniscate':
+    SIMULATION_TIME_IN_SECONDS = 120.0
+    MAX_V = 0.125
     MAX_W = 1.25
 
 DELTA_T = 0.1 # this is the sampling time

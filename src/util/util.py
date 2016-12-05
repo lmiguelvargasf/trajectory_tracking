@@ -2,6 +2,7 @@
 from constants import TRAJECTORY, SIMULATION_TIME_IN_SECONDS
 from trajectory.astroid_trajectory import AstroidTrajectory
 from trajectory.circular_trajectory import CircularTrajectory
+from trajectory.lemniscate_trajectory import LemniscateTrajectory
 from trajectory.linear_trajectory import LinearTrajectory
 from trajectory.squared_trajectory import SquaredTrajectory
 
@@ -15,3 +16,5 @@ def create_trajectory():
         return SquaredTrajectory(2.0, SIMULATION_TIME_IN_SECONDS, 0.01, 0.01)
     elif TRAJECTORY == 'astroid':
         return AstroidTrajectory(2.0, SIMULATION_TIME_IN_SECONDS)
+    elif TRAJECTORY == 'lemniscate':
+        return LemniscateTrajectory(2.0, SIMULATION_TIME_IN_SECONDS)
