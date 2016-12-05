@@ -41,4 +41,3 @@ class LemniscateTrajectoryTest(unittest.TestCase):
     def assertPositionAlmostEqual(self, expected, actual, delta):
         self.assertAlmostEqual(expected.x, actual.x, delta=delta)
         self.assertAlmostEqual(expected.y, actual.y, delta=delta)
-
