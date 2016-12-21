@@ -5,7 +5,7 @@ import time
 from gazebo_msgs.msg import ModelStates
 from geometry_msgs.msg import Twist
 
-from constants import DELTA_T, STEPS, CONTROLLER
+from constants import DELTA_T, STEPS, CONTROLLER, K_X, K_Y, K_THETA
 from controller.euler_controller import EulerMethodController
 from controller.pid_controller import PIDController
 from plotter.simulation_plotter import SimulationPlotter
@@ -15,7 +15,9 @@ from util.util import create_trajectory
 def create_controller():
     trajectory = create_trajectory()
     if CONTROLLER == 'euler':
-        return EulerMethodController(trajectory)
+        return EulerMethodController(
+            trajectory,
+            {'x': K_X, 'y': K_Y, 'theta': K_THETA})
     elif CONTROLLER == 'pid':
         return PIDController(trajectory)
 

@@ -2,15 +2,17 @@
 from math import atan2, sin, pi
 from math import cos
 
-from constants import K_X, DELTA_T, K_THETA, SIMULATION_TIME_IN_SECONDS
-from constants import K_Y
+from constants import DELTA_T, SIMULATION_TIME_IN_SECONDS
 from orientation import get_angle_between_0_and_2_pi
 from .controller import Controller
 
 
 class EulerMethodController(Controller):
-    def __init__(self, trajectory):
+    def __init__(self, trajectory, control_constants):
         Controller.__init__(self, trajectory)
+        self.K_X = control_constants['x']
+        self.K_Y = control_constants['y']
+        self.K_THETA = control_constants['theta']
         self.theta_ez_n_minus_1 = 0
         self.theta_n_minus_1 = 0
 
@@ -19,10 +21,10 @@ class EulerMethodController(Controller):
         self.y_ref_n_plus_1 = reference.y
 
     def get_delta_x_n(self):
-        return self.x_ref_n_plus_1 - K_X * (self.x_ref_n - self.x_n) - self.x_n
+        return self.x_ref_n_plus_1 - self.K_X * (self.x_ref_n - self.x_n) - self.x_n
 
     def get_delta_y_n(self):
-        return self.y_ref_n_plus_1 - K_Y * (self.y_ref_n - self.y_n) - self.y_n
+        return self.y_ref_n_plus_1 - self.K_Y * (self.y_ref_n - self.y_n) - self.y_n
 
     def get_delta_theta_n(self):
         self.theta_ez_n = get_angle_between_0_and_2_pi(self.theta_ez_n)
@@ -31,7 +33,7 @@ class EulerMethodController(Controller):
 
         epsilon = 4 * DELTA_T
 
-        alpha = self.theta_ez_n - K_THETA * (self.theta_ez_n_minus_1 - self.theta_n) - self.theta_n
+        alpha = self.theta_ez_n - self.K_THETA * (self.theta_ez_n_minus_1 - self.theta_n) - self.theta_n
 
         if alpha == 2 * pi:
             alpha = 0
