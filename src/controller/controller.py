@@ -4,8 +4,10 @@ from orientation import get_euler_orientation
 
 
 class Controller:
-    def __init__(self, trajectory):
+    def __init__(self, trajectory, simulation_data):
         self.trajectory = trajectory
+        self.simulation_time = simulation_data['time']
+        self.delta = simulation_data['delta']
         self.theta_ref_n = 0
 
     def set_current_orientation(self, orientation):

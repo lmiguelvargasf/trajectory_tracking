@@ -7,13 +7,11 @@ from .controller import Controller
 
 
 class EulerMethodController(Controller):
-    def __init__(self, trajectory, control_constants, simulation_data):
-        Controller.__init__(self, trajectory)
+    def __init__(self, trajectory, simulation_data, control_constants):
+        Controller.__init__(self, trajectory, simulation_data)
         self.K_X = control_constants['x']
         self.K_Y = control_constants['y']
         self.K_THETA = control_constants['theta']
-        self.delta = simulation_data['delta']
-        self.simulation_time = simulation_data['time']
         self.theta_ez_n_minus_1 = 0
         self.theta_n_minus_1 = 0
 

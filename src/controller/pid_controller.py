@@ -2,14 +2,13 @@
 from math import atan2, sin
 from math import cos
 
-from constants import MAX_V, MAX_W, DELTA_T, SIMULATION_TIME_IN_SECONDS
 from orientation import get_angle_between_0_and_2_pi
 from .controller import Controller
 
 
 class PIDController(Controller):
-    def __init__(self, trajectory, control_constants):
-        Controller.__init__(self, trajectory)
+    def __init__(self, trajectory, simulation_data, control_constants, speed_limits):
+        Controller.__init__(self, trajectory, simulation_data)
         self.K_P_V = control_constants['kpv']
         self.K_I_V = control_constants['kiv']
         self.K_D_V = control_constants['kdv']
@@ -26,14 +25,14 @@ class PIDController(Controller):
         self.e_v_nm2 = 0
         self.e_w_nm2 = 0
 
-        self.MAX_V = MAX_V
-        self.MAX_W = MAX_W
+        self.MAX_V = speed_limits['linear']
+        self.MAX_W = speed_limits['angular']
 
     def compute_control_actions(self, pose, twist, i):
         self.i = i
         self.set_current_orientation(pose.orientation)
         self.set_current_position(pose.position)
-        self.set_current_reference(self.trajectory.get_position_at((i + 1) * DELTA_T))
+        self.set_current_reference(self.trajectory.get_position_at((i + 1) * self.delta))
 
         w = self.get_angular_speed(twist)
         v = self.get_linear_speed(twist)
@@ -83,15 +82,15 @@ class PIDController(Controller):
         return e_v, e_w
 
     def compute_w_pid_factors(self):
-        a_w = self.K_P_W + self.K_I_W * DELTA_T / 2 + self.K_D_W / DELTA_T
-        b_w = - self.K_P_W + self.K_I_W * DELTA_T / 2 - 2 * self.K_D_W / DELTA_T
-        c_w = self.K_D_W / DELTA_T
+        a_w = self.K_P_W + self.K_I_W * self.delta / 2 + self.K_D_W / self.delta
+        b_w = - self.K_P_W + self.K_I_W * self.delta / 2 - 2 * self.K_D_W / self.delta
+        c_w = self.K_D_W / self.delta
         return a_w, b_w, c_w
 
     def compute_v_pid_factors(self):
-        a_v = self.K_P_V + self.K_I_V * DELTA_T / 2 + self.K_D_V / DELTA_T
-        b_v = -self.K_P_V + self.K_I_V * DELTA_T / 2 - 2 * self.K_D_V / DELTA_T
-        c_v = self.K_D_V / DELTA_T
+        a_v = self.K_P_V + self.K_I_V * self.delta / 2 + self.K_D_V / self.delta
+        b_v = -self.K_P_V + self.K_I_V * self.delta / 2 - 2 * self.K_D_V / self.delta
+        c_v = self.K_D_V / self.delta
         return a_v, b_v, c_v
 
     def limit_angular_speed_reference(self, w_ref_n):
@@ -105,15 +104,15 @@ class PIDController(Controller):
         theta_ref = atan2(self.y_ref_n - self.y_n, self.x_ref_n - self.x_n)
 
         if self.trajectory.get_name()  in ('squared', 'circular'):
-            if not (0 <= self.i * DELTA_T <= SIMULATION_TIME_IN_SECONDS / 4):
+            if not (0 <= self.i * self.delta <= self.simulation_time / 4):
                 theta_ref = get_angle_between_0_and_2_pi(theta_ref)
                 self.theta_n = get_angle_between_0_and_2_pi(self.theta_n)
 
-            if self.trajectory.get_name() == 'circular' and (self.i + 1) * DELTA_T == SIMULATION_TIME_IN_SECONDS:
+            if self.trajectory.get_name() == 'circular' and (self.i + 1) * self.delta == self.simulation_time:
                 theta_ref = atan2(sin(theta_ref), cos(theta_ref))
                 self.theta_n = atan2(sin(self.theta_n), cos(self.theta_n))
 
-        w_ref_n = (theta_ref - self.theta_n) / DELTA_T
+        w_ref_n = (theta_ref - self.theta_n) / self.delta
 
         self.theta_ref_n = theta_ref
 
@@ -127,8 +126,8 @@ class PIDController(Controller):
         return v_ref_n
 
     def compute_linear_speed_reference(self):
-        v_x_ref = (self.x_ref_n - self.x_n) / DELTA_T
-        v_y_ref = (self.y_ref_n - self.y_n) / DELTA_T
+        v_x_ref = (self.x_ref_n - self.x_n) / self.delta
+        v_y_ref = (self.y_ref_n - self.y_n) / self.delta
         v_ref_n = (v_x_ref ** 2 + v_y_ref ** 2) ** 0.5
         return v_ref_n
 
