@@ -16,3 +16,6 @@ class AstroidTrajectory(object, Trajectory):
         self.position.y = self.radius * sin(2 * pi * t / self.period) ** 3
 
         return self.position
+
+    def get_name(self):
+        return str(AstroidTrajectory.__name__).replace('Trajectory', '').lower()

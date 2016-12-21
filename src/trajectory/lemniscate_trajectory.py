@@ -16,3 +16,6 @@ class LemniscateTrajectory(object, Trajectory):
         self.position.y = 2 * sqrt(2) * sin(2 * pi* t / self.period) * cos(2 * pi* t / self.period) / (sin(2 * pi * t / self.period) ** 2 + 1)
 
         return self.position
+
+    def get_name(self):
+        return str(LemniscateTrajectory.__name__).replace('Trajectory', '').lower()

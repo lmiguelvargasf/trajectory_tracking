@@ -18,3 +18,6 @@ class CircularTrajectory(object, Trajectory):
         self.position.y = -self.radius * cos(2 * pi * t / self.period) + self.y_0
 
         return self.position
+
+    def get_name(self):
+        return str(CircularTrajectory.__name__).replace('Trajectory', '').lower()

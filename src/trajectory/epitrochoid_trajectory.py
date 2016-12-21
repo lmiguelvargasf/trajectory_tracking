@@ -19,3 +19,6 @@ class EpitrochoidTrajectory(object, Trajectory):
         self.position.y = self.scale_factor * ((self.R + self.r) * sin(2 * pi * t/ self.period) - self.d * sin(((self.R + self.r) / self.r) * 2 * pi * t / self.period))
 
         return self.position
+
+    def get_name(self):
+        return str(EpitrochoidTrajectory.__name__).replace('Trajectory', '').lower()
