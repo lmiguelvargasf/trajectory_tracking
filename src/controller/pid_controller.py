@@ -2,22 +2,21 @@
 from math import atan2, sin
 from math import cos
 
-from constants import K_I_V, K_I_W, K_D_W, MAX_V, MAX_W, DELTA_T, SIMULATION_TIME_IN_SECONDS
-from constants import K_P_V, K_D_V, K_P_W
+from constants import MAX_V, MAX_W, DELTA_T, SIMULATION_TIME_IN_SECONDS
 from orientation import get_angle_between_0_and_2_pi
 from .controller import Controller
 
 
 class PIDController(Controller):
-    def __init__(self, trajectory):
+    def __init__(self, trajectory, control_constants):
         Controller.__init__(self, trajectory)
-        self.K_P_V = K_P_V
-        self.K_I_V = K_I_V
-        self.K_D_V = K_D_V
+        self.K_P_V = control_constants['kpv']
+        self.K_I_V = control_constants['kiv']
+        self.K_D_V = control_constants['kdv']
 
-        self.K_P_W = K_P_W
-        self.K_I_W = K_I_W
-        self.K_D_W = K_D_W
+        self.K_P_W = control_constants['kpw']
+        self.K_I_W = control_constants['kiw']
+        self.K_D_W = control_constants['kdw']
 
         self.v_c_nm1 = 0
         self.w_c_nm1 = 0

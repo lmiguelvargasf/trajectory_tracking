@@ -5,7 +5,8 @@ import time
 from gazebo_msgs.msg import ModelStates
 from geometry_msgs.msg import Twist
 
-from constants import DELTA_T, STEPS, CONTROLLER, K_X, K_Y, K_THETA, SIMULATION_TIME_IN_SECONDS
+from constants import DELTA_T, STEPS, CONTROLLER, K_X, K_Y, K_THETA, SIMULATION_TIME_IN_SECONDS, K_P_V, K_I_V, K_D_V, \
+    K_P_W, K_I_W, K_D_W
 from controller.euler_controller import EulerMethodController
 from controller.pid_controller import PIDController
 from plotter.simulation_plotter import SimulationPlotter
@@ -18,9 +19,13 @@ def create_controller():
         return EulerMethodController(
             trajectory,
             {'x': K_X, 'y': K_Y, 'theta': K_THETA},
-            {'delta': DELTA_T, 'time': SIMULATION_TIME_IN_SECONDS})
+            {'delta': DELTA_T, 'time': SIMULATION_TIME_IN_SECONDS}
+        )
     elif CONTROLLER == 'pid':
-        return PIDController(trajectory)
+        return PIDController(
+            trajectory,
+            {'kpv': K_P_V, 'kiv': K_I_V, 'kdv': K_D_V, 'kpw': K_P_W, 'kiw': K_I_W, 'kdw': K_D_W}
+        )
 
 
 def get_pose(message):
