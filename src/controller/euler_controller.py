@@ -10,8 +10,7 @@ from .controller import Controller
 
 class EulerMethodController(Controller):
     def __init__(self, trajectory):
-        Controller.__init__(self)
-        self.trajectory = trajectory
+        Controller.__init__(self, trajectory)
         self.theta_ez_n_minus_1 = 0
         self.theta_n_minus_1 = 0
 

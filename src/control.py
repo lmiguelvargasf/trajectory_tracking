@@ -13,10 +13,11 @@ from util.util import create_trajectory
 
 
 def create_controller():
+    trajectory = create_trajectory()
     if CONTROLLER == 'euler':
-        return EulerMethodController(create_trajectory())
+        return EulerMethodController(trajectory)
     elif CONTROLLER == 'pid':
-        return PIDController()
+        return PIDController(trajectory)
 
 
 def get_pose(message):

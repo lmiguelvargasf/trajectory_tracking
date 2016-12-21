@@ -10,8 +10,8 @@ from orientation import get_angle_between_0_and_2_pi
 
 
 class PIDController(Controller):
-    def __init__(self):
-        Controller.__init__(self)
+    def __init__(self, trajectory):
+        Controller.__init__(self, trajectory)
         self.K_P_V = K_P_V
         self.K_I_V = K_I_V
         self.K_D_V = K_D_V

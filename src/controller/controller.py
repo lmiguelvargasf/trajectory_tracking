@@ -1,12 +1,11 @@
 #!/usr/bin/env python
 
 from orientation import get_euler_orientation
-from util.util import create_trajectory
 
 
 class Controller:
-    def __init__(self):
-        self.trajectory = create_trajectory()
+    def __init__(self, trajectory):
+        self.trajectory = trajectory
         self.theta_ref_n = 0
 
     def set_current_orientation(self, orientation):
