@@ -5,9 +5,17 @@ import time
 from gazebo_msgs.msg import ModelStates
 from geometry_msgs.msg import Twist
 
-from constants import DELTA_T, STEPS
-from controller.controller import create_controller
+from constants import DELTA_T, STEPS, CONTROLLER
+from controller.euler_controller import EulerMethodController
+from controller.pid_controller import PIDController
 from plotter.simulation_plotter import SimulationPlotter
+
+
+def create_controller():
+    if CONTROLLER == 'euler':
+        return EulerMethodController()
+    elif CONTROLLER == 'pid':
+        return PIDController()
 
 
 def get_pose(message):
