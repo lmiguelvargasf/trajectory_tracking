@@ -6,7 +6,7 @@ from gazebo_msgs.msg import ModelStates
 from geometry_msgs.msg import Twist
 
 from constants import DELTA_T, STEPS
-from controller import create_controller
+from controller.controller import create_controller
 from plotter.simulation_plotter import SimulationPlotter
 
 
