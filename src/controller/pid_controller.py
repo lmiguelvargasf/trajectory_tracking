@@ -1,12 +1,11 @@
 #!/usr/bin/env python
 from math import atan2, sin
-
 from math import cos
 
-from constants import K_I_V, K_I_W, K_D_W, MAX_V, MAX_W, DELTA_T, TRAJECTORY, SIMULATION_TIME_IN_SECONDS
+from constants import K_I_V, K_I_W, K_D_W, MAX_V, MAX_W, DELTA_T, SIMULATION_TIME_IN_SECONDS
 from constants import K_P_V, K_D_V, K_P_W
-from .controller import Controller
 from orientation import get_angle_between_0_and_2_pi
+from .controller import Controller
 
 
 class PIDController(Controller):
@@ -106,12 +105,12 @@ class PIDController(Controller):
     def compute_angular_speed_reference(self):
         theta_ref = atan2(self.y_ref_n - self.y_n, self.x_ref_n - self.x_n)
 
-        if TRAJECTORY == 'squared' or TRAJECTORY == 'circular':
+        if self.trajectory.get_name()  in ('squared', 'circular'):
             if not (0 <= self.i * DELTA_T <= SIMULATION_TIME_IN_SECONDS / 4):
                 theta_ref = get_angle_between_0_and_2_pi(theta_ref)
                 self.theta_n = get_angle_between_0_and_2_pi(self.theta_n)
 
-            if TRAJECTORY == 'circular' and (self.i + 1) * DELTA_T == SIMULATION_TIME_IN_SECONDS:
+            if self.trajectory.get_name() == 'circular' and (self.i + 1) * DELTA_T == SIMULATION_TIME_IN_SECONDS:
                 theta_ref = atan2(sin(theta_ref), cos(theta_ref))
                 self.theta_n = atan2(sin(self.theta_n), cos(self.theta_n))
 
