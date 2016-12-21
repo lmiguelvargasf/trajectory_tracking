@@ -12,6 +12,9 @@ class LemniscateTrajectoryTest(unittest.TestCase):
         self.trajectory = LemniscateTrajectory(5, 4)
         self.expected_position = Point()
 
+    def test_when_getting_trajectory_name_then_lemniscate_is_returned(self):
+        self.assertEqual('lemniscate', self.trajectory.get_name())
+
     def test_given_lemniscate_trajectory_when_getting_position_after_0s_then_position_is_returned(self):
         self.expected_position.x = 2.8284
         self.expected_position.y = 0.0

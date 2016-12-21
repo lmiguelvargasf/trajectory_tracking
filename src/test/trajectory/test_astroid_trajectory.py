@@ -15,6 +15,8 @@ class AstroidTrajectoryTest(unittest.TestCase):
         self.expected_position = Point()
         self.trajectory = AstroidTrajectory(self.radius, self.period)
 
+    def test_when_getting_trajectory_name_then_astroid_is_returned(self):
+        self.assertEqual('astroid', self.trajectory.get_name())
 
     def test_when_creating_trajectory_the_radius_and_period_are_set(self):
         self.assertEqual(self.radius, self.trajectory.radius)

@@ -12,6 +12,9 @@ class CircularTrajectoryTest(unittest.TestCase):
         self.trajectory = CircularTrajectory(5, 4)
         self.expected_position = Point()
 
+    def test_when_getting_trajectory_name_then_circular_is_returned(self):
+        self.assertEqual('circular', self.trajectory.get_name())
+
     def test_given_circular_trajectory_centered_at_origin_when_getting_position_then_position_is_returned(self):
         self.expected_position.x = 5
         self.expected_position.y = 0
