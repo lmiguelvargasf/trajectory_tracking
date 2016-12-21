@@ -2,17 +2,18 @@
 from math import atan2, sin, pi
 from math import cos
 
-from constants import DELTA_T, SIMULATION_TIME_IN_SECONDS
 from orientation import get_angle_between_0_and_2_pi
 from .controller import Controller
 
 
 class EulerMethodController(Controller):
-    def __init__(self, trajectory, control_constants):
+    def __init__(self, trajectory, control_constants, simulation_data):
         Controller.__init__(self, trajectory)
         self.K_X = control_constants['x']
         self.K_Y = control_constants['y']
         self.K_THETA = control_constants['theta']
+        self.delta = simulation_data['delta']
+        self.simulation_time = simulation_data['time']
         self.theta_ez_n_minus_1 = 0
         self.theta_n_minus_1 = 0
 
@@ -31,7 +32,7 @@ class EulerMethodController(Controller):
         self.theta_n = get_angle_between_0_and_2_pi(self.theta_n)
         self.theta_ez_n_minus_1 = get_angle_between_0_and_2_pi(self.theta_ez_n_minus_1)
 
-        epsilon = 4 * DELTA_T
+        epsilon = 4 * self.delta
 
         alpha = self.theta_ez_n - self.K_THETA * (self.theta_ez_n_minus_1 - self.theta_n) - self.theta_n
 
@@ -39,9 +40,9 @@ class EulerMethodController(Controller):
             alpha = 0
 
         if self.trajectory.get_name() == 'astroid' and (
-                            abs(SIMULATION_TIME_IN_SECONDS / 4 - self.i * DELTA_T) < epsilon or \
-                                abs(SIMULATION_TIME_IN_SECONDS / 2 - self.i * DELTA_T) < epsilon or \
-                            abs(3 * SIMULATION_TIME_IN_SECONDS / 4 - self.i * DELTA_T) < epsilon):
+                            abs(self.simulation_time / 4 - self.i * self.delta) < epsilon or \
+                                abs(self.simulation_time / 2 - self.i * self.delta) < epsilon or \
+                            abs(3 * self.simulation_time / 4 - self.i * self.delta) < epsilon):
             alpha = abs(alpha) * 2
 
         return alpha
@@ -53,17 +54,17 @@ class EulerMethodController(Controller):
         delta_x_n = self.get_delta_x_n()
         delta_y_n = self.get_delta_y_n()
 
-        return (delta_x_n * cos(self.theta_ez_n) + delta_y_n * sin(self.theta_ez_n)) / DELTA_T
+        return (delta_x_n * cos(self.theta_ez_n) + delta_y_n * sin(self.theta_ez_n)) / self.delta
 
     def compute_w_c_n(self):
-        w_n = self.get_delta_theta_n() / DELTA_T
+        w_n = self.get_delta_theta_n() / self.delta
 
         self.theta_ez_n_minus_1 = self.theta_ez_n
         self.theta_n_minus_1 = self.theta_n
         self.theta_ref_n = self.theta_ez_n
 
         if self.trajectory.get_name() in ('circular', 'squared', 'astroid'):
-            if not 0 <= self.i * DELTA_T < SIMULATION_TIME_IN_SECONDS / 4 + 10 * DELTA_T:
+            if not 0 <= self.i * self.delta < self.simulation_time / 4 + 10 * self.delta:
                 self.theta_ref_n = get_angle_between_0_and_2_pi(self.theta_ez_n)
                 self.theta_n = get_angle_between_0_and_2_pi(self.theta_n)
 
@@ -74,8 +75,8 @@ class EulerMethodController(Controller):
         self.i = i
         self.set_current_orientation(pose.orientation)
         self.set_current_position(pose.position)
-        self.set_current_reference(self.trajectory.get_position_at(i * DELTA_T))
-        self.set_next_reference(self.trajectory.get_position_at((i + 1) * DELTA_T))
+        self.set_current_reference(self.trajectory.get_position_at(i * self.delta))
+        self.set_next_reference(self.trajectory.get_position_at((i + 1) * self.delta))
 
         self.theta_ez_n = self.compute_theta_ez_n()
         self.v_c_n = self.compute_v_c_n()
