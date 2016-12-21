@@ -7,13 +7,12 @@ from constants import K_X, DELTA_T, K_THETA, TRAJECTORY, SIMULATION_TIME_IN_SECO
 from constants import K_Y
 from .controller import Controller
 from orientation import get_angle_between_0_and_2_pi
-from util.util import create_trajectory
 
 
 class EulerMethodController(Controller):
-    def __init__(self):
+    def __init__(self, trajectory):
         Controller.__init__(self)
-        self.trajectory = create_trajectory()
+        self.trajectory = trajectory
         self.theta_ez_n_minus_1 = 0
         self.theta_n_minus_1 = 0
 

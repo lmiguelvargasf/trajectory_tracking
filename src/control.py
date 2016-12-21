@@ -9,11 +9,12 @@ from constants import DELTA_T, STEPS, CONTROLLER
 from controller.euler_controller import EulerMethodController
 from controller.pid_controller import PIDController
 from plotter.simulation_plotter import SimulationPlotter
+from util.util import create_trajectory
 
 
 def create_controller():
     if CONTROLLER == 'euler':
-        return EulerMethodController()
+        return EulerMethodController(create_trajectory())
     elif CONTROLLER == 'pid':
         return PIDController()
 
