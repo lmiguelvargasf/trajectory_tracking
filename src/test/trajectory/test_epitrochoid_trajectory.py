@@ -12,6 +12,9 @@ class EpitrochoidTrajectoryTest(unittest.TestCase):
         self.trajectory = EpitrochoidTrajectory(5, 1, 3, 4, 1.0 / 3)
         self.expected_position = Point()
 
+    def test_when_getting_trajectory_name_then_epitrochoid_is_returned(self):
+        self.assertEqual('epitrochoid', self.trajectory.get_name())
+
     def test_given_epitrochoid_trajectory_when_getting_position_after_0s_then_position_is_returned(self):
         self.expected_position.x = 1.0
         self.expected_position.y = 0.0

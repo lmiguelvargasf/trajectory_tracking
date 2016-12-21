@@ -5,9 +5,30 @@ import time
 from gazebo_msgs.msg import ModelStates
 from geometry_msgs.msg import Twist
 
-from constants import DELTA_T, STEPS
-from controller import create_controller
+from constants import DELTA_T, STEPS, CONTROLLER, K_X, K_Y, K_THETA, SIMULATION_TIME_IN_SECONDS, K_P_V, K_I_V, K_D_V, \
+    K_P_W, K_I_W, K_D_W, MAX_V, MAX_W
+from controller.euler_controller import EulerMethodController
+from controller.pid_controller import PIDController
 from plotter.simulation_plotter import SimulationPlotter
+from util.util import create_trajectory
+
+
+def create_controller():
+    trajectory = create_trajectory()
+    simulation_data = {'delta': DELTA_T, 'time': SIMULATION_TIME_IN_SECONDS}
+    if CONTROLLER == 'euler':
+        return EulerMethodController(
+            trajectory,
+            simulation_data,
+            {'x': K_X, 'y': K_Y, 'theta': K_THETA}
+        )
+    elif CONTROLLER == 'pid':
+        return PIDController(
+            trajectory,
+            simulation_data,
+            {'kpv': K_P_V, 'kiv': K_I_V, 'kdv': K_D_V, 'kpw': K_P_W, 'kiw': K_I_W, 'kdw': K_D_W},
+            {'linear': MAX_V, 'angular': MAX_W}
+        )
 
 
 def get_pose(message):

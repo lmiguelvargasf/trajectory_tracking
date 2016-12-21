@@ -17,3 +17,6 @@ class LinearTrajectory(object, Trajectory):
         self.position.y = self.v_y * t + self.y_0
 
         return self.position
+
+    def get_name(self):
+        return str(LinearTrajectory.__name__).replace('Trajectory', '').lower()

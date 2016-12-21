@@ -12,6 +12,9 @@ class LinearTrajectoryTest(unittest.TestCase):
         self.trajectory = LinearTrajectory(1, 0, 2, 0)
         self.expected_position = Point()
 
+    def test_when_getting_trajectory_name_then_linear_is_returned(self):
+        self.assertEqual('linear', self.trajectory.get_name())
+
     def test_given_trajectory_at_origin_when_getting_position_after_1s_then_position_is_returned(self):
         self.expected_position.x = 1
         self.expected_position.y = 2

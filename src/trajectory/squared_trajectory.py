@@ -28,3 +28,6 @@ class SquaredTrajectory(object, Trajectory):
             self.position.y = -self.v * (t - 3 * self.period / 4) + self.y_0 + self.side
 
         return self.position
+
+    def get_name(self):
+        return str(SquaredTrajectory.__name__).replace('Trajectory', '').lower()
