@@ -54,6 +54,26 @@ easily:
 $ sudo apt-get install python-rosinstall
 ```
 
+### Installing Turtlebot package
+
+Once ROS and Gazebo have been installed, you have to install the
+Turtlebot package. Run the following command line:
+
+```
+$ sudo apt-get install ros-kinetic-turtlebot-gazebo
+```
+
+In order to make sure that the installation process was successful,
+execute the following command line, which will open a Gazebo world
+with some objects and a Turtlebot between them:
+
+```
+$ roslaunch turtlebot_gazebo turtlebot_world.launch
+```
+
+In case you get an error when executing the previous command, just
+restart your computer and try again.
+
 ### Cloning repository
 
 Once you have installed ROS and Gazebo, you can clone this repository:
