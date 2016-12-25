@@ -96,11 +96,22 @@ $ source ~/turtlebot_ws/devel/setup.bash
 
 ### Cloning repository
 
-Once you have installed ROS and Gazebo, you can clone this repository:
+Now it is possible to clone this repository. Because this repository
+is a ROS package, it should be cloned inside `~/turtlebot_ws/src/`:
 
 ```
+$ cd ~/turtlebot_ws/src/
 $ git clone https://github.com/bit0001/trajectory_tracking.git
 ```
+
+After cloning the repo, you have to run `catkin_make` again:
+
+```
+$ cd ~/turtlebot/
+$ catkin_make
+```
+
+Finally, this package is ready to be used.
 
 ## Usage
 First, you need to source the workspace, and execute a launch file:
