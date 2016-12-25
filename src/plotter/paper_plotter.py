@@ -4,7 +4,8 @@ import matplotlib.pyplot as plt
 
 from constants import PATH_TO_IMPORT_EULER_DATA
 from constants import PATH_TO_IMPORT_PID_DATA
-from plotter import Plotter, PlotData, get_error
+
+from .plotter import Plotter, PlotData, get_error
 
 
 class PaperPlotter(Plotter):

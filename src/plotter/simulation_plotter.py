@@ -6,8 +6,9 @@ from os import makedirs
 from os.path import exists, dirname
 
 from constants import DELTA_T, CONTROLLER, PATH_TO_EXPORT_DATA
-from plotter import Plotter, PlotData, get_error
 from util.util import create_trajectory
+
+from .plotter import Plotter, PlotData, get_error
 
 
 class SimulationPlotter(Plotter):
