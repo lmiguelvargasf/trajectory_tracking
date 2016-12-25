@@ -13,14 +13,46 @@ These algorithms have been tested, and are properly working for the following tr
 * Squared Trajectory
 
 ## Installation
-Before cloning this repository, you should install ROS and Gazebo. It is highly recommended to use Ubuntu as OS.
-
-### Installing ROS
-In order to install ROS, you can follow the instruction in [this tutorial][8].
-The ROS version used in this project is `kinect`.
+Before cloning this repository, you should install ROS and Gazebo.
+It is highly recommended to use Ubuntu as OS. I also suggest installing
+Gazebo before ROS in order to avoid Gazebo version conflicts.
 
 ### Installing Gazebo
-In order to install Gazebo, you can follow the instructions provided in [this tutorial][9].
+In order to install Gazebo, you can follow the instructions provided in
+[this tutorial][9], or you can just execute this command line:
+
+```
+$ curl -ssL http://get.gazebosim.org | sh
+```
+
+### Installing ROS
+The ROS version used in this project is `kinect`. In order to install
+ROS, you can follow the instruction in [this tutorial][8], or you can
+execute the following command lines:
+
+```
+$ sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
+$ sudo apt-key adv --keyserver hkp://ha.pool.sks-keyservers.net:80 --recv-key 421C365BD9FF1F717815A3895523BAEEB01FA116
+$ sudo apt-get update
+$ sudo apt-get install ros-kinetic-desktop-full
+$ sudo rosdep init
+$ rosdep update
+```
+
+Finally you should source the enviroment variables to avoid doing it
+every time you want to use ROS:
+
+```
+$ echo "source /opt/ros/kinetic/setup.bash" >> ~/.bashrc
+$ source ~/.bashrc
+```
+
+You could optionally install `rosinstall` in order to download packages
+easily:
+
+```
+$ sudo apt-get install python-rosinstall
+```
 
 ### Cloning repository
 
