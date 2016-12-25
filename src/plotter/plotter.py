@@ -2,8 +2,6 @@
 # coding=utf-8
 from __future__ import unicode_literals
 
-from constants import STEPS
-
 
 def get_error(reference, actual):
     return [(b_i - a_i) for b_i , a_i in zip(reference, actual)]
@@ -35,8 +33,9 @@ class PlotData:
 
 
 class Plotter:
-    def __init__(self):
-        self.zeros = [0 for _ in range(STEPS)]
+    def __init__(self, steps):
+        self.steps = steps
+        self.zeros = [0 for _ in range(steps)]
 
         self.LINE_WIDTH = 2
         self.FIGURE_TITLE_SIZE = 21

@@ -8,8 +8,8 @@ from plotter import Plotter, PlotData, get_error
 
 
 class PaperPlotter(Plotter):
-    def __init__(self):
-        Plotter.__init__(self)
+    def __init__(self, steps):
+        Plotter.__init__(self, steps)
         self.LINE_WIDTH = 3
         self.euler_plot_data = PlotData()
         self.pid_plot_data = PlotData()

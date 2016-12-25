@@ -3,23 +3,21 @@
 import matplotlib.pyplot as plt
 from errno import EEXIST
 from os import makedirs
-
 from os.path import exists, dirname
 
 from constants import DELTA_T, CONTROLLER, PATH_TO_EXPORT_DATA
-from constants import STEPS
 from plotter import Plotter, PlotData, get_error
 from util.util import create_trajectory
 
 
 class SimulationPlotter(Plotter):
-    def __init__(self):
-        Plotter.__init__(self)
+    def __init__(self, steps):
+        Plotter.__init__(self, steps)
         self.plot_data = PlotData()
         trajectory = create_trajectory()
-        self.plot_data.t = [i * DELTA_T for i in range(STEPS)]
-        self.plot_data.x_ref = [trajectory.get_position_at(i * DELTA_T).x for i in range(STEPS)]
-        self.plot_data.y_ref = [trajectory.get_position_at(i * DELTA_T).y for i in range(STEPS)]
+        self.plot_data.t = [i * DELTA_T for i in range(self.steps)]
+        self.plot_data.x_ref = [trajectory.get_position_at(i * DELTA_T).x for i in range(self.steps)]
+        self.plot_data.y_ref = [trajectory.get_position_at(i * DELTA_T).y for i in range(self.steps)]
 
         self.fig_part_0, self.plots_part_0 = plt.subplots(2, 2, sharex=True)
         self.fig_part_1, self.plots_part_1 = plt.subplots(2, 2, sharex=True)

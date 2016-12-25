@@ -65,7 +65,7 @@ if __name__ == '__main__':
         pass
 
     i = 0
-    plotter = SimulationPlotter()
+    plotter = SimulationPlotter(STEPS)
     controller = create_controller()
     rate = rospy.Rate(int(1 / DELTA_T))
     while not rospy.is_shutdown() and i < STEPS:
