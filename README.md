@@ -74,6 +74,26 @@ $ roslaunch turtlebot_gazebo turtlebot_world.launch
 In case you get an error when executing the previous command, just
 restart your computer and try again.
 
+### Creating a workspace
+
+Now, it is time to create a workspace, so you can create it in your
+home directory by executing the following commands, in this case
+the workspace will be named `turtlebot_ws`
+
+```
+$ mkdir -p ~/turtlebot_ws/src
+$ cd ~/turtlebot_ws/src/
+$ catkin_init_workspace
+$ cd ~/turtlebot_ws/
+$ catkin_make
+```
+
+Once the workspace has been created source it:
+
+```
+$ source ~/turtlebot_ws/devel/setup.bash
+```
+
 ### Cloning repository
 
 Once you have installed ROS and Gazebo, you can clone this repository:
