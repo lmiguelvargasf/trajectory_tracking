@@ -3,23 +3,23 @@
 import matplotlib.pyplot as plt
 from errno import EEXIST
 from os import makedirs
-
 from os.path import exists, dirname
 
-from constants import DELTA_T, CONTROLLER, PATH_TO_EXPORT_DATA
-from constants import STEPS
-from plotter import Plotter, PlotData, get_error
 from util.util import create_trajectory
+from .plotter import Plotter, PlotData, get_error
 
 
 class SimulationPlotter(Plotter):
-    def __init__(self):
-        Plotter.__init__(self)
+    def __init__(self, steps, delta, controller_name, path):
+        Plotter.__init__(self, steps)
+        self.delta = delta
+        self.controller = controller_name
+        self.path = path
         self.plot_data = PlotData()
         trajectory = create_trajectory()
-        self.plot_data.t = [i * DELTA_T for i in range(STEPS)]
-        self.plot_data.x_ref = [trajectory.get_position_at(i * DELTA_T).x for i in range(STEPS)]
-        self.plot_data.y_ref = [trajectory.get_position_at(i * DELTA_T).y for i in range(STEPS)]
+        self.plot_data.t = [i * self.delta for i in range(self.steps)]
+        self.plot_data.x_ref = [trajectory.get_position_at(i * self.delta).x for i in range(self.steps)]
+        self.plot_data.y_ref = [trajectory.get_position_at(i * self.delta).y for i in range(self.steps)]
 
         self.fig_part_0, self.plots_part_0 = plt.subplots(2, 2, sharex=True)
         self.fig_part_1, self.plots_part_1 = plt.subplots(2, 2, sharex=True)
@@ -69,9 +69,9 @@ class SimulationPlotter(Plotter):
         self.decorate_plot(self.plots_part_2[1], r'$\omega_{c}\ {\rm vs}\ t$', r'$t[{\rm s}]$', r'$\omega_{c}[{\rm rad/s}]$')
 
         title = ''
-        if CONTROLLER == 'euler':
+        if self.controller == 'euler':
             title = r'${\rm Euler\ method\ controller}\ $'
-        elif CONTROLLER == 'pid':
+        elif self.controller == 'pid':
             title = r'${\rm PID\ controller}\ $'
 
         self.fig_part_0.suptitle(title + r'${\rm results - }\ x\ {\rm and}\ y$', fontsize=self.FIGURE_TITLE_SIZE)
@@ -84,7 +84,7 @@ class SimulationPlotter(Plotter):
 
     def export_results(self):
         for file_name, a_list in self.plot_data.file_array_name.items():
-            self.export_list(PATH_TO_EXPORT_DATA + file_name, a_list)
+            self.export_list(self.path + file_name, a_list)
 
     def export_list(self, path_to_file, a_list):
         if not exists(dirname(path_to_file)):

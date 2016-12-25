@@ -6,7 +6,7 @@ from gazebo_msgs.msg import ModelStates
 from geometry_msgs.msg import Twist
 
 from constants import DELTA_T, STEPS, CONTROLLER, K_X, K_Y, K_THETA, SIMULATION_TIME_IN_SECONDS, K_P_V, K_I_V, K_D_V, \
-    K_P_W, K_I_W, K_D_W, MAX_V, MAX_W
+    K_P_W, K_I_W, K_D_W, MAX_V, MAX_W, PATH_TO_EXPORT_DATA
 from controller.euler_controller import EulerMethodController
 from controller.pid_controller import PIDController
 from plotter.simulation_plotter import SimulationPlotter
@@ -65,7 +65,7 @@ if __name__ == '__main__':
         pass
 
     i = 0
-    plotter = SimulationPlotter()
+    plotter = SimulationPlotter(STEPS, DELTA_T, CONTROLLER, PATH_TO_EXPORT_DATA)
     controller = create_controller()
     rate = rospy.Rate(int(1 / DELTA_T))
     while not rospy.is_shutdown() and i < STEPS:

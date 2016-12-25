@@ -2,23 +2,21 @@
 # coding=utf-8
 import matplotlib.pyplot as plt
 
-from constants import PATH_TO_IMPORT_EULER_DATA
-from constants import PATH_TO_IMPORT_PID_DATA
-from plotter import Plotter, PlotData, get_error
+from .plotter import Plotter, PlotData, get_error
 
 
 class PaperPlotter(Plotter):
-    def __init__(self):
-        Plotter.__init__(self)
+    def __init__(self, steps, euler_path, pid_path):
+        Plotter.__init__(self, steps)
         self.LINE_WIDTH = 3
         self.euler_plot_data = PlotData()
         self.pid_plot_data = PlotData()
 
         for file_name, a_list in self.euler_plot_data.file_array_name.items():
-            self.import_data(PATH_TO_IMPORT_EULER_DATA + file_name, a_list)
+            self.import_data(euler_path + file_name, a_list)
 
         for file_name, a_list in self.pid_plot_data.file_array_name.items():
-            self.import_data(PATH_TO_IMPORT_PID_DATA + file_name, a_list)
+            self.import_data(pid_path + file_name, a_list)
 
         self.fig_part_0, self.plots_part_0 = plt.subplots(1, 1)
         self.fig_part_1, self.plots_part_1 = plt.subplots(3, 1, sharex=True)
