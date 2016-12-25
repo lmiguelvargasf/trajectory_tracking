@@ -5,18 +5,16 @@ from errno import EEXIST
 from os import makedirs
 from os.path import exists, dirname
 
-from util.util import create_trajectory
 from .plotter import Plotter, PlotData, get_error
 
 
 class SimulationPlotter(Plotter):
-    def __init__(self, steps, delta, controller_name, path):
+    def __init__(self, trajectory, steps, delta, controller_name, path):
         Plotter.__init__(self, steps)
         self.delta = delta
         self.controller = controller_name
         self.path = path
         self.plot_data = PlotData()
-        trajectory = create_trajectory()
         self.plot_data.t = [i * self.delta for i in range(self.steps)]
         self.plot_data.x_ref = [trajectory.get_position_at(i * self.delta).x for i in range(self.steps)]
         self.plot_data.y_ref = [trajectory.get_position_at(i * self.delta).y for i in range(self.steps)]

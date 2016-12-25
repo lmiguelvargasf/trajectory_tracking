@@ -6,15 +6,19 @@ from gazebo_msgs.msg import ModelStates
 from geometry_msgs.msg import Twist
 
 from constants import DELTA_T, STEPS, CONTROLLER, K_X, K_Y, K_THETA, SIMULATION_TIME_IN_SECONDS, K_P_V, K_I_V, K_D_V, \
-    K_P_W, K_I_W, K_D_W, MAX_V, MAX_W, PATH_TO_EXPORT_DATA
+    K_P_W, K_I_W, K_D_W, MAX_V, MAX_W, PATH_TO_EXPORT_DATA, TRAJECTORY
 from controller.euler_controller import EulerMethodController
 from controller.pid_controller import PIDController
 from plotter.simulation_plotter import SimulationPlotter
-from util.util import create_trajectory
+from trajectory.astroid_trajectory import AstroidTrajectory
+from trajectory.circular_trajectory import CircularTrajectory
+from trajectory.epitrochoid_trajectory import EpitrochoidTrajectory
+from trajectory.lemniscate_trajectory import LemniscateTrajectory
+from trajectory.linear_trajectory import LinearTrajectory
+from trajectory.squared_trajectory import SquaredTrajectory
 
 
-def create_controller():
-    trajectory = create_trajectory()
+def create_controller(trajectory):
     simulation_data = {'delta': DELTA_T, 'time': SIMULATION_TIME_IN_SECONDS}
     if CONTROLLER == 'euler':
         return EulerMethodController(
@@ -29,6 +33,20 @@ def create_controller():
             {'kpv': K_P_V, 'kiv': K_I_V, 'kdv': K_D_V, 'kpw': K_P_W, 'kiw': K_I_W, 'kdw': K_D_W},
             {'linear': MAX_V, 'angular': MAX_W}
         )
+
+def create_trajectory():
+    if TRAJECTORY == 'linear':
+        return LinearTrajectory(0.05, 0.01, 0.05, 0.01)
+    elif TRAJECTORY == 'circular':
+        return CircularTrajectory(2.0, SIMULATION_TIME_IN_SECONDS)
+    elif TRAJECTORY == 'squared':
+        return SquaredTrajectory(2.0, SIMULATION_TIME_IN_SECONDS, 0.01, 0.01)
+    elif TRAJECTORY == 'astroid':
+        return AstroidTrajectory(2.0, SIMULATION_TIME_IN_SECONDS)
+    elif TRAJECTORY == 'lemniscate':
+        return LemniscateTrajectory(2.0, SIMULATION_TIME_IN_SECONDS)
+    elif TRAJECTORY == 'epitrochoid':
+        return EpitrochoidTrajectory(5, 1, 3, SIMULATION_TIME_IN_SECONDS, 1 / 3.0)
 
 
 def get_pose(message):
@@ -65,8 +83,9 @@ if __name__ == '__main__':
         pass
 
     i = 0
-    plotter = SimulationPlotter(STEPS, DELTA_T, CONTROLLER, PATH_TO_EXPORT_DATA)
-    controller = create_controller()
+    trajectory = create_trajectory()
+    plotter = SimulationPlotter(trajectory, STEPS, DELTA_T, CONTROLLER, PATH_TO_EXPORT_DATA)
+    controller = create_controller(trajectory)
     rate = rospy.Rate(int(1 / DELTA_T))
     while not rospy.is_shutdown() and i < STEPS:
         compute_control_actions()
