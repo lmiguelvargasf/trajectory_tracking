@@ -46,27 +46,41 @@ def compute_control_actions():
 
 
 if __name__ == '__main__':
-    if len(sys.argv) != 3:
-        print('Error:', 'missing arguments!' if len(sys.argv) < 3 else 'too much arguments!')
-        print('Try: rosrun trajectory_tracking control.py <controller> <trajectory>')
+    parameters = sys.argv[1:]
+    if len(parameters) not in (2, 3):
+        print('Error:', end=' ')
+        if len(parameters) < 2:
+            print('missing arguments!')
+        elif len(parameters) > 3:
+            print('too much arguments!')
+
+        print('Try: rosrun trajectory_tracking control.py <controller> <trajectory> [simulation_time]')
         sys.exit(-1)
 
-    if sys.argv[1] in ('euler', 'pid'):
-        CONTROLLER = sys.argv[1]
+    if parameters[0] in ('euler', 'pid'):
+        CONTROLLER = parameters[0]
     else:
         print('Error: "{}" not valid controller name!'.format(sys.argv[1]))
         sys.exit(-2)
 
-    if sys.argv[2] in ('linear', 'circular', 'squared'):
-        TRAJECTORY = sys.argv[2]
-        SIM_TIME = SIM_INFO[sys.argv[2]][0]
-        STEPS = int(SIM_TIME / DELTA_T)
-        MAX_V = SIM_INFO[sys.argv[2]][1]
-        MAX_W = SIM_INFO[sys.argv[2]][2]
+    if parameters[1] in ('linear', 'circular', 'squared'):
+        TRAJECTORY = parameters[1]
+        TRAJECTORY_PERIOD = SIM_INFO[TRAJECTORY][0]
+        MAX_V = SIM_INFO[TRAJECTORY][1]
+        MAX_W = SIM_INFO[TRAJECTORY][2]
     else:
-        print('Error: "{}" not a valid trajectory name!'.format(sys.argv[2]))
+        print('Error: "{}" not a valid trajectory name!'.format(parameters[1]))
         sys.exit(-3)
 
+    try:
+        SIM_TIME = float(parameters[2])
+    except ValueError:
+        print('Error: simulation time must be a valid number!')
+        sys.exit(-4)
+    except IndexError:
+        SIM_TIME = TRAJECTORY_PERIOD
+
+    STEPS = int(SIM_TIME / DELTA_T)
     PATH_TO_EXPORT_DATA = '../txt_results/' + CONTROLLER + '/' + TRAJECTORY + '/'
 
     rospy.init_node('control')
