@@ -11,12 +11,7 @@ from geometry_msgs.msg import Twist
 from controller.euler_controller import EulerMethodController
 from controller.pid_controller import PIDController
 from plotter.simulation_plotter import SimulationPlotter
-from trajectory.astroid_trajectory import AstroidTrajectory
-from trajectory.circular_trajectory import CircularTrajectory
-from trajectory.epitrochoid_trajectory import EpitrochoidTrajectory
-from trajectory.lemniscate_trajectory import LemniscateTrajectory
-from trajectory.linear_trajectory import LinearTrajectory
-from trajectory.squared_trajectory import SquaredTrajectory
+from util.util import create_trajectory
 
 DELTA_T = 0.1 # this is the sampling time
 
@@ -32,6 +27,7 @@ SIM_INFO = {
 def create_controller(trajectory):
     simulation_data = {'delta': DELTA_T, 'time': SIM_TIME}
     if CONTROLLER == 'euler':
+
         return EulerMethodController(
             trajectory,
             simulation_data,
@@ -45,19 +41,6 @@ def create_controller(trajectory):
             {'linear': SIM_INFO[trajectory.get_name()][1], 'angular': SIM_INFO[trajectory.get_name()][2]}
         )
 
-def create_trajectory(trajectory_name, simulation_time):
-    if trajectory_name == 'linear':
-        return LinearTrajectory(0.05, 0.01, 0.05, 0.01)
-    elif trajectory_name == 'circular':
-        return CircularTrajectory(2.0, simulation_time)
-    elif trajectory_name == 'squared':
-        return SquaredTrajectory(2.0, simulation_time, 0.01, 0.01)
-    elif trajectory_name == 'astroid':
-        return AstroidTrajectory(2.0, simulation_time)
-    elif trajectory_name == 'lemniscate':
-        return LemniscateTrajectory(2.0, simulation_time)
-    elif trajectory_name == 'epitrochoid':
-        return EpitrochoidTrajectory(5, 1, 3, simulation_time, 1 / 3.0)
 
 
 def get_pose(message):
