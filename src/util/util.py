@@ -9,19 +9,19 @@ from trajectory.lemniscate_trajectory import LemniscateTrajectory
 from trajectory.linear_trajectory import LinearTrajectory
 from trajectory.squared_trajectory import SquaredTrajectory
 
-def create_trajectory(trajectory_name, simulation_time):
+def create_trajectory(trajectory_name, period):
     if trajectory_name == 'linear':
         return LinearTrajectory(0.05, 0.01, 0.05, 0.01)
     elif trajectory_name == 'circular':
-        return CircularTrajectory(2.0, simulation_time)
+        return CircularTrajectory(2.0, period)
     elif trajectory_name == 'squared':
-        return SquaredTrajectory(2.0, simulation_time, 0.01, 0.01)
+        return SquaredTrajectory(2.0, period, 0.01, 0.01)
     elif trajectory_name == 'astroid':
-        return AstroidTrajectory(2.0, simulation_time)
+        return AstroidTrajectory(2.0, period)
     elif trajectory_name == 'lemniscate':
-        return LemniscateTrajectory(2.0, simulation_time)
+        return LemniscateTrajectory(2.0, period)
     elif trajectory_name == 'epitrochoid':
-        return EpitrochoidTrajectory(5, 1, 3, simulation_time, 1 / 3.0)
+        return EpitrochoidTrajectory(5, 1, 3, period, 1 / 3.0)
 
 
 def create_controller(trajectory, controller_name, delta, sim_info):
