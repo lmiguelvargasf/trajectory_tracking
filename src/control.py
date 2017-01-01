@@ -30,7 +30,7 @@ SIM_INFO = {
 }
 
 def create_controller(trajectory):
-    simulation_data = {'delta': DELTA_T, 'time': SIMULATION_TIME_IN_SECONDS}
+    simulation_data = {'delta': DELTA_T, 'time': SIM_TIME}
     if CONTROLLER == 'euler':
         return EulerMethodController(
             trajectory,
@@ -45,19 +45,19 @@ def create_controller(trajectory):
             {'linear': SIM_INFO[trajectory.get_name()][1], 'angular': SIM_INFO[trajectory.get_name()][2]}
         )
 
-def create_trajectory():
-    if TRAJECTORY == 'linear':
+def create_trajectory(trajectory_name, simulation_time):
+    if trajectory_name == 'linear':
         return LinearTrajectory(0.05, 0.01, 0.05, 0.01)
-    elif TRAJECTORY == 'circular':
-        return CircularTrajectory(2.0, SIMULATION_TIME_IN_SECONDS)
-    elif TRAJECTORY == 'squared':
-        return SquaredTrajectory(2.0, SIMULATION_TIME_IN_SECONDS, 0.01, 0.01)
-    elif TRAJECTORY == 'astroid':
-        return AstroidTrajectory(2.0, SIMULATION_TIME_IN_SECONDS)
-    elif TRAJECTORY == 'lemniscate':
-        return LemniscateTrajectory(2.0, SIMULATION_TIME_IN_SECONDS)
-    elif TRAJECTORY == 'epitrochoid':
-        return EpitrochoidTrajectory(5, 1, 3, SIMULATION_TIME_IN_SECONDS, 1 / 3.0)
+    elif trajectory_name == 'circular':
+        return CircularTrajectory(2.0, simulation_time)
+    elif trajectory_name == 'squared':
+        return SquaredTrajectory(2.0, simulation_time, 0.01, 0.01)
+    elif trajectory_name == 'astroid':
+        return AstroidTrajectory(2.0, simulation_time)
+    elif trajectory_name == 'lemniscate':
+        return LemniscateTrajectory(2.0, simulation_time)
+    elif trajectory_name == 'epitrochoid':
+        return EpitrochoidTrajectory(5, 1, 3, simulation_time, 1 / 3.0)
 
 
 def get_pose(message):
@@ -97,8 +97,8 @@ if __name__ == '__main__':
 
     if sys.argv[2] in ('linear', 'circular', 'squared'):
         TRAJECTORY = sys.argv[2]
-        SIMULATION_TIME_IN_SECONDS = SIM_INFO[sys.argv[2]][0]
-        STEPS = int(SIMULATION_TIME_IN_SECONDS / DELTA_T)
+        SIM_TIME = SIM_INFO[sys.argv[2]][0]
+        STEPS = int(SIM_TIME / DELTA_T)
         MAX_V = SIM_INFO[sys.argv[2]][1]
         MAX_W = SIM_INFO[sys.argv[2]][2]
     else:
@@ -117,7 +117,7 @@ if __name__ == '__main__':
         pass
 
     i = 0
-    trajectory = create_trajectory()
+    trajectory = create_trajectory(TRAJECTORY, SIM_TIME)
     plotter = SimulationPlotter(trajectory, STEPS, DELTA_T, CONTROLLER, PATH_TO_EXPORT_DATA)
     controller = create_controller(trajectory)
     rate = rospy.Rate(int(1 / DELTA_T))
