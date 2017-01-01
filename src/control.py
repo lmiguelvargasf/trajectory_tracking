@@ -2,11 +2,12 @@
 from __future__ import print_function
 import rospy
 import time
+import sys
 from gazebo_msgs.msg import ModelStates
 from geometry_msgs.msg import Twist
 
-from constants import DELTA_T, STEPS, CONTROLLER, K_X, K_Y, K_THETA, SIMULATION_TIME_IN_SECONDS, K_P_V, K_I_V, K_D_V, \
-    K_P_W, K_I_W, K_D_W, MAX_V, MAX_W, PATH_TO_EXPORT_DATA, TRAJECTORY
+from constants import DELTA_T, STEPS, K_X, K_Y, K_THETA, SIMULATION_TIME_IN_SECONDS, K_P_V, K_I_V, K_D_V, \
+    K_P_W, K_I_W, K_D_W, MAX_V, MAX_W, TRAJECTORY, RESULTS_DIRECTORY
 from controller.euler_controller import EulerMethodController
 from controller.pid_controller import PIDController
 from plotter.simulation_plotter import SimulationPlotter
@@ -73,6 +74,18 @@ def compute_control_actions():
 
 
 if __name__ == '__main__':
+    if len(sys.argv) != 2:
+        print('Error:', 'missing arguments!' if len(sys.argv) < 2 else 'too much arguments!')
+        print('Try: rosrun trajectory_tracking control.py <controller>')
+        sys.exit(-1)
+
+    if sys.argv[1] in ('euler', 'pid'):
+        CONTROLLER = sys.argv[1]
+        PATH_TO_EXPORT_DATA = RESULTS_DIRECTORY + CONTROLLER + '/' + TRAJECTORY + '/'
+    else:
+        print('Error: "{}" not valid controller name!'.format(sys.argv[1]))
+        sys.exit(-2)
+
     rospy.init_node('control')
     current_pose = None
     current_twist = None
