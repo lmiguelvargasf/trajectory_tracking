@@ -114,31 +114,31 @@ $ catkin_make
 Finally, this package is ready to be used.
 
 ## Usage
-First, you need to source the workspace, and execute a launch file:
+Open a terminal window, and you have to source the workspace, and execute
+a launch file in order to initialize Gazebo:
 
 ```
-$ source turtlebot_ws/devel/setup.bash
+$ source ~/turtlebot_ws/devel/setup.bash
 $ roslaunch trajectory_tracking turtlebot_world.launch
 ```
 
 This will open Gazebo in a world where a turtlebot is shown in the middle of a room.
-Now, open up a new terminal, source again the workspace, and run the file `trajectory_tracking twist.py`:
+Now, open a new terminal, source again the workspace, and run the file
+`trajectory_tracking twist.py`:
 
 ```
 $ source turtlebot_ws/devel/setup.bash
 $ rosrun trajectory_tracking twist.py cmd_vel:=cmd_vel_mux/input/teleop
 ```
 
-Finally, to run an experiment, open a new terminal, source the workspace and run the file `control.py`:
+Finally, open again a new terminal, source the workspace and run the file `control.py`:
 ```
 $ source turtlebot_ws/devel/setup.bash
-$ rosrun trajectory_tracking control.py
+$ rosrun trajectory_tracking control.py <controller_name> <trajectory_name>
 ```
 
-By default, turtlebot will follow a linear trajectory using the numerical method controller, but you can change it
-by changing the values of `TRAJECTORY` and `CONTROLLER` constants inside `src/constants.py`.
-The possible values that `CONTROLLER` can take are: `'pid'` and `'euler'`, while the possible values of `TRAJECTORY` are
-`'linear'`, `'circular'`, and `'squared'`.
+Where controller_name could be either `euler` or `pid`, and trajectory_name
+could be either `linear`, `circular`, or `squared`.
 
 
 ## Trajectories
