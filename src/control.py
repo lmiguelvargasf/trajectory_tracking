@@ -65,7 +65,7 @@ if __name__ == '__main__':
 
     if parameters[1] in ('linear', 'circular', 'squared'):
         TRAJECTORY = parameters[1]
-        TRAJECTORY_PERIOD = SIM_INFO[TRAJECTORY][0]
+        PERIOD = SIM_INFO[TRAJECTORY][0]
         MAX_V = SIM_INFO[TRAJECTORY][1]
         MAX_W = SIM_INFO[TRAJECTORY][2]
     else:
@@ -83,7 +83,7 @@ if __name__ == '__main__':
         print('Error: simulation time must be a valid number!')
         sys.exit(-5)
     except IndexError:
-        SIM_TIME = TRAJECTORY_PERIOD
+        SIM_TIME = PERIOD
 
     STEPS = int(SIM_TIME / DELTA_T)
     PATH_TO_EXPORT_DATA = '../txt_results/' + CONTROLLER + '/' + TRAJECTORY + '/'
@@ -98,7 +98,7 @@ if __name__ == '__main__':
         pass
 
     i = 0
-    trajectory = create_trajectory(TRAJECTORY, TRAJECTORY_PERIOD)
+    trajectory = create_trajectory(TRAJECTORY, PERIOD)
     plotter = SimulationPlotter(trajectory, STEPS, DELTA_T, CONTROLLER, PATH_TO_EXPORT_DATA)
     controller = create_controller(trajectory, CONTROLLER, DELTA_T, SIM_INFO)
     rate = rospy.Rate(int(1 / DELTA_T))
