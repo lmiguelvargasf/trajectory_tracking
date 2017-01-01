@@ -74,9 +74,14 @@ if __name__ == '__main__':
 
     try:
         SIM_TIME = float(parameters[2])
+
+        if SIM_TIME <= 0:
+            print('Error: simulation time must be a positive number!')
+            sys.exit(-4)
+
     except ValueError:
         print('Error: simulation time must be a valid number!')
-        sys.exit(-4)
+        sys.exit(-5)
     except IndexError:
         SIM_TIME = TRAJECTORY_PERIOD
 
@@ -93,7 +98,7 @@ if __name__ == '__main__':
         pass
 
     i = 0
-    trajectory = create_trajectory(TRAJECTORY, SIM_TIME)
+    trajectory = create_trajectory(TRAJECTORY, TRAJECTORY_PERIOD)
     plotter = SimulationPlotter(trajectory, STEPS, DELTA_T, CONTROLLER, PATH_TO_EXPORT_DATA)
     controller = create_controller(trajectory, CONTROLLER, DELTA_T, SIM_INFO)
     rate = rospy.Rate(int(1 / DELTA_T))
