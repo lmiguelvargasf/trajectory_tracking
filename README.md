@@ -134,12 +134,19 @@ $ rosrun trajectory_tracking twist.py cmd_vel:=cmd_vel_mux/input/teleop
 Finally, open again a new terminal, source the workspace and run the file `control.py`:
 ```
 $ source turtlebot_ws/devel/setup.bash
-$ rosrun trajectory_tracking control.py <controller_name> <trajectory_name>
+$ rosrun trajectory_tracking control.py <controller_name> <trajectory_name> [simulation_time]
 ```
 
 Where controller_name could be either `euler` or `pid`, and trajectory_name
 could be either `linear`, `circular`, or `squared`.
+The simulation_time is a positive number, and if it is not given, a
+default time is used. Example:
 
+```
+$ rosrun trajectory_tracking control.py euler squared 60.0
+```
+The previous command uses the the euler method controller to follow
+a squared trajectory during 60 seconds.
 
 ## Trajectories
 Three trajectories have been used to test each controller.
