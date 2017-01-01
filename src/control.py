@@ -1,13 +1,13 @@
 #!/usr/bin/env python
 from __future__ import print_function
-import rospy
-import time
+
 import sys
+import time
+
+import rospy
 from gazebo_msgs.msg import ModelStates
 from geometry_msgs.msg import Twist
 
-from constants import DELTA_T, STEPS, K_X, K_Y, K_THETA, SIMULATION_TIME_IN_SECONDS, K_P_V, K_I_V, K_D_V, \
-    K_P_W, K_I_W, K_D_W, MAX_V, MAX_W, TRAJECTORY, RESULTS_DIRECTORY
 from controller.euler_controller import EulerMethodController
 from controller.pid_controller import PIDController
 from plotter.simulation_plotter import SimulationPlotter
@@ -18,6 +18,16 @@ from trajectory.lemniscate_trajectory import LemniscateTrajectory
 from trajectory.linear_trajectory import LinearTrajectory
 from trajectory.squared_trajectory import SquaredTrajectory
 
+DELTA_T = 0.1 # this is the sampling time
+
+SIM_INFO = {
+    'linear': (10.0, 0.075, 1.25),
+    'circular': (120.0, 0.11, 1.25),
+    'squared': (160.0, 0.11, 1,25),
+    'astroid': (120.0, 0.105, 1.25),
+    'lemniscate': (120.0, 0.125, 1.25),
+    'epitrochoid': (240.0, 0.162, 1.25),
+}
 
 def create_controller(trajectory):
     simulation_data = {'delta': DELTA_T, 'time': SIMULATION_TIME_IN_SECONDS}
@@ -25,14 +35,14 @@ def create_controller(trajectory):
         return EulerMethodController(
             trajectory,
             simulation_data,
-            {'x': K_X, 'y': K_Y, 'theta': K_THETA}
+            {'x': 0.9, 'y': 0.9, 'theta': 0.9}
         )
     elif CONTROLLER == 'pid':
         return PIDController(
             trajectory,
             simulation_data,
-            {'kpv': K_P_V, 'kiv': K_I_V, 'kdv': K_D_V, 'kpw': K_P_W, 'kiw': K_I_W, 'kdw': K_D_W},
-            {'linear': MAX_V, 'angular': MAX_W}
+            {'kpv': 0.2, 'kiv': 1.905, 'kdv': 0.00, 'kpw': 0.45, 'kiw': 1.25, 'kdw': 0.00},
+            {'linear': SIM_INFO[trajectory.get_name()][1], 'angular': SIM_INFO[trajectory.get_name()][2]}
         )
 
 def create_trajectory():
@@ -74,17 +84,28 @@ def compute_control_actions():
 
 
 if __name__ == '__main__':
-    if len(sys.argv) != 2:
-        print('Error:', 'missing arguments!' if len(sys.argv) < 2 else 'too much arguments!')
-        print('Try: rosrun trajectory_tracking control.py <controller>')
+    if len(sys.argv) != 3:
+        print('Error:', 'missing arguments!' if len(sys.argv) < 3 else 'too much arguments!')
+        print('Try: rosrun trajectory_tracking control.py <controller> <trajectory>')
         sys.exit(-1)
 
     if sys.argv[1] in ('euler', 'pid'):
         CONTROLLER = sys.argv[1]
-        PATH_TO_EXPORT_DATA = RESULTS_DIRECTORY + CONTROLLER + '/' + TRAJECTORY + '/'
     else:
         print('Error: "{}" not valid controller name!'.format(sys.argv[1]))
         sys.exit(-2)
+
+    if sys.argv[2] in ('linear', 'circular', 'squared'):
+        TRAJECTORY = sys.argv[2]
+        SIMULATION_TIME_IN_SECONDS = SIM_INFO[sys.argv[2]][0]
+        STEPS = int(SIMULATION_TIME_IN_SECONDS / DELTA_T)
+        MAX_V = SIM_INFO[sys.argv[2]][1]
+        MAX_W = SIM_INFO[sys.argv[2]][2]
+    else:
+        print('Error: "{}" not a valid trajectory name!'.format(sys.argv[2]))
+        sys.exit(-3)
+
+    PATH_TO_EXPORT_DATA = '../txt_results/' + CONTROLLER + '/' + TRAJECTORY + '/'
 
     rospy.init_node('control')
     current_pose = None
