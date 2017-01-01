@@ -8,38 +8,18 @@ import rospy
 from gazebo_msgs.msg import ModelStates
 from geometry_msgs.msg import Twist
 
-from controller.euler_controller import EulerMethodController
-from controller.pid_controller import PIDController
 from plotter.simulation_plotter import SimulationPlotter
-from util.util import create_trajectory
+from util.util import create_trajectory, create_controller
 
-DELTA_T = 0.1 # this is the sampling time
-
+DELTA_T = 0.1  # this is the sampling time
 SIM_INFO = {
     'linear': (10.0, 0.075, 1.25),
     'circular': (120.0, 0.11, 1.25),
-    'squared': (160.0, 0.11, 1,25),
+    'squared': (160.0, 0.11, 1.25),
     'astroid': (120.0, 0.105, 1.25),
     'lemniscate': (120.0, 0.125, 1.25),
     'epitrochoid': (240.0, 0.162, 1.25),
 }
-
-
-def create_controller(trajectory, controller_name, delta, sim_info):
-    simulation_data = {'delta': delta, 'time': sim_info[trajectory.get_name()][0]}
-    if controller_name == 'euler':
-        return EulerMethodController(
-            trajectory,
-            simulation_data,
-            {'x': 0.9, 'y': 0.9, 'theta': 0.9}
-        )
-    elif controller_name == 'pid':
-        return PIDController(
-            trajectory,
-            simulation_data,
-            {'kpv': 0.2, 'kiv': 1.905, 'kdv': 0.00, 'kpw': 0.45, 'kiw': 1.25, 'kdw': 0.00},
-            {'linear': sim_info[trajectory.get_name()][1], 'angular': sim_info[trajectory.get_name()][2]}
-        )
 
 
 def get_pose(message):
