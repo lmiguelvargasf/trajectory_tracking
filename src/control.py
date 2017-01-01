@@ -24,23 +24,22 @@ SIM_INFO = {
     'epitrochoid': (240.0, 0.162, 1.25),
 }
 
-def create_controller(trajectory):
-    simulation_data = {'delta': DELTA_T, 'time': SIM_TIME}
-    if CONTROLLER == 'euler':
 
+def create_controller(trajectory, controller_name, delta, sim_info):
+    simulation_data = {'delta': delta, 'time': sim_info[trajectory.get_name()][0]}
+    if controller_name == 'euler':
         return EulerMethodController(
             trajectory,
             simulation_data,
             {'x': 0.9, 'y': 0.9, 'theta': 0.9}
         )
-    elif CONTROLLER == 'pid':
+    elif controller_name == 'pid':
         return PIDController(
             trajectory,
             simulation_data,
             {'kpv': 0.2, 'kiv': 1.905, 'kdv': 0.00, 'kpw': 0.45, 'kiw': 1.25, 'kdw': 0.00},
-            {'linear': SIM_INFO[trajectory.get_name()][1], 'angular': SIM_INFO[trajectory.get_name()][2]}
+            {'linear': sim_info[trajectory.get_name()][1], 'angular': sim_info[trajectory.get_name()][2]}
         )
-
 
 
 def get_pose(message):
@@ -102,7 +101,7 @@ if __name__ == '__main__':
     i = 0
     trajectory = create_trajectory(TRAJECTORY, SIM_TIME)
     plotter = SimulationPlotter(trajectory, STEPS, DELTA_T, CONTROLLER, PATH_TO_EXPORT_DATA)
-    controller = create_controller(trajectory)
+    controller = create_controller(trajectory, CONTROLLER, DELTA_T, SIM_INFO)
     rate = rospy.Rate(int(1 / DELTA_T))
     while not rospy.is_shutdown() and i < STEPS:
         compute_control_actions()
