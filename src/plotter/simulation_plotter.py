@@ -5,6 +5,9 @@ from errno import EEXIST
 from os import makedirs
 from os.path import exists, dirname
 
+import datetime
+import sqlite3
+
 from .plotter import Plotter, PlotData, get_error
 
 
@@ -80,18 +83,38 @@ class SimulationPlotter(Plotter):
 
         plt.show()
 
-    def export_results(self):
-        for file_name, a_list in self.plot_data.file_array_name.items():
-            self.export_list(self.path + file_name, a_list)
+    def export_results(self, database_path):
+        connection = sqlite3.connect(database_path)
+        cursor = connection.cursor()
 
-    def export_list(self, path_to_file, a_list):
-        if not exists(dirname(path_to_file)):
-            try:
-                makedirs(dirname(path_to_file))
-            except OSError as exc:  # Guard against race condition
-                if exc.errno != EEXIST:
-                    raise
+        table_name = ('_'.join(['euler', 'linear', datetime.datetime.now().strftime('%Y_%m_%d_%H_%M_%S')]))
 
-        with open(path_to_file, 'w') as file:
-            for e in a_list:
-                file.write(str(e) + '\n')
+        cursor.execute(
+            """
+            CREATE TABLE IF NOT EXISTS {} (
+            t REAL  NOT NULL PRIMARY KEY,
+            x REAL NOT NULL,
+            x_ref REAL NOT NULL,
+            y REAL NOT NULL,
+            y_ref REAL NOT NULL,
+            theta REAL NOT NULL,
+            theta_ref REAL NOT NULL,
+            v_c REAL NOT NULL,
+            w_c REAL NOT NULL
+            )
+            """.format(table_name))
+
+        for i in range(len(self.plot_data.t)):
+            cursor.execute(
+                """
+                INSERT INTO {} (t, x, x_ref, y, y_ref, theta, theta_ref, v_c, w_c)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                """.format(table_name),
+                (self.plot_data.t[i], self.plot_data.x[i], self.plot_data.x_ref[i],
+                 self.plot_data.y[i], self.plot_data.y_ref[i], self.plot_data.theta[i],
+                 self.plot_data.theta_ref[i], self.plot_data.v_c[i], self.plot_data.w_c[i])
+            )
+            connection.commit()
+
+        cursor.close()
+        connection.close()

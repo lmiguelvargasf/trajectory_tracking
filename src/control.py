@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 from __future__ import print_function
 
+import os
 import sys
 import time
 
@@ -112,7 +113,7 @@ if __name__ == '__main__':
     time.sleep(2)
 
     plotter.plot_results()
-    plotter.export_results()
+    plotter.export_results(os.sep.join(__file__.split(os.sep)[:-2]) + '/results.db')
     print ('Data was exported successfully!')
 
     rospy.spin()
