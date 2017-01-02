@@ -146,7 +146,11 @@ default time is used. Example:
 $ rosrun trajectory_tracking control.py euler squared 60.0
 ```
 The previous command uses the the euler method controller to follow
-a squared trajectory during 60 seconds.
+a squared trajectory during 60 seconds. Once an experiment is
+completed, results are plotted and shown, and when plot windows are
+closed, simulation data is stored in a database, which is stored in the
+root directory of this project, creating a table which name follows the
+following format: `controller_trajectory_YYYY_mm_dd_HH_MM_SS`.
 
 ## Trajectories
 Three trajectories have been used to test each controller.
