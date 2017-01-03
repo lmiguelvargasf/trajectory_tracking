@@ -34,7 +34,11 @@ QUERIES = {
         """
         SELECT name FROM simulations
         ORDER BY creation_datetime DESC
-      """,
+        """,
+    'select_data':
+        """
+        SELECT * FROM {}
+        """,
 }
 
 TITLES = {

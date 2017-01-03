@@ -18,9 +18,7 @@ if __name__ == '__main__':
     simulation_name = cursor.fetchone()[0]
     controller = str(simulation_name).split('_')[0]
 
-    cursor.execute("""
-      SELECT * FROM {}
-""".format(simulation_name))
+    cursor.execute(QUERIES['select_data'].format(simulation_name))
 
     for row in cursor.fetchall():
         plot_data.t.append(row[0])
