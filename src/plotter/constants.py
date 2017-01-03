@@ -29,7 +29,12 @@ QUERIES = {
         """
         INSERT INTO simulations (name, creation_datetime)
         VALUES (?, ?)
+        """,
+    'select_sim':
         """
+        SELECT name FROM simulations
+        ORDER BY creation_datetime DESC
+      """,
 }
 
 TITLES = {
