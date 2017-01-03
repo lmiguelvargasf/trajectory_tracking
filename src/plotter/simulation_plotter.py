@@ -5,43 +5,35 @@ import matplotlib.pyplot as plt
 import sqlite3
 
 from .constants import TITLES, LABELS, QUERIES
-from .plotter import Plotter, PlotData, get_error
+from .plotter import Plotter, get_error
 
 
 class SimulationPlotter(Plotter):
-    def __init__(self, steps, controller_name, path):
-        Plotter.__init__(self, steps)
+    def __init__(self, plot_data, controller_name):
+        Plotter.__init__(self)
         self.controller = controller_name
-        self.path = path
-        self.plot_data = PlotData()
+        self.plot_data = plot_data
 
         self.fig_part_0, self.plots_part_0 = plt.subplots(2, 2, sharex=True)
         self.fig_part_1, self.plots_part_1 = plt.subplots(2, 2, sharex=True)
         self.fig_part_2, self.plots_part_2 = plt.subplots(1, 2)
-
-    def add_data(self, t, pose, reference):
-        self.plot_data.t.append(t)
-        self.plot_data.x.append(pose.position.x)
-        self.plot_data.y.append(pose.position.y)
-        self.plot_data.x_ref.append(reference.x)
-        self.plot_data.y_ref.append(reference.y)
 
     def plot_results(self):
         e_x = get_error(self.plot_data.x_ref, self.plot_data.x)
         e_y = get_error(self.plot_data.y_ref, self.plot_data.y)
         self.plots_part_0[0, 0].plot(self.plot_data.t, self.plot_data.x_ref, 'r--', label=r'$x_{ref}$', lw=self.LINE_WIDTH)
         self.plots_part_0[0, 0].plot(self.plot_data.t, self.plot_data.x, 'b', label=r'$x$')
-        self.plots_part_0[0, 1].plot(self.plot_data.t, self.zeros, 'r--', label=r'$e=0$', lw=self.LINE_WIDTH)
+        self.plots_part_0[0, 1].plot(self.plot_data.t, self.plot_data.zeros, 'r--', label=r'$e=0$', lw=self.LINE_WIDTH)
         self.plots_part_0[0, 1].plot(self.plot_data.t, e_x, 'b', label=r'$x_{error}$')
         self.plots_part_0[1, 0].plot(self.plot_data.t, self.plot_data.y_ref, 'r--', label=r'$y_{ref}$', lw=self.LINE_WIDTH)
         self.plots_part_0[1, 0].plot(self.plot_data.t, self.plot_data.y, 'b', label=r'$y$')
-        self.plots_part_0[1, 1].plot(self.plot_data.t, self.zeros, 'r--', label=r'$e=0$', lw=self.LINE_WIDTH)
+        self.plots_part_0[1, 1].plot(self.plot_data.t, self.plot_data.zeros, 'r--', label=r'$e=0$', lw=self.LINE_WIDTH)
         self.plots_part_0[1, 1].plot(self.plot_data.t, e_y, 'b', label=r'$y_{error}$')
 
         e_theta = get_error(self.plot_data.theta_ref, self.plot_data.theta)
         self.plots_part_1[0, 0].plot(self.plot_data.t, self.plot_data.theta_ref, 'r--', label=r'$\theta_{ref}$', lw=self.LINE_WIDTH)
         self.plots_part_1[0, 0].plot(self.plot_data.t, self.plot_data.theta, 'b', label=r'$\theta$')
-        self.plots_part_1[1, 0].plot(self.plot_data.t, self.zeros, 'r--', label=r'$e=0$', lw=self.LINE_WIDTH)
+        self.plots_part_1[1, 0].plot(self.plot_data.t, self.plot_data.zeros, 'r--', label=r'$e=0$', lw=self.LINE_WIDTH)
         self.plots_part_1[1, 0].plot(self.plot_data.t, e_theta, 'b', label=r'$\theta_{error}$')
 
         plt.figure(self.fig_part_1.number)
