@@ -27,6 +27,21 @@ QUERIES = {
         """,
 }
 
+TITLES = {
+    'x_vs_t': r'$x\ {\rm and}\ x_{ref}\ {\rm vs}\ t$',
+    'x_error': r'$x_{error}\ {\rm vs}\ t$',
+    'y_vs_t': r'$y\ {\rm and}\ y_{ref}\ {\rm vs}\ t$',
+    'y_error': r'$y_{error}\ {\rm vs}\ t$',
+    'theta_vs_t': r'$\theta,\ \theta_{ref}\ {\rm vs}\ t$',
+    'theta_error': r'$\theta_{error}\ {\rm vs}\ t$',
+    'trajectory': r'${\rm followed\ trajectory\ vs\ reference\ trajectory}$',
+    'v_vs_t': r'$v_{c}\ {\rm vs}\ t$',
+    'w_vs_t': r'$\omega_{c}\ {\rm vs}\ t$',
+    'x_n_y': r'${\rm results - }\ x\ {\rm and}\ y$',
+    'theta_n_trajectory': r'${\rm results - }\ \theta\ {\rm and\ trajectory}$',
+    'v_n_w': r'${\rm results - }\ v_{c}\ {\rm and}\ \omega_{c}$'
+}
+
 class SimulationPlotter(Plotter):
     def __init__(self, trajectory, steps, delta, controller_name, path):
         Plotter.__init__(self, steps)
