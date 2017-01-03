@@ -114,6 +114,7 @@ $ catkin_make
 Finally, this package is ready to be used.
 
 ## Usage
+### Running a simulation
 Open a terminal window, and you have to source the workspace, and execute
 a launch file in order to initialize Gazebo:
 
@@ -127,13 +128,13 @@ Now, open a new terminal, source again the workspace, and run the file
 `trajectory_tracking twist.py`:
 
 ```
-$ source turtlebot_ws/devel/setup.bash
+$ source ~/turtlebot_ws/devel/setup.bash
 $ rosrun trajectory_tracking twist.py cmd_vel:=cmd_vel_mux/input/teleop
 ```
 
 Finally, open again a new terminal, source the workspace and run the file `control.py`:
 ```
-$ source turtlebot_ws/devel/setup.bash
+$ source ~/turtlebot_ws/devel/setup.bash
 $ rosrun trajectory_tracking control.py <controller_name> <trajectory_name> [simulation_time]
 ```
 
@@ -151,6 +152,17 @@ completed, results are plotted and shown, and when plot windows are
 closed, simulation data is stored in a database, which is stored in the
 root directory of this project, creating a table which name follows the
 following format: `controller_trajectory_YYYY_mm_dd_HH_MM_SS`.
+
+### Plotting results of the last simulation
+Once a simulation has been completed, it is possible to plot again the results obained
+in that simulation. In order to achive this, one has to run the module `plotter` and pass
+the absolute path to the database `results.db` as an argument of the command-line:
+
+```
+$ cd ~/turtlebot_ws/src/trajectory_tracking/src/
+$ python -m plotter /absolute/path/to/database/results.db
+```
+
 
 ## Trajectories
 Three trajectories have been used to test each controller.
