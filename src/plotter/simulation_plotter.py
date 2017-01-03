@@ -87,18 +87,17 @@ class SimulationPlotter(Plotter):
         self.plots_part_2[0].plot(self.plot_data.t, self.plot_data.v_c, 'b', label=r'$v_{c}$')
         self.plots_part_2[1].plot(self.plot_data.t, self.plot_data.w_c, 'b', label=r'$\omega_{c}$')
 
-        self.decorate_plot(self.plots_part_0[0, 0], r'$x\ {\rm and}\ x_{ref}\ {\rm vs}\ t$', r'$t[{\rm s}]$', r'$x[{\rm m}]$')
-        self.decorate_plot(self.plots_part_0[0, 1], r'$x_{error}\ {\rm vs}\ t$', r'$t[{\rm s}]$', r'$x_{error}[{\rm m}]$')
-        self.decorate_plot(self.plots_part_0[1, 0], r'$y\ {\rm and}\ y_{ref}\ {\rm vs}\ t$', r'$t[{\rm s}]$', r'$y[{\rm m}]$')
-        self.decorate_plot(self.plots_part_0[1, 1], r'$y_{error}\ {\rm vs}\ t$', r'$t[{\rm s}]$', r'$y_{error}[{\rm m}]$')
+        self.decorate_plot(self.plots_part_0[0, 0], TITLES['x_vs_t'], r'$t[{\rm s}]$', r'$x[{\rm m}]$')
+        self.decorate_plot(self.plots_part_0[0, 1], TITLES['x_error'], r'$t[{\rm s}]$', r'$x_{error}[{\rm m}]$')
+        self.decorate_plot(self.plots_part_0[1, 0], TITLES['y_vs_t'], r'$t[{\rm s}]$', r'$y[{\rm m}]$')
+        self.decorate_plot(self.plots_part_0[1, 1], TITLES['y_error'], r'$t[{\rm s}]$', r'$y_{error}[{\rm m}]$')
 
-        self.decorate_plot(self.plots_part_1[0, 0], r'$\theta,\ \theta_{ref}\ {\rm vs}\ t$', r'$t[{\rm s}]$', r'$\theta[{\rm rad}]$')
-        self.decorate_plot(self.plots_part_1[1, 0], r'$\theta_{error}\ {\rm vs}\ t$', r'$t[{\rm s}]$', r'$\theta_{error}[{\rm rad}]$')
-        self.decorate_plot(trajectory_plot, r'${\rm followed\ trajectory\ vs\ reference\ trajectory}$',
-                           r'$x[{\rm m}]$', r'$y[{\rm m}]$')
+        self.decorate_plot(self.plots_part_1[0, 0], TITLES['theta_vs_t'], r'$t[{\rm s}]$', r'$\theta[{\rm rad}]$')
+        self.decorate_plot(self.plots_part_1[1, 0], TITLES['theta_error'], r'$t[{\rm s}]$', r'$\theta_{error}[{\rm rad}]$')
+        self.decorate_plot(trajectory_plot, TITLES['trajectory'], r'$x[{\rm m}]$', r'$y[{\rm m}]$')
 
-        self.decorate_plot(self.plots_part_2[0], r'$v_{c}\ {\rm vs}\ t$', r'$t[{\rm s}]$', r'$v_{c}[{\rm m/s}]$')
-        self.decorate_plot(self.plots_part_2[1], r'$\omega_{c}\ {\rm vs}\ t$', r'$t[{\rm s}]$', r'$\omega_{c}[{\rm rad/s}]$')
+        self.decorate_plot(self.plots_part_2[0], TITLES['v_vs_t'], r'$t[{\rm s}]$', r'$v_{c}[{\rm m/s}]$')
+        self.decorate_plot(self.plots_part_2[1], TITLES['w_vs_t'], r'$t[{\rm s}]$', r'$\omega_{c}[{\rm rad/s}]$')
 
         title = ''
         if self.controller == 'euler':
@@ -106,11 +105,9 @@ class SimulationPlotter(Plotter):
         elif self.controller == 'pid':
             title = r'${\rm PID\ controller}\ $'
 
-        self.fig_part_0.suptitle(title + r'${\rm results - }\ x\ {\rm and}\ y$', fontsize=self.FIGURE_TITLE_SIZE)
-        self.fig_part_2.suptitle(title + r'${\rm results - }\ v_{c}\ {\rm and}\ \omega_{c}$',
-                                 fontsize=self.FIGURE_TITLE_SIZE)
-        self.fig_part_1.suptitle(title + r'${\rm results - }\ \theta\ {\rm and\ trajectory}$',
-                                 fontsize=self.FIGURE_TITLE_SIZE)
+        self.fig_part_0.suptitle(title + TITLES['x_n_y'], fontsize=self.FIGURE_TITLE_SIZE)
+        self.fig_part_1.suptitle(title + TITLES['theta_n_trajectory'], fontsize=self.FIGURE_TITLE_SIZE)
+        self.fig_part_2.suptitle(title + TITLES['v_n_w'], fontsize=self.FIGURE_TITLE_SIZE)
 
         plt.show()
 
