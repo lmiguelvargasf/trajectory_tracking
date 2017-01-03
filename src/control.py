@@ -32,7 +32,7 @@ def get_pose(message):
 def compute_control_actions():
     global i
     controller.compute_control_actions(current_pose, current_twist, i)
-    plotter.add_point(current_pose)
+    plotter.add_data(i * DELTA_T, current_pose, controller.current_reference)
     plotter.plot_data.theta.append(controller.theta_n)
     plotter.plot_data.theta_ref.append(controller.theta_ref_n)
     plotter.plot_data.v_c.append(controller.v_c_n)
