@@ -128,7 +128,23 @@ class SimulationPlotter(Plotter):
         connection = sqlite3.connect(database_path)
         cursor = connection.cursor()
 
-        table_name = ('_'.join(['euler', 'linear', datetime.datetime.now().strftime('%Y_%m_%d_%H_%M_%S')]))
+        creation_datetime = datetime.datetime.now()
+        table_name = ('_'.join(['euler', 'linear', creation_datetime.strftime('%Y_%m_%d_%H_%M_%S')]))
+
+        cursor.execute("""
+        CREATE TABLE IF NOT EXISTS simulations (
+        id INTEGER  NOT NULL PRIMARY KEY AUTOINCREMENT ,
+        name VARCHAR(255) NOT NULL UNIQUE,
+        creation_datetime DATETIME)
+        """)
+
+        cursor.execute(
+            """
+            INSERT INTO simulations (name, creation_datetime)
+            VALUES (?, ?)
+            """, (table_name, creation_datetime)
+        )
+        connection.commit()
 
         cursor.execute(QUERIES['create_table'].format(table_name))
 
