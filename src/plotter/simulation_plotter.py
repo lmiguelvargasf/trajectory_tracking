@@ -105,27 +105,11 @@ class SimulationPlotter(Plotter):
 
         table_name = ('_'.join(['euler', 'linear', datetime.datetime.now().strftime('%Y_%m_%d_%H_%M_%S')]))
 
-        cursor.execute(
-            """
-            CREATE TABLE IF NOT EXISTS {} (
-            t REAL  NOT NULL PRIMARY KEY,
-            x REAL NOT NULL,
-            x_ref REAL NOT NULL,
-            y REAL NOT NULL,
-            y_ref REAL NOT NULL,
-            theta REAL NOT NULL,
-            theta_ref REAL NOT NULL,
-            v_c REAL NOT NULL,
-            w_c REAL NOT NULL
-            )
-            """.format(table_name))
+        cursor.execute(QUERIES['create_table'].format(table_name))
 
         for i in range(len(self.plot_data.t)):
             cursor.execute(
-                """
-                INSERT INTO {} (t, x, x_ref, y, y_ref, theta, theta_ref, v_c, w_c)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-                """.format(table_name),
+                QUERIES['insert_data'].format(table_name),
                 (self.plot_data.t[i], self.plot_data.x[i], self.plot_data.x_ref[i],
                  self.plot_data.y[i], self.plot_data.y_ref[i], self.plot_data.theta[i],
                  self.plot_data.theta_ref[i], self.plot_data.v_c[i], self.plot_data.w_c[i])
