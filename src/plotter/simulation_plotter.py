@@ -6,6 +6,26 @@ import sqlite3
 
 from .plotter import Plotter, PlotData, get_error
 
+QUERIES = {
+    'create_table':
+        """
+        CREATE TABLE IF NOT EXISTS {} (
+        t REAL  NOT NULL PRIMARY KEY,
+        x REAL NOT NULL,
+        x_ref REAL NOT NULL,
+        y REAL NOT NULL,
+        y_ref REAL NOT NULL,
+        theta REAL NOT NULL,
+        theta_ref REAL NOT NULL,
+        v_c REAL NOT NULL,
+        w_c REAL NOT NULL)
+        """,
+    'insert_data':
+        """
+        INSERT INTO {} (t, x, x_ref, y, y_ref, theta, theta_ref, v_c, w_c)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+        """,
+}
 
 class SimulationPlotter(Plotter):
     def __init__(self, trajectory, steps, delta, controller_name, path):
