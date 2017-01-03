@@ -1,11 +1,7 @@
 #!/usr/bin/env python
 # coding=utf-8
-import matplotlib.pyplot as plt
-from errno import EEXIST
-from os import makedirs
-from os.path import exists, dirname
-
 import datetime
+import matplotlib.pyplot as plt
 import sqlite3
 
 from .plotter import Plotter, PlotData, get_error
