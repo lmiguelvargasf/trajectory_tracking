@@ -2,7 +2,7 @@
 from math import atan2, sin
 from math import cos
 
-from orientation import get_angle_between_0_and_2_pi
+from util.angle import get_angle_between_0_and_2_pi
 from .controller import Controller
 
 

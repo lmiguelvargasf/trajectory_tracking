@@ -9,6 +9,8 @@ from trajectory.lemniscate_trajectory import LemniscateTrajectory
 from trajectory.linear_trajectory import LinearTrajectory
 from trajectory.squared_trajectory import SquaredTrajectory
 
+
+
 def create_trajectory(trajectory_name, period):
     if trajectory_name == 'linear':
         return LinearTrajectory(0.05, 0.01, 0.05, 0.01)

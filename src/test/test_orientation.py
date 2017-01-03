@@ -2,7 +2,7 @@
 import unittest
 from math import pi
 
-from orientation import get_angle_between_0_and_2_pi
+from util.angle import get_angle_between_0_and_2_pi
 
 
 class OrientationTest(unittest.TestCase):

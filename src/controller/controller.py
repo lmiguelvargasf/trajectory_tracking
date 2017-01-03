@@ -1,6 +1,5 @@
 #!/usr/bin/env python
-
-from orientation import get_euler_orientation
+from util.angle import get_euler_orientation
 
 
 class Controller:

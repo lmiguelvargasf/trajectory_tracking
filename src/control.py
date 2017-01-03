@@ -10,7 +10,7 @@ from gazebo_msgs.msg import ModelStates
 from geometry_msgs.msg import Twist
 
 from plotter.simulation_plotter import SimulationPlotter
-from util.util import create_trajectory, create_controller
+from util.builder import create_trajectory, create_controller
 
 DELTA_T = 0.1  # this is the sampling time
 SIM_INFO = {
