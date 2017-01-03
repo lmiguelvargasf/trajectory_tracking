@@ -7,7 +7,7 @@ import sqlite3
 from .plotter import Plotter, PlotData, get_error
 
 QUERIES = {
-    'create_table':
+    'create_sim':
         """
         CREATE TABLE IF NOT EXISTS {} (
         t REAL  NOT NULL PRIMARY KEY,
@@ -25,6 +25,18 @@ QUERIES = {
         INSERT INTO {} (t, x, x_ref, y, y_ref, theta, theta_ref, v_c, w_c)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
         """,
+    'create_sims':
+        """
+        CREATE TABLE IF NOT EXISTS simulations (
+        id INTEGER  NOT NULL PRIMARY KEY AUTOINCREMENT,
+        name VARCHAR(255) NOT NULL UNIQUE,
+        creation_datetime DATETIME)
+        """,
+    'insert_sim':
+        """
+        INSERT INTO simulations (name, creation_datetime)
+        VALUES (?, ?)
+        """
 }
 
 TITLES = {
@@ -131,22 +143,11 @@ class SimulationPlotter(Plotter):
         creation_datetime = datetime.datetime.now()
         table_name = ('_'.join(['euler', 'linear', creation_datetime.strftime('%Y_%m_%d_%H_%M_%S')]))
 
-        cursor.execute("""
-        CREATE TABLE IF NOT EXISTS simulations (
-        id INTEGER  NOT NULL PRIMARY KEY AUTOINCREMENT ,
-        name VARCHAR(255) NOT NULL UNIQUE,
-        creation_datetime DATETIME)
-        """)
-
-        cursor.execute(
-            """
-            INSERT INTO simulations (name, creation_datetime)
-            VALUES (?, ?)
-            """, (table_name, creation_datetime)
-        )
+        cursor.execute(QUERIES['create_sims'])
+        cursor.execute(QUERIES['insert_sim'], (table_name, creation_datetime))
         connection.commit()
 
-        cursor.execute(QUERIES['create_table'].format(table_name))
+        cursor.execute(QUERIES['create_sim'].format(table_name))
 
         for i in range(len(self.plot_data.t)):
             cursor.execute(
