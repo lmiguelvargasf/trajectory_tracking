@@ -110,3 +110,6 @@ fabric.properties
 
 # file for testing scripts
 src/tester.py
+
+# idea database resources
+.idea/dataSources/
