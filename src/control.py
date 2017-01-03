@@ -9,6 +9,7 @@ import rospy
 from gazebo_msgs.msg import ModelStates
 from geometry_msgs.msg import Twist
 
+from plotter.plotter import PlotData
 from plotter.simulation_plotter import SimulationPlotter
 from util.builder import create_trajectory, create_controller
 
@@ -32,11 +33,16 @@ def get_pose(message):
 def compute_control_actions():
     global i
     controller.compute_control_actions(current_pose, current_twist, i)
-    plotter.add_data(i * DELTA_T, current_pose, controller.current_reference)
-    plotter.plot_data.theta.append(controller.theta_n)
-    plotter.plot_data.theta_ref.append(controller.theta_ref_n)
-    plotter.plot_data.v_c.append(controller.v_c_n)
-    plotter.plot_data.w_c.append(controller.w_c_n)
+    plot_data.t.append(i * DELTA_T)
+    plot_data.x.append(current_pose.position.x)
+    plot_data.y.append(current_pose.position.y)
+    plot_data.x_ref.append(controller.current_reference.x)
+    plot_data.y_ref.append(controller.current_reference.y)
+    plot_data.theta.append(controller.theta_n)
+    plot_data.theta_ref.append(controller.theta_ref_n)
+    plot_data.v_c.append(controller.v_c_n)
+    plot_data.w_c.append(controller.w_c_n)
+    plot_data.zeros.append(0)
 
     twist = Twist()
     twist.linear.x = controller.v_c_n
@@ -100,7 +106,7 @@ if __name__ == '__main__':
 
     i = 0
     trajectory = create_trajectory(TRAJECTORY, PERIOD)
-    plotter = SimulationPlotter(trajectory, STEPS, DELTA_T, CONTROLLER, PATH_TO_EXPORT_DATA)
+    plot_data = PlotData()
     controller = create_controller(trajectory, CONTROLLER, DELTA_T, SIM_INFO)
     rate = rospy.Rate(int(1 / DELTA_T))
     while not rospy.is_shutdown() and i < STEPS:
@@ -108,10 +114,9 @@ if __name__ == '__main__':
         rate.sleep()
 
     print('Simulation was completed successfully!')
-
     # wait before plotting after simulation is completed
     time.sleep(2)
-
+    plotter = SimulationPlotter(plot_data, CONTROLLER)
     plotter.plot_results()
     plotter.export_results(os.sep.join(__file__.split(os.sep)[:-2]) + '/results.db')
     print ('Data was exported successfully!')

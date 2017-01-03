@@ -18,13 +18,10 @@ class PlotData:
         self.theta_ref = []
         self.v_c = []
         self.w_c = []
-
+        self.zeros = []
 
 class Plotter:
-    def __init__(self, steps):
-        self.steps = steps
-        self.zeros = [0 for _ in range(steps)]
-
+    def __init__(self):
         self.LINE_WIDTH = 2
         self.FIGURE_TITLE_SIZE = 21
         self.PLOT_TITLE_SIZE = 19
