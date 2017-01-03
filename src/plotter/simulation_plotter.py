@@ -42,6 +42,19 @@ TITLES = {
     'v_n_w': r'${\rm results - }\ v_{c}\ {\rm and}\ \omega_{c}$'
 }
 
+LABELS = {
+    't': r'$t[{\rm s}]$',
+    'x': r'$x[{\rm m}]$',
+    'x_error': r'$x_{error}[{\rm m}]$',
+    'y': r'$y[{\rm m}]$',
+    'y_error': r'$y_{error}[{\rm m}]$',
+    'theta': r'$\theta[{\rm rad}]$',
+    'theta_error': r'$\theta_{error}[{\rm rad}]$',
+    'v': r'$v_{c}[{\rm m/s}]$',
+    'w': r'$\omega_{c}[{\rm rad/s}]$',
+}
+
+
 class SimulationPlotter(Plotter):
     def __init__(self, trajectory, steps, delta, controller_name, path):
         Plotter.__init__(self, steps)
