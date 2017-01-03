@@ -100,17 +100,17 @@ class SimulationPlotter(Plotter):
         self.plots_part_2[0].plot(self.plot_data.t, self.plot_data.v_c, 'b', label=r'$v_{c}$')
         self.plots_part_2[1].plot(self.plot_data.t, self.plot_data.w_c, 'b', label=r'$\omega_{c}$')
 
-        self.decorate_plot(self.plots_part_0[0, 0], TITLES['x_vs_t'], r'$t[{\rm s}]$', r'$x[{\rm m}]$')
-        self.decorate_plot(self.plots_part_0[0, 1], TITLES['x_error'], r'$t[{\rm s}]$', r'$x_{error}[{\rm m}]$')
-        self.decorate_plot(self.plots_part_0[1, 0], TITLES['y_vs_t'], r'$t[{\rm s}]$', r'$y[{\rm m}]$')
-        self.decorate_plot(self.plots_part_0[1, 1], TITLES['y_error'], r'$t[{\rm s}]$', r'$y_{error}[{\rm m}]$')
+        self.decorate_plot(self.plots_part_0[0, 0], TITLES['x_vs_t'], LABELS['t'], LABELS['x'])
+        self.decorate_plot(self.plots_part_0[0, 1], TITLES['x_error'], LABELS['t'], LABELS['x_error'])
+        self.decorate_plot(self.plots_part_0[1, 0], TITLES['y_vs_t'], LABELS['t'], LABELS['y'])
+        self.decorate_plot(self.plots_part_0[1, 1], TITLES['y_error'], LABELS['t'], LABELS['y_error'])
 
-        self.decorate_plot(self.plots_part_1[0, 0], TITLES['theta_vs_t'], r'$t[{\rm s}]$', r'$\theta[{\rm rad}]$')
-        self.decorate_plot(self.plots_part_1[1, 0], TITLES['theta_error'], r'$t[{\rm s}]$', r'$\theta_{error}[{\rm rad}]$')
-        self.decorate_plot(trajectory_plot, TITLES['trajectory'], r'$x[{\rm m}]$', r'$y[{\rm m}]$')
+        self.decorate_plot(self.plots_part_1[0, 0], TITLES['theta_vs_t'], LABELS['t'], LABELS['theta'])
+        self.decorate_plot(self.plots_part_1[1, 0], TITLES['theta_error'], LABELS['t'], LABELS['theta_error'])
+        self.decorate_plot(trajectory_plot, TITLES['trajectory'], LABELS['x'], LABELS['y'])
 
-        self.decorate_plot(self.plots_part_2[0], TITLES['v_vs_t'], r'$t[{\rm s}]$', r'$v_{c}[{\rm m/s}]$')
-        self.decorate_plot(self.plots_part_2[1], TITLES['w_vs_t'], r'$t[{\rm s}]$', r'$\omega_{c}[{\rm rad/s}]$')
+        self.decorate_plot(self.plots_part_2[0], TITLES['v_vs_t'], LABELS['t'], LABELS['v'])
+        self.decorate_plot(self.plots_part_2[1], TITLES['w_vs_t'], LABELS['t'], LABELS['w'])
 
         title = ''
         if self.controller == 'euler':
