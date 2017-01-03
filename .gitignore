@@ -113,3 +113,6 @@ src/tester.py
 
 # idea database resources
 .idea/dataSources/
+
+# database
+results.db
