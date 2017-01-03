@@ -17,5 +17,6 @@ class Controller:
         self.y_n = position.y
 
     def set_current_reference(self, reference):
+        self.current_reference = reference
         self.x_ref_n = reference.x
         self.y_ref_n = reference.y
