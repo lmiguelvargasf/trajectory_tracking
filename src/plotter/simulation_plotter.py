@@ -18,7 +18,6 @@ class SimulationPlotter(Plotter):
         self.controller = controller_name
         self.path = path
         self.plot_data = PlotData()
-        self.plot_data.t = [i * self.delta for i in range(self.steps)]
         self.plot_data.x_ref = [trajectory.get_position_at(i * self.delta).x for i in range(self.steps)]
         self.plot_data.y_ref = [trajectory.get_position_at(i * self.delta).y for i in range(self.steps)]
 
@@ -26,7 +25,8 @@ class SimulationPlotter(Plotter):
         self.fig_part_1, self.plots_part_1 = plt.subplots(2, 2, sharex=True)
         self.fig_part_2, self.plots_part_2 = plt.subplots(1, 2)
 
-    def add_point(self, pose):
+    def add_point(self, t, pose):
+        self.plot_data.t.append(t)
         self.plot_data.x.append(pose.position.x)
         self.plot_data.y.append(pose.position.y)
 
