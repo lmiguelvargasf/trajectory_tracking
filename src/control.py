@@ -100,7 +100,7 @@ if __name__ == '__main__':
 
     i = 0
     trajectory = create_trajectory(TRAJECTORY, PERIOD)
-    plotter = SimulationPlotter(trajectory, STEPS, DELTA_T, CONTROLLER, PATH_TO_EXPORT_DATA)
+    plotter = SimulationPlotter(STEPS, CONTROLLER, PATH_TO_EXPORT_DATA)
     controller = create_controller(trajectory, CONTROLLER, DELTA_T, SIM_INFO)
     rate = rospy.Rate(int(1 / DELTA_T))
     while not rospy.is_shutdown() and i < STEPS:

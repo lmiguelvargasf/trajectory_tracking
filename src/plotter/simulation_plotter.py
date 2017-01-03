@@ -9,9 +9,8 @@ from .plotter import Plotter, PlotData, get_error
 
 
 class SimulationPlotter(Plotter):
-    def __init__(self, trajectory, steps, delta, controller_name, path):
+    def __init__(self, steps, controller_name, path):
         Plotter.__init__(self, steps)
-        self.delta = delta
         self.controller = controller_name
         self.path = path
         self.plot_data = PlotData()
