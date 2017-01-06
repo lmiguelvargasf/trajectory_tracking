@@ -33,16 +33,16 @@ def get_pose(message):
 def compute_control_actions():
     global i
     controller.compute_control_actions(current_pose, current_twist, i)
-    plot_data.t.append(i * DELTA_T)
-    plot_data.x.append(current_pose.position.x)
-    plot_data.y.append(current_pose.position.y)
-    plot_data.x_ref.append(controller.current_reference.x)
-    plot_data.y_ref.append(controller.current_reference.y)
-    plot_data.theta.append(controller.theta_n)
-    plot_data.theta_ref.append(controller.theta_ref_n)
-    plot_data.v_c.append(controller.v_c_n)
-    plot_data.w_c.append(controller.w_c_n)
-    plot_data.zeros.append(0)
+    plot_data.data['t'].append(i * DELTA_T)
+    plot_data.data['x'].append(current_pose.position.x)
+    plot_data.data['x_ref'].append(controller.current_reference.x)
+    plot_data.data['y'].append(current_pose.position.y)
+    plot_data.data['y_ref'].append(controller.current_reference.y)
+    plot_data.data['theta'].append(controller.theta_n)
+    plot_data.data['theta_ref'].append(controller.theta_ref_n)
+    plot_data.data['v_c'].append(controller.v_c_n)
+    plot_data.data['w_c'].append(controller.w_c_n)
+    plot_data.data['zeros'].append(0)
 
     twist = Twist()
     twist.linear.x = controller.v_c_n

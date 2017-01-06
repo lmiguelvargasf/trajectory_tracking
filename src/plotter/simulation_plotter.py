@@ -136,12 +136,12 @@ class SimulationPlotter(Plotter):
 
         cursor.execute(QUERIES['create_sim'].format(table_name))
 
-        for i in range(len(self.plot_data.t)):
+        for i in range(len(self.plot_data.data['t'])):
             cursor.execute(
                 QUERIES['insert_data'].format(table_name),
-                (self.plot_data.t[i], self.plot_data.x[i], self.plot_data.x_ref[i],
-                 self.plot_data.y[i], self.plot_data.y_ref[i], self.plot_data.theta[i],
-                 self.plot_data.theta_ref[i], self.plot_data.v_c[i], self.plot_data.w_c[i])
+                (self.plot_data.data['t'][i], self.plot_data.data['x'][i], self.plot_data.data['x_ref'][i],
+                 self.plot_data.data['y'][i], self.plot_data.data['y_ref'][i], self.plot_data.data['theta'][i],
+                 self.plot_data.data['theta_ref'][i], self.plot_data.data['v_c'][i], self.plot_data.data['w_c'][i])
             )
             connection.commit()
 
