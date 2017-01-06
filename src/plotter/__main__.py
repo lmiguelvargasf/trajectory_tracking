@@ -29,6 +29,11 @@ if __name__ == '__main__':
         print_error_message()
         sys.exit(1)
 
+
+    if len(parameters) == 1 and parameters[0] == '--help':
+        print_usage()
+        sys.exit(0)
+
     connection = sqlite3.connect(path_to_database)
     cursor = connection.cursor()
 
