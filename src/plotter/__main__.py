@@ -1,3 +1,4 @@
+import os
 import sqlite3
 
 import sys
@@ -33,6 +34,12 @@ if __name__ == '__main__':
     if len(parameters) == 1 and parameters[0] == '--help':
         print_usage()
         sys.exit(0)
+
+    path_to_database = parameters[0]
+
+    if not os.path.isfile(path_to_database):
+        print('Error: database does not exist!')
+        sys.exit(2)
 
     connection = sqlite3.connect(path_to_database)
     cursor = connection.cursor()
