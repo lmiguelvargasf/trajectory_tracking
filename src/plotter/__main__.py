@@ -4,7 +4,7 @@ import sqlite3
 import sys
 
 from .simulation_plotter import SimulationPlotter
-from .plotter import PlotData
+from .plotter import get_data_container
 from .constants import QUERIES, ARRAY_NAMES
 
 
@@ -27,13 +27,13 @@ def plot_simulation(simulation_name):
     controller = str(simulation_name).split('_')[0]
     number_of_columns = len(ARRAY_NAMES) - 1
     cursor.execute(QUERIES['select_data'].format(simulation_name))
-    plot_data = PlotData()
+    data_container = get_data_container()
     for row in cursor.fetchall():
         for i in range(number_of_columns):
-            plot_data.data[ARRAY_NAMES[i]].append(row[i])
-        plot_data.data[ARRAY_NAMES[number_of_columns]].append(0)
+            data_container[ARRAY_NAMES[i]].append(row[i])
+        data_container[ARRAY_NAMES[number_of_columns]].append(0)
 
-    plotter = SimulationPlotter(plot_data, controller)
+    plotter = SimulationPlotter(data_container, controller)
     plotter.plot_results()
 
 

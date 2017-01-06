@@ -9,7 +9,7 @@ import rospy
 from gazebo_msgs.msg import ModelStates
 from geometry_msgs.msg import Twist
 
-from plotter.plotter import PlotData
+from plotter.plotter import get_data_container
 from plotter.simulation_plotter import SimulationPlotter
 from util.builder import create_trajectory, create_controller
 
@@ -33,16 +33,16 @@ def get_pose(message):
 def compute_control_actions():
     global i
     controller.compute_control_actions(current_pose, current_twist, i)
-    plot_data.data['t'].append(i * DELTA_T)
-    plot_data.data['x'].append(current_pose.position.x)
-    plot_data.data['x_ref'].append(controller.current_reference.x)
-    plot_data.data['y'].append(current_pose.position.y)
-    plot_data.data['y_ref'].append(controller.current_reference.y)
-    plot_data.data['theta'].append(controller.theta_n)
-    plot_data.data['theta_ref'].append(controller.theta_ref_n)
-    plot_data.data['v_c'].append(controller.v_c_n)
-    plot_data.data['w_c'].append(controller.w_c_n)
-    plot_data.data['zeros'].append(0)
+    data_container['t'].append(i * DELTA_T)
+    data_container['x'].append(current_pose.position.x)
+    data_container['x_ref'].append(controller.current_reference.x)
+    data_container['y'].append(current_pose.position.y)
+    data_container['y_ref'].append(controller.current_reference.y)
+    data_container['theta'].append(controller.theta_n)
+    data_container['theta_ref'].append(controller.theta_ref_n)
+    data_container['v_c'].append(controller.v_c_n)
+    data_container['w_c'].append(controller.w_c_n)
+    data_container['zeros'].append(0)
 
     twist = Twist()
     twist.linear.x = controller.v_c_n
@@ -106,7 +106,7 @@ if __name__ == '__main__':
 
     i = 0
     trajectory = create_trajectory(TRAJECTORY, PERIOD)
-    plot_data = PlotData()
+    data_container = get_data_container()
     controller = create_controller(trajectory, CONTROLLER, DELTA_T, SIM_INFO)
     rate = rospy.Rate(int(1 / DELTA_T))
     while not rospy.is_shutdown() and i < STEPS:
@@ -116,7 +116,7 @@ if __name__ == '__main__':
     print('Simulation was completed successfully!')
     # wait before plotting after simulation is completed
     time.sleep(2)
-    plotter = SimulationPlotter(plot_data, CONTROLLER)
+    plotter = SimulationPlotter(data_container, CONTROLLER)
     plotter.plot_results()
     plotter.export_results(os.sep.join(__file__.split(os.sep)[:-2]) + '/results.db')
     print ('Data was exported successfully!')
