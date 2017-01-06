@@ -76,5 +76,10 @@ if __name__ == '__main__':
                 print(row[0])
             sys.exit(0)
 
+        if parameters[0] not in rows:
+            print('Error: simulation does not exists')
+            sys.exit(3)
+
+
     cursor.close()
     connection.close()
