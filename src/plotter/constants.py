@@ -67,3 +67,5 @@ LABELS = {
     'v': r'$v_{c}[{\rm m/s}]$',
     'w': r'$\omega_{c}[{\rm rad/s}]$',
 }
+
+ARRAY_NAMES = ('t', 'x', 'x_ref', 'y', 'y_ref', 'theta', 'theta_ref', 'v_c', 'w_c', 'zeros')

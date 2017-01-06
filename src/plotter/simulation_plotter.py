@@ -19,30 +19,85 @@ class SimulationPlotter(Plotter):
         self.fig_part_2, self.plots_part_2 = plt.subplots(1, 2)
 
     def plot_results(self):
-        e_x = get_error(self.plot_data.x_ref, self.plot_data.x)
-        e_y = get_error(self.plot_data.y_ref, self.plot_data.y)
-        self.plots_part_0[0, 0].plot(self.plot_data.t, self.plot_data.x_ref, 'r--', label=r'$x_{ref}$', lw=self.LINE_WIDTH)
-        self.plots_part_0[0, 0].plot(self.plot_data.t, self.plot_data.x, 'b', label=r'$x$')
-        self.plots_part_0[0, 1].plot(self.plot_data.t, self.plot_data.zeros, 'r--', label=r'$e=0$', lw=self.LINE_WIDTH)
-        self.plots_part_0[0, 1].plot(self.plot_data.t, e_x, 'b', label=r'$x_{error}$')
-        self.plots_part_0[1, 0].plot(self.plot_data.t, self.plot_data.y_ref, 'r--', label=r'$y_{ref}$', lw=self.LINE_WIDTH)
-        self.plots_part_0[1, 0].plot(self.plot_data.t, self.plot_data.y, 'b', label=r'$y$')
-        self.plots_part_0[1, 1].plot(self.plot_data.t, self.plot_data.zeros, 'r--', label=r'$e=0$', lw=self.LINE_WIDTH)
-        self.plots_part_0[1, 1].plot(self.plot_data.t, e_y, 'b', label=r'$y_{error}$')
+        e_x = get_error(self.plot_data.data['x_ref'], self.plot_data.data['x'])
+        e_y = get_error(self.plot_data.data['y_ref'], self.plot_data.data['y'])
 
-        e_theta = get_error(self.plot_data.theta_ref, self.plot_data.theta)
-        self.plots_part_1[0, 0].plot(self.plot_data.t, self.plot_data.theta_ref, 'r--', label=r'$\theta_{ref}$', lw=self.LINE_WIDTH)
-        self.plots_part_1[0, 0].plot(self.plot_data.t, self.plot_data.theta, 'b', label=r'$\theta$')
-        self.plots_part_1[1, 0].plot(self.plot_data.t, self.plot_data.zeros, 'r--', label=r'$e=0$', lw=self.LINE_WIDTH)
-        self.plots_part_1[1, 0].plot(self.plot_data.t, e_theta, 'b', label=r'$\theta_{error}$')
+        self.plots_part_0[0, 0].plot(
+            self.plot_data.data['t'],
+            self.plot_data.data['x_ref'],
+            'r--', label=r'$x_{ref}$', lw=self.LINE_WIDTH)
+
+        self.plots_part_0[0, 0].plot(
+            self.plot_data.data['t'],
+            self.plot_data.data['x'],
+            'b', label=r'$x$')
+
+        self.plots_part_0[0, 1].plot(
+            self.plot_data.data['t'],
+            self.plot_data.data['zeros'],
+            'r--', label=r'$e=0$', lw=self.LINE_WIDTH)
+
+        self.plots_part_0[0, 1].plot(
+            self.plot_data.data['t'], e_x, 'b', label=r'$x_{error}$')
+
+        self.plots_part_0[1, 0].plot(
+            self.plot_data.data['t'],
+            self.plot_data.data['y_ref'],
+            'r--', label=r'$y_{ref}$', lw=self.LINE_WIDTH)
+
+        self.plots_part_0[1, 0].plot(
+            self.plot_data.data['t'],
+            self.plot_data.data['y'],
+            'b', label=r'$y$')
+
+        self.plots_part_0[1, 1].plot(
+            self.plot_data.data['t'],
+            self.plot_data.data['zeros'],
+            'r--', label=r'$e=0$', lw=self.LINE_WIDTH)
+
+        self.plots_part_0[1, 1].plot(
+            self.plot_data.data['t'], e_y, 'b', label=r'$y_{error}$')
+
+        e_theta = get_error(self.plot_data.data['theta_ref'], self.plot_data.data['theta'])
+        self.plots_part_1[0, 0].plot(
+            self.plot_data.data['t'],
+            self.plot_data.data['theta_ref'],
+            'r--', label=r'$\theta_{ref}$', lw=self.LINE_WIDTH)
+
+        self.plots_part_1[0, 0].plot(
+            self.plot_data.data['t'],
+            self.plot_data.data['theta'],
+            'b', label=r'$\theta$')
+
+        self.plots_part_1[1, 0].plot(
+            self.plot_data.data['t'],
+            self.plot_data.data['zeros'],
+            'r--', label=r'$e=0$', lw=self.LINE_WIDTH)
+
+        self.plots_part_1[1, 0].plot(
+            self.plot_data.data['t'], e_theta, 'b', label=r'$\theta_{error}$')
 
         plt.figure(self.fig_part_1.number)
         trajectory_plot = plt.subplot(122)
-        trajectory_plot.plot(self.plot_data.x_ref, self.plot_data.y_ref, 'r--', label=r'${\rm reference}$', lw=self.LINE_WIDTH)
-        trajectory_plot.plot(self.plot_data.x, self.plot_data.y, 'b', label=r'${\rm followed}$')
+        trajectory_plot.plot(
+            self.plot_data.data['x_ref'],
+            self.plot_data.data['y_ref'],
+            'r--', label=r'${\rm reference}$', lw=self.LINE_WIDTH)
 
-        self.plots_part_2[0].plot(self.plot_data.t, self.plot_data.v_c, 'b', label=r'$v_{c}$')
-        self.plots_part_2[1].plot(self.plot_data.t, self.plot_data.w_c, 'b', label=r'$\omega_{c}$')
+        trajectory_plot.plot(
+            self.plot_data.data['x'],
+            self.plot_data.data['y'],
+            'b', label=r'${\rm followed}$')
+
+        self.plots_part_2[0].plot(
+            self.plot_data.data['t'],
+            self.plot_data.data['v_c'],
+            'b', label=r'$v_{c}$')
+
+        self.plots_part_2[1].plot(
+            self.plot_data.data['t'],
+            self.plot_data.data['w_c'],
+            'b', label=r'$\omega_{c}$')
 
         self.decorate_plot(self.plots_part_0[0, 0], TITLES['x_vs_t'], LABELS['t'], LABELS['x'])
         self.decorate_plot(self.plots_part_0[0, 1], TITLES['x_error'], LABELS['t'], LABELS['x_error'])

@@ -5,7 +5,7 @@ import sys
 
 from .simulation_plotter import SimulationPlotter
 from .plotter import PlotData
-from .constants import QUERIES
+from .constants import QUERIES, ARRAY_NAMES
 
 
 def print_error_message():
@@ -25,19 +25,14 @@ def print_usage():
 
 def plot_simulation(simulation_name):
     controller = str(simulation_name).split('_')[0]
+    number_of_columns = len(cursor.execute('''PRAGMA TABLE_INFO({})'''.format(simulation_name)).fetchall())
     cursor.execute(QUERIES['select_data'].format(simulation_name))
     plot_data = PlotData()
     for row in cursor.fetchall():
-        plot_data.t.append(row[0])
-        plot_data.x.append(row[1])
-        plot_data.x_ref.append(row[2])
-        plot_data.y.append(row[3])
-        plot_data.y_ref.append(row[4])
-        plot_data.theta.append(row[5])
-        plot_data.theta_ref.append(row[6])
-        plot_data.v_c.append(row[7])
-        plot_data.w_c.append(row[8])
-        plot_data.zeros.append(0)
+        for i in range(number_of_columns):
+            plot_data.data[ARRAY_NAMES[i]].append(row[i])
+        plot_data.data[ARRAY_NAMES[number_of_columns]].append(0)
+
     plotter = SimulationPlotter(plot_data, controller)
     plotter.plot_results()
 
