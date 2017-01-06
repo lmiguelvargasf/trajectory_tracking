@@ -15,7 +15,7 @@ from util.builder import create_trajectory, create_controller
 
 DELTA_T = 0.1  # this is the sampling time
 SIM_INFO = {
-    'linear': (10.0, 0.075, 1.25),
+    'linear': (60.0, 0.075, 1.25),
     'circular': (120.0, 0.11, 1.25),
     'squared': (160.0, 0.11, 1.25),
     'astroid': (120.0, 0.105, 1.25),
