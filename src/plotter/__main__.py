@@ -75,9 +75,14 @@ if __name__ == '__main__':
                 print(row[0])
             sys.exit(0)
 
-        if parameters[0] not in rows:
+        simulations = [row[0] for row in rows]
+        simulation_name = parameters[1]
+
+        if simulation_name not in simulations:
             print('Error: simulation does not exists')
             sys.exit(3)
+        print("Plotting the results of the simulation: {}...".format(simulation_name))
+        plot_simulation(simulation_name)
 
     cursor.close()
     connection.close()
