@@ -163,6 +163,19 @@ $ cd ~/turtlebot_ws/src/trajectory_tracking/src/
 $ python -m plotter /absolute/path/to/database/results.db
 ```
 
+### Plotting results of a simulation specifying its name
+It is also possible to plot again the results of a simulation by specifying its name:
+
+```
+$ cd ~/turtlebot_ws/src/trajectory_tracking/src/
+$ python -m plotter /absolute/path/to/database/results.db simulation_name
+```
+
+In order to see the list of simulation names use the `--sims` flag:
+```
+$ cd ~/turtlebot_ws/src/trajectory_tracking/src/
+$ python -m plotter /absolute/path/to/database/results.db --sims
+```
 
 ## Trajectories
 Three trajectories have been used to test each controller.
