@@ -154,7 +154,7 @@ root directory of this project, creating a table which name follows the
 following format: `controller_trajectory_YYYY_mm_dd_HH_MM_SS`.
 
 ### Plotting results of the last simulation
-Once a simulation has been completed, it is possible to plot again the results obained
+Once a simulation has been completed, it is possible to plot again the results obtained
 in that simulation. In order to achive this, one has to run the module `plotter` and pass
 the absolute path to the database `results.db` as an argument of the command-line:
 
