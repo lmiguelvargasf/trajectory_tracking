@@ -7,18 +7,24 @@ from .plotter import PlotData
 from .constants import QUERIES
 
 if __name__ == '__main__':
-    print("Plotting results of the last simulation...")
-    plot_data = PlotData()
-
-    connection = sqlite3.connect(sys.argv[1:][0])
+    parameters = sys.argv[1:]
+    connection = sqlite3.connect(parameters[0])
     cursor = connection.cursor()
 
     cursor.execute(QUERIES['select_sim'])
 
+    if len(parameters) == 2 and parameters[1] == '--sims':
+        print('Simulations:')
+        for row in cursor.fetchall():
+            print(row[0])
+        sys.exit(0)
+
+    print("Plotting results of the last simulation...")
     simulation_name = cursor.fetchone()[0]
     controller = str(simulation_name).split('_')[0]
 
     cursor.execute(QUERIES['select_data'].format(simulation_name))
+    plot_data = PlotData()
 
     for row in cursor.fetchall():
         plot_data.t.append(row[0])
