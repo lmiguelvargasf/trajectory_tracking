@@ -8,7 +8,18 @@ from .constants import QUERIES
 
 if __name__ == '__main__':
     parameters = sys.argv[1:]
-    connection = sqlite3.connect(parameters[0])
+    try:
+        path_to_database = parameters[0]
+    except IndexError:
+        print('Error: missing arguments!')
+        print('Try any of these:')
+        print('python -m plotter /path/to/database/results.db')
+        print('\tPlots the results of the last simulation.')
+        print('python -m plotter /path/to/database/results.db --sims')
+        print('\tShows the list of simulations.')
+        sys.exit(1)
+
+    connection = sqlite3.connect(path_to_database)
     cursor = connection.cursor()
 
     cursor.execute(QUERIES['select_sim'])
