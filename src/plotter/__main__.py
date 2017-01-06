@@ -23,13 +23,31 @@ def print_usage():
     print('\tShows the list of simulations.')
 
 
+def plot_simulation(simulation_name):
+    controller = str(simulation_name).split('_')[0]
+    cursor.execute(QUERIES['select_data'].format(simulation_name))
+    plot_data = PlotData()
+    for row in cursor.fetchall():
+        plot_data.t.append(row[0])
+        plot_data.x.append(row[1])
+        plot_data.x_ref.append(row[2])
+        plot_data.y.append(row[3])
+        plot_data.y_ref.append(row[4])
+        plot_data.theta.append(row[5])
+        plot_data.theta_ref.append(row[6])
+        plot_data.v_c.append(row[7])
+        plot_data.w_c.append(row[8])
+        plot_data.zeros.append(0)
+    plotter = SimulationPlotter(plot_data, controller)
+    plotter.plot_results()
+
+
 if __name__ == '__main__':
     parameters = sys.argv[1:]
 
     if len(parameters) not in (1, 2, 3):
         print_error_message()
         sys.exit(1)
-
 
     if len(parameters) == 1 and parameters[0] == '--help':
         print_usage()
@@ -43,31 +61,12 @@ if __name__ == '__main__':
 
     connection = sqlite3.connect(path_to_database)
     cursor = connection.cursor()
-
     cursor.execute(QUERIES['select_sim'])
 
     if len(parameters) == 1:
         print("Plotting results of the last simulation...")
         simulation_name = cursor.fetchone()[0]
-        controller = str(simulation_name).split('_')[0]
-
-        cursor.execute(QUERIES['select_data'].format(simulation_name))
-        plot_data = PlotData()
-
-        for row in cursor.fetchall():
-            plot_data.t.append(row[0])
-            plot_data.x.append(row[1])
-            plot_data.x_ref.append(row[2])
-            plot_data.y.append(row[3])
-            plot_data.y_ref.append(row[4])
-            plot_data.theta.append(row[5])
-            plot_data.theta_ref.append(row[6])
-            plot_data.v_c.append(row[7])
-            plot_data.w_c.append(row[8])
-            plot_data.zeros.append(0)
-
-        plotter = SimulationPlotter(plot_data, controller)
-        plotter.plot_results()
+        plot_simulation(simulation_name)
 
     if len(parameters) == 2:
         rows = cursor.fetchall()
@@ -79,7 +78,6 @@ if __name__ == '__main__':
         if parameters[0] not in rows:
             print('Error: simulation does not exists')
             sys.exit(3)
-
 
     cursor.close()
     connection.close()
