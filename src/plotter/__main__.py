@@ -69,5 +69,12 @@ if __name__ == '__main__':
         plotter = SimulationPlotter(plot_data, controller)
         plotter.plot_results()
 
+    if len(parameters) == 2:
+        rows = cursor.fetchall()
+        if parameters[1] == '--sims':
+            for row in rows:
+                print(row[0])
+            sys.exit(0)
+
     cursor.close()
     connection.close()
