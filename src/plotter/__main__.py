@@ -25,7 +25,7 @@ def print_usage():
 
 def plot_simulation(simulation_name):
     controller = str(simulation_name).split('_')[0]
-    number_of_columns = len(cursor.execute('''PRAGMA TABLE_INFO({})'''.format(simulation_name)).fetchall())
+    number_of_columns = len(ARRAY_NAMES) - 1
     cursor.execute(QUERIES['select_data'].format(simulation_name))
     plot_data = PlotData()
     for row in cursor.fetchall():
