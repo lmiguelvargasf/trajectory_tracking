@@ -38,4 +38,11 @@ LABELS = {
     'w': r'$\omega_{c}[{\rm rad/s}]$',
 }
 
+PLOT = {
+    'line_width': 2,
+    'fig_title_size': 21,
+    'plot_title_size': 19,
+    'axis_label_size': 17
+}
+
 ARRAY_NAMES = ('t', 'x', 'x_ref', 'y', 'y_ref', 'theta', 'theta_ref', 'v_c', 'w_c', 'zeros')
