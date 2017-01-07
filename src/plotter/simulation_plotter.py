@@ -3,10 +3,10 @@
 import matplotlib.pyplot as plt
 
 from .constants import TITLES, LABELS, PLOT, COLORS
-from .plotter import Plotter, get_error
+from .plotter import get_error
 
 
-class SimulationPlotter(Plotter):
+class SimulationPlotter:
     def __init__(self, data, controller_name):
         self.controller = controller_name
         self.data = data
@@ -15,13 +15,17 @@ class SimulationPlotter(Plotter):
         self.fig_part_1, self.plots_part_1 = plt.subplots(2, 2, sharex=True)
         self.fig_part_2, self.plots_part_2 = plt.subplots(1, 2)
 
+    def _plot_reference(self, plot, ys, tag):
+        label = r'$' + '{}'.format(tag) + '_{ref}$'
+        plot.plot(self.data['t'], ys, COLORS['ref'], label=label, lw=PLOT['line_width'])
+
     def plot_results(self):
         x_error = get_error(self.data['x_ref'], self.data['x'])
         y_error = get_error(self.data['y_ref'], self.data['y'])
 
-        self.plots_part_0[0, 0].plot(
-            self.data['t'], self.data['x_ref'],
-            COLORS['ref'], label=r'$x_{ref}$', lw=PLOT['line_width'])
+        self._plot_reference(self.plots_part_0[0, 0], self.data['x_ref'], 'x')
+        self._plot_reference(self.plots_part_0[1, 0], self.data['y_ref'], 'y')
+        self._plot_reference(self.plots_part_1[0, 0], self.data['theta_ref'], r'\theta')
 
         self.plots_part_0[0, 0].plot(
             self.data['t'], self.data['x'],
@@ -36,10 +40,6 @@ class SimulationPlotter(Plotter):
             COLORS['actual'], label=r'$x_{error}$')
 
         self.plots_part_0[1, 0].plot(
-            self.data['t'], self.data['y_ref'],
-            COLORS['ref'], label=r'$y_{ref}$', lw=PLOT['line_width'])
-
-        self.plots_part_0[1, 0].plot(
             self.data['t'], self.data['y'],
             COLORS['actual'], label=r'$y$')
 
@@ -52,10 +52,6 @@ class SimulationPlotter(Plotter):
             COLORS['actual'], label=r'$y_{error}$')
 
         theta_error = get_error(self.data['theta_ref'], self.data['theta'])
-        self.plots_part_1[0, 0].plot(
-            self.data['t'], self.data['theta_ref'],
-            COLORS['ref'], label=r'$\theta_{ref}$', lw=PLOT['line_width'])
-
         self.plots_part_1[0, 0].plot(
             self.data['t'], self.data['theta'],
             COLORS['actual'], label=r'$\theta$')
