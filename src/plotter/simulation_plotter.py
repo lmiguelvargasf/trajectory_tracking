@@ -29,6 +29,7 @@ class SimulationPlotter:
     def plot_results(self):
         x_error = get_error(self.data['x_ref'], self.data['x'])
         y_error = get_error(self.data['y_ref'], self.data['y'])
+        theta_error = get_error(self.data['theta_ref'], self.data['theta'])
 
         self._plot_reference(self.plots_part_0[0, 0], self.data['x_ref'], 'x')
         self._plot_reference(self.plots_part_0[1, 0], self.data['y_ref'], 'y')
@@ -50,7 +51,6 @@ class SimulationPlotter:
             self.data['t'], y_error,
             COLORS['actual'], label=r'$y_{error}$')
 
-        theta_error = get_error(self.data['theta_ref'], self.data['theta'])
 
         self.plots_part_1[1, 0].plot(
             self.data['t'], theta_error,
