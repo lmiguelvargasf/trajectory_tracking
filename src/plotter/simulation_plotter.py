@@ -7,17 +7,17 @@ from .plotter import Plotter, get_error
 
 
 class SimulationPlotter(Plotter):
-    def __init__(self, plot_data, controller_name):
+    def __init__(self, data, controller_name):
         self.controller = controller_name
-        self.data = plot_data
+        self.data = data
 
         self.fig_part_0, self.plots_part_0 = plt.subplots(2, 2, sharex=True)
         self.fig_part_1, self.plots_part_1 = plt.subplots(2, 2, sharex=True)
         self.fig_part_2, self.plots_part_2 = plt.subplots(1, 2)
 
     def plot_results(self):
-        e_x = get_error(self.data['x_ref'], self.data['x'])
-        e_y = get_error(self.data['y_ref'], self.data['y'])
+        x_error = get_error(self.data['x_ref'], self.data['x'])
+        y_error = get_error(self.data['y_ref'], self.data['y'])
 
         self.plots_part_0[0, 0].plot(
             self.data['t'], self.data['x_ref'],
@@ -32,7 +32,7 @@ class SimulationPlotter(Plotter):
             'r--', label=r'$e=0$', lw=PLOT['line_width'])
 
         self.plots_part_0[0, 1].plot(
-            self.data['t'], e_x, 'b', label=r'$x_{error}$')
+            self.data['t'], x_error, 'b', label=r'$x_{error}$')
 
         self.plots_part_0[1, 0].plot(
             self.data['t'], self.data['y_ref'],
@@ -47,9 +47,9 @@ class SimulationPlotter(Plotter):
             'r--', label=r'$e=0$', lw=PLOT['line_width'])
 
         self.plots_part_0[1, 1].plot(
-            self.data['t'], e_y, 'b', label=r'$y_{error}$')
+            self.data['t'], y_error, 'b', label=r'$y_{error}$')
 
-        e_theta = get_error(self.data['theta_ref'], self.data['theta'])
+        theta_error = get_error(self.data['theta_ref'], self.data['theta'])
         self.plots_part_1[0, 0].plot(
             self.data['t'], self.data['theta_ref'],
             'r--', label=r'$\theta_{ref}$', lw=PLOT['line_width'])
@@ -63,7 +63,7 @@ class SimulationPlotter(Plotter):
             'r--', label=r'$e=0$', lw=PLOT['line_width'])
 
         self.plots_part_1[1, 0].plot(
-            self.data['t'], e_theta, 'b', label=r'$\theta_{error}$')
+            self.data['t'], theta_error, 'b', label=r'$\theta_{error}$')
 
         plt.figure(self.fig_part_1.number)
         trajectory_plot = plt.subplot(122)
