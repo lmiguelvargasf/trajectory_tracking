@@ -94,7 +94,6 @@ if __name__ == '__main__':
         SIM_TIME = PERIOD
 
     STEPS = int(SIM_TIME / DELTA_T)
-    PATH_TO_EXPORT_DATA = '../txt_results/' + CONTROLLER + '/' + TRAJECTORY + '/'
 
     rospy.init_node('control')
     current_pose = None
