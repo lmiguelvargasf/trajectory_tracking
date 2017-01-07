@@ -2,7 +2,7 @@
 # coding=utf-8
 import matplotlib.pyplot as plt
 
-from .constants import TITLES, LABELS, PLOT
+from .constants import TITLES, LABELS, PLOT, COLORS
 from .plotter import Plotter, get_error
 
 
@@ -21,67 +21,70 @@ class SimulationPlotter(Plotter):
 
         self.plots_part_0[0, 0].plot(
             self.data['t'], self.data['x_ref'],
-            'r--', label=r'$x_{ref}$', lw=PLOT['line_width'])
+            COLORS['ref'], label=r'$x_{ref}$', lw=PLOT['line_width'])
 
         self.plots_part_0[0, 0].plot(
             self.data['t'], self.data['x'],
-            'b', label=r'$x$')
+            COLORS['actual'], label=r'$x$')
 
         self.plots_part_0[0, 1].plot(
             self.data['t'], self.data['zeros'],
-            'r--', label=r'$e=0$', lw=PLOT['line_width'])
+            COLORS['ref'], label=r'$e=0$', lw=PLOT['line_width'])
 
         self.plots_part_0[0, 1].plot(
-            self.data['t'], x_error, 'b', label=r'$x_{error}$')
+            self.data['t'], x_error,
+            COLORS['actual'], label=r'$x_{error}$')
 
         self.plots_part_0[1, 0].plot(
             self.data['t'], self.data['y_ref'],
-            'r--', label=r'$y_{ref}$', lw=PLOT['line_width'])
+            COLORS['ref'], label=r'$y_{ref}$', lw=PLOT['line_width'])
 
         self.plots_part_0[1, 0].plot(
             self.data['t'], self.data['y'],
-            'b', label=r'$y$')
+            COLORS['actual'], label=r'$y$')
 
         self.plots_part_0[1, 1].plot(
             self.data['t'], self.data['zeros'],
-            'r--', label=r'$e=0$', lw=PLOT['line_width'])
+            COLORS['ref'], label=r'$e=0$', lw=PLOT['line_width'])
 
         self.plots_part_0[1, 1].plot(
-            self.data['t'], y_error, 'b', label=r'$y_{error}$')
+            self.data['t'], y_error,
+            COLORS['actual'], label=r'$y_{error}$')
 
         theta_error = get_error(self.data['theta_ref'], self.data['theta'])
         self.plots_part_1[0, 0].plot(
             self.data['t'], self.data['theta_ref'],
-            'r--', label=r'$\theta_{ref}$', lw=PLOT['line_width'])
+            COLORS['ref'], label=r'$\theta_{ref}$', lw=PLOT['line_width'])
 
         self.plots_part_1[0, 0].plot(
             self.data['t'], self.data['theta'],
-            'b', label=r'$\theta$')
+            COLORS['actual'], label=r'$\theta$')
 
         self.plots_part_1[1, 0].plot(
             self.data['t'], self.data['zeros'],
-            'r--', label=r'$e=0$', lw=PLOT['line_width'])
+            COLORS['ref'], label=r'$e=0$', lw=PLOT['line_width'])
 
         self.plots_part_1[1, 0].plot(
-            self.data['t'], theta_error, 'b', label=r'$\theta_{error}$')
+            self.data['t'], theta_error,
+            COLORS['actual'], label=r'$\theta_{error}$')
 
         plt.figure(self.fig_part_1.number)
         trajectory_plot = plt.subplot(122)
         trajectory_plot.plot(
             self.data['x_ref'], self.data['y_ref'],
-            'r--', label=r'${\rm reference}$', lw=PLOT['line_width'])
+            COLORS['ref'], label=r'${\rm reference}$', lw=PLOT['line_width'])
 
         trajectory_plot.plot(
             self.data['x'], self.data['y'],
-            'b', label=r'${\rm followed}$')
+            COLORS['actual'], label=r'${\rm followed}$')
 
         self.plots_part_2[0].plot(
             self.data['t'], self.data['v_c'],
-            'b', label=r'$v_{c}$')
+            COLORS['actual'], label=r'$v_{c}$')
 
         self.plots_part_2[1].plot(
             self.data['t'], self.data['w_c'],
-            'b', label=r'$\omega_{c}$')
+            COLORS['actual'], label=r'$\omega_{c}$')
 
         self.decorate_plot(self.plots_part_0[0, 0], TITLES['x_vs_t'], LABELS['t'], LABELS['x'])
         self.decorate_plot(self.plots_part_0[0, 1], TITLES['x_error'], LABELS['t'], LABELS['x_error'])
