@@ -19,6 +19,9 @@ class SimulationPlotter:
         label = r'$' + '{}'.format(tag) + '_{ref}$'
         plot.plot(self.data['t'], ys, COLORS['ref'], label=label, lw=PLOT['line_width'])
 
+    def _plot_zeros(self, plot):
+        plot.plot(self.data['t'], self.data['zeros'], COLORS['ref'], label=r'$e=0$', lw=PLOT['line_width'])
+
     def plot_results(self):
         x_error = get_error(self.data['x_ref'], self.data['x'])
         y_error = get_error(self.data['y_ref'], self.data['y'])
@@ -27,13 +30,13 @@ class SimulationPlotter:
         self._plot_reference(self.plots_part_0[1, 0], self.data['y_ref'], 'y')
         self._plot_reference(self.plots_part_1[0, 0], self.data['theta_ref'], r'\theta')
 
+        self._plot_zeros(self.plots_part_0[0, 1])
+        self._plot_zeros(self.plots_part_0[1, 1])
+        self._plot_zeros(self.plots_part_1[1, 0])
+
         self.plots_part_0[0, 0].plot(
             self.data['t'], self.data['x'],
             COLORS['actual'], label=r'$x$')
-
-        self.plots_part_0[0, 1].plot(
-            self.data['t'], self.data['zeros'],
-            COLORS['ref'], label=r'$e=0$', lw=PLOT['line_width'])
 
         self.plots_part_0[0, 1].plot(
             self.data['t'], x_error,
@@ -44,10 +47,6 @@ class SimulationPlotter:
             COLORS['actual'], label=r'$y$')
 
         self.plots_part_0[1, 1].plot(
-            self.data['t'], self.data['zeros'],
-            COLORS['ref'], label=r'$e=0$', lw=PLOT['line_width'])
-
-        self.plots_part_0[1, 1].plot(
             self.data['t'], y_error,
             COLORS['actual'], label=r'$y_{error}$')
 
@@ -55,10 +54,6 @@ class SimulationPlotter:
         self.plots_part_1[0, 0].plot(
             self.data['t'], self.data['theta'],
             COLORS['actual'], label=r'$\theta$')
-
-        self.plots_part_1[1, 0].plot(
-            self.data['t'], self.data['zeros'],
-            COLORS['ref'], label=r'$e=0$', lw=PLOT['line_width'])
 
         self.plots_part_1[1, 0].plot(
             self.data['t'], theta_error,
