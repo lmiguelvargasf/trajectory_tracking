@@ -1,10 +1,8 @@
 #!/usr/bin/env python
 # coding=utf-8
-import datetime
 import matplotlib.pyplot as plt
-import sqlite3
 
-from .constants import TITLES, LABELS, QUERIES
+from .constants import TITLES, LABELS
 from .plotter import Plotter, get_error
 
 
@@ -109,28 +107,3 @@ class SimulationPlotter(Plotter):
         self.fig_part_2.suptitle(title + TITLES['v_n_w'], fontsize=self.FIGURE_TITLE_SIZE)
 
         plt.show()
-
-    def export_results(self, database_path):
-        connection = sqlite3.connect(database_path)
-        cursor = connection.cursor()
-
-        creation_datetime = datetime.datetime.now()
-        table_name = ('_'.join(['euler', 'linear', creation_datetime.strftime('%Y_%m_%d_%H_%M_%S')]))
-
-        cursor.execute(QUERIES['create_sims'])
-        cursor.execute(QUERIES['insert_sim'], (table_name, creation_datetime))
-        connection.commit()
-
-        cursor.execute(QUERIES['create_sim'].format(table_name))
-
-        for i in range(len(self.data['t'])):
-            cursor.execute(
-                QUERIES['insert_data'].format(table_name),
-                (self.data['t'][i], self.data['x'][i], self.data['x_ref'][i],
-                 self.data['y'][i], self.data['y_ref'][i], self.data['theta'][i],
-                 self.data['theta_ref'][i], self.data['v_c'][i], self.data['w_c'][i])
-            )
-            connection.commit()
-
-        cursor.close()
-        connection.close()

@@ -12,6 +12,7 @@ from geometry_msgs.msg import Twist
 from plotter.plotter import get_data_container
 from plotter.simulation_plotter import SimulationPlotter
 from util.builder import create_trajectory, create_controller
+from util.results import export_results
 
 DELTA_T = 0.1  # this is the sampling time
 SIM_INFO = {
@@ -118,7 +119,7 @@ if __name__ == '__main__':
     time.sleep(2)
     plotter = SimulationPlotter(data_container, CONTROLLER)
     plotter.plot_results()
-    plotter.export_results(os.sep.join(__file__.split(os.sep)[:-2]) + '/results.db')
+    export_results(data_container, os.sep.join(__file__.split(os.sep)[:-2]) + '/results.db')
     print ('Data was exported successfully!')
 
     rospy.spin()
