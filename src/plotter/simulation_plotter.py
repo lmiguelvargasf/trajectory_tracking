@@ -15,16 +15,21 @@ class SimulationPlotter:
         self.fig_part_1, self.plots_part_1 = plt.subplots(2, 2, sharex=True)
         self.fig_part_2, self.plots_part_2 = plt.subplots(1, 2)
 
-    def _plot_reference(self, plot, ys, tag):
-        label = r'$' + tag + r'_{ref}$'
-        plot.plot(self.data['t'], ys, COLORS['ref'], label=label, lw=PLOT['line_width'])
+    def _plot_reference(self, plot, tag, ys, xs=None):
+        if xs is None:
+            xs = self.data['t']
+
+        label = r'$' + tag + (r'_{ref}$' if tag in ('x', 'y', r'\theta') else r'$')
+        plot.plot(xs, ys, COLORS['ref'], label=label, lw=PLOT['line_width'])
 
     def _plot_zeros(self, plot):
         plot.plot(self.data['t'], self.data['zeros'], COLORS['ref'], label=r'$e=0$', lw=PLOT['line_width'])
 
-    def _plot_actual_data(self, plot, ys, tag):
+    def _plot_actual_data(self, plot, tag, ys, xs=None):
+        if xs is None:
+            xs = self.data['t']
         label= r'$' + tag + r'$'
-        plot.plot(self.data['t'], ys, COLORS['actual'], label=label)
+        plot.plot(xs, ys, COLORS['actual'], label=label)
 
     def _plot_error(self, plot, error, tag):
         label = r'$' + tag + r'_{error}$'
@@ -35,13 +40,13 @@ class SimulationPlotter:
         y_error = get_error(self.data['y_ref'], self.data['y'])
         theta_error = get_error(self.data['theta_ref'], self.data['theta'])
 
-        self._plot_reference(self.plots_part_0[0, 0], self.data['x_ref'], 'x')
-        self._plot_reference(self.plots_part_0[1, 0], self.data['y_ref'], 'y')
-        self._plot_reference(self.plots_part_1[0, 0], self.data['theta_ref'], r'\theta')
+        self._plot_reference(self.plots_part_0[0, 0], 'x', self.data['x_ref'])
+        self._plot_reference(self.plots_part_0[1, 0], 'y', self.data['y_ref'])
+        self._plot_reference(self.plots_part_1[0, 0], r'\theta', self.data['theta_ref'])
 
-        self._plot_actual_data(self.plots_part_0[0, 0], self.data['x'], 'x')
-        self._plot_actual_data(self.plots_part_0[1, 0], self.data['y'], 'y')
-        self._plot_actual_data(self.plots_part_1[0, 0], self.data['theta'], r'\theta')
+        self._plot_actual_data(self.plots_part_0[0, 0], 'x', self.data['x'])
+        self._plot_actual_data(self.plots_part_0[1, 0], 'y', self.data['y'], )
+        self._plot_actual_data(self.plots_part_1[0, 0], r'\theta', self.data['theta'])
 
         self._plot_zeros(self.plots_part_0[0, 1])
         self._plot_zeros(self.plots_part_0[1, 1])
@@ -53,21 +58,11 @@ class SimulationPlotter:
 
         plt.figure(self.fig_part_1.number)
         trajectory_plot = plt.subplot(122)
-        trajectory_plot.plot(
-            self.data['x_ref'], self.data['y_ref'],
-            COLORS['ref'], label=r'${\rm reference}$', lw=PLOT['line_width'])
+        self._plot_reference(trajectory_plot, r'{\rm reference}', self.data['y_ref'], self.data['x_ref'])
+        self._plot_actual_data(trajectory_plot, r'{\rm followed}', self.data['y'], self.data['x'])
 
-        trajectory_plot.plot(
-            self.data['x'], self.data['y'],
-            COLORS['actual'], label=r'${\rm followed}$')
-
-        self.plots_part_2[0].plot(
-            self.data['t'], self.data['v_c'],
-            COLORS['actual'], label=r'$v_{c}$')
-
-        self.plots_part_2[1].plot(
-            self.data['t'], self.data['w_c'],
-            COLORS['actual'], label=r'$\omega_{c}$')
+        self._plot_actual_data(self.plots_part_2[0], r'v_{c}', self.data['v_c'])
+        self._plot_actual_data(self.plots_part_2[1], r'\omega_{c}', self.data['w_c'])
 
         self._decorate_plot(self.plots_part_0[0, 0], TITLES['x_vs_t'], LABELS['t'], LABELS['x'])
         self._decorate_plot(self.plots_part_0[0, 1], TITLES['x_error'], LABELS['t'], LABELS['x_error'])
