@@ -21,6 +21,12 @@ class Plotter:
     def plot_zeros(self, plot):
         plot.plot(self.t, self.zeros, COLORS['ref'], label=r'$e=0$', lw=PLOT['line_width'])
 
+    def plot_actual_data(self, plot, tag, ys, xs=None, color=COLORS['line_0']):
+        if xs is None:
+            xs = self.t
+        label= r'$' + tag + r'$'
+        plot.plot(xs, ys, color, label=label)
+
     def plot_reference(self, plot, tag, ys, xs=None):
         if xs is None:
             xs = self.t

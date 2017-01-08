@@ -14,12 +14,6 @@ class SimulationPlotter(Plotter):
         self.fig_part_1, self.plots_part_1 = plt.subplots(2, 2, sharex=True)
         self.fig_part_2, self.plots_part_2 = plt.subplots(1, 2)
 
-    def _plot_actual_data(self, plot, tag, ys, xs=None, color=COLORS['line_0']):
-        if xs is None:
-            xs = self.t
-        label= r'$' + tag + r'$'
-        plot.plot(xs, ys, color, label=label)
-
     def _plot_error(self, plot, error, tag):
         label = r'$' + tag + r'_{error}$'
         plot.plot(self.t, error, COLORS['line_0'], label=label)
@@ -33,9 +27,9 @@ class SimulationPlotter(Plotter):
         self.plot_reference(self.plots_part_0[1, 0], 'y', self.data['y_ref'])
         self.plot_reference(self.plots_part_1[0, 0], r'\theta', self.data['theta_ref'])
 
-        self._plot_actual_data(self.plots_part_0[0, 0], 'x', self.data['x'])
-        self._plot_actual_data(self.plots_part_0[1, 0], 'y', self.data['y'], )
-        self._plot_actual_data(self.plots_part_1[0, 0], r'\theta', self.data['theta'])
+        self.plot_actual_data(self.plots_part_0[0, 0], 'x', self.data['x'])
+        self.plot_actual_data(self.plots_part_0[1, 0], 'y', self.data['y'], )
+        self.plot_actual_data(self.plots_part_1[0, 0], r'\theta', self.data['theta'])
 
         self.plot_zeros(self.plots_part_0[0, 1])
         self.plot_zeros(self.plots_part_0[1, 1])
@@ -48,10 +42,10 @@ class SimulationPlotter(Plotter):
         plt.figure(self.fig_part_1.number)
         trajectory_plot = plt.subplot(122)
         self.plot_reference(trajectory_plot, r'{\rm reference}', self.data['y_ref'], self.data['x_ref'])
-        self._plot_actual_data(trajectory_plot, r'{\rm followed}', self.data['y'], self.data['x'])
+        self.plot_actual_data(trajectory_plot, r'{\rm followed}', self.data['y'], self.data['x'])
 
-        self._plot_actual_data(self.plots_part_2[0], r'v_{c}', self.data['v_c'])
-        self._plot_actual_data(self.plots_part_2[1], r'\omega_{c}', self.data['w_c'])
+        self.plot_actual_data(self.plots_part_2[0], r'v_{c}', self.data['v_c'])
+        self.plot_actual_data(self.plots_part_2[1], r'\omega_{c}', self.data['w_c'])
 
         self._decorate_plot(self.plots_part_0[0, 0], TITLES['x_vs_t'], LABELS['t'], LABELS['x'])
         self._decorate_plot(self.plots_part_0[0, 1], TITLES['x_error'], LABELS['t'], LABELS['x_error'])
