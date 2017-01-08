@@ -38,8 +38,8 @@ class ComparisonPlotter(Plotter):
             self.plot_error(self.position_error_plot[0], x_error, tag, color)
             self.plot_error(self.position_error_plot[1], y_error, tag, color)
 
-
-
+            self.plot_actual_data(self.control_action_plot[0], tag, data['v_c'], color=color)
+            self.plot_actual_data(self.control_action_plot[1], tag, data['w_c'], color=color)
 
         self.plot_zeros(self.position_error_plot[0])
         self.plot_zeros(self.position_error_plot[1])
