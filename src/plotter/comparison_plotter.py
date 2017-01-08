@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 import matplotlib.pyplot as plt
 
+from cv2.viz import LINE_WIDTH
+
 
 class ComparisonPlotter:
     def __init__(self, data_list):
@@ -16,6 +18,7 @@ class ComparisonPlotter:
         self.zeros = temp_data['zeros']
 
     def plot_comparison(self):
+        self.trajectory_plot.plot(self.x_ref, self.y_ref, 'r--', label=r'${\rm reference}$', lw=LINE_WIDTH)
         plt.show()
 
 if __name__ == '__main__':
