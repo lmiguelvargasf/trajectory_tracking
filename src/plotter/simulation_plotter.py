@@ -3,11 +3,12 @@
 import matplotlib.pyplot as plt
 
 from .constants import TITLES, LABELS, PLOT, COLORS
-from .plotter import get_error
+from .plotter import get_error, Plotter
 
 
-class SimulationPlotter:
+class SimulationPlotter(Plotter):
     def __init__(self, data, controller_name):
+        Plotter.__init__(self)
         self.controller = controller_name
         self.data = data
 

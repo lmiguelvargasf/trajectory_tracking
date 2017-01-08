@@ -14,4 +14,5 @@ def get_data_container():
 
 
 class Plotter:
-    pass
+    def __init__(self):
+        pass
