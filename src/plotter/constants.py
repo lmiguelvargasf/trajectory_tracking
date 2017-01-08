@@ -19,6 +19,7 @@ TITLES = {
     'theta_vs_t': r'$\theta,\ \theta_{ref}\ {\rm vs}\ t$',
     'theta_error': r'$\theta_{error}\ {\rm vs}\ t$',
     'trajectory': r'${\rm followed\ trajectory\ vs\ reference\ trajectory}$',
+    'trajectories': r'${\rm followed\ trajectories\ vs\ reference\ trajectory}$',
     'v_vs_t': r'$v_{c}\ {\rm vs}\ t$',
     'w_vs_t': r'$\omega_{c}\ {\rm vs}\ t$',
     'x_n_y': r'${\rm results - }\ x\ {\rm and}\ y$',
