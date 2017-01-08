@@ -33,3 +33,10 @@ class Plotter:
 
         label = r'$' + tag + (r'_{ref}$' if tag in ('x', 'y', r'\theta') else r'$')
         plot.plot(xs, ys, COLORS['ref'], label=label, lw=PLOT['line_width'])
+
+    def _decorate_plot(self, plot, title, x_label, y_label):
+        plot.set_title(title, fontsize=PLOT['plot_title_size'])
+        plot.set_xlabel(x_label, fontsize=PLOT['axis_label_size'])
+        plot.set_ylabel(y_label, fontsize=PLOT['axis_label_size'])
+        plot.legend(loc=0)
+        plot.grid()

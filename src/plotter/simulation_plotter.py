@@ -70,10 +70,3 @@ class SimulationPlotter(Plotter):
         self.fig_part_2.suptitle(title + TITLES['v_n_w'], fontsize=PLOT['fig_title_size'])
 
         plt.show()
-
-    def _decorate_plot(self, plot, title, x_label, y_label):
-        plot.set_title(title, fontsize=PLOT['plot_title_size'])
-        plot.set_xlabel(x_label, fontsize=PLOT['axis_label_size'])
-        plot.set_ylabel(y_label, fontsize=PLOT['axis_label_size'])
-        plot.legend(loc=0)
-        plot.grid()
