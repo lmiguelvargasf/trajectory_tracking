@@ -12,10 +12,6 @@ class SimulationPlotter(Plotter):
         self.controller = controller_name
         self.data = data
 
-        self.fig_part_0, self.plots_part_0 = plt.subplots(2, 2, sharex=True)
-        self.fig_part_1, self.plots_part_1 = plt.subplots(2, 2, sharex=True)
-        self.fig_part_2, self.plots_part_2 = plt.subplots(1, 2)
-
     def _plot_reference(self, plot, tag, ys, xs=None):
         if xs is None:
             xs = self.data['t']

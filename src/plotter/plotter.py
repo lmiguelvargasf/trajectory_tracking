@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # coding=utf-8
-from __future__ import unicode_literals
-
+import matplotlib.pyplot as plt
 from .constants import ARRAY_NAMES
 
 
@@ -15,4 +14,6 @@ def get_data_container():
 
 class Plotter:
     def __init__(self):
-        pass
+        self.fig_part_0, self.plots_part_0 = plt.subplots(2, 2, sharex=True)
+        self.fig_part_1, self.plots_part_1 = plt.subplots(2, 2, sharex=True)
+        self.fig_part_2, self.plots_part_2 = plt.subplots(1, 2)

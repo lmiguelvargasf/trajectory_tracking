@@ -3,4 +3,5 @@ from plotter.plotter import Plotter
 
 
 class ComparisonPlotter(Plotter):
-    pass
+    def __init__(self):
+        Plotter.__init__(self)
