@@ -46,12 +46,12 @@ class ComparisonPlotter(Plotter):
 
         self.decorate_plot(self.trajectory_plot, TITLES['trajectories'], LABELS['x'], LABELS['y'])
 
-        self.decorate_plot(self.position_plot[0], TITLES['x_vs_t'], LABELS['t'], LABELS['x'])
+        self.decorate_plot(self.position_plot[0], TITLES['x_vs_t'], y_label=LABELS['x'])
         self.decorate_plot(self.position_plot[1], TITLES['y_vs_t'], LABELS['t'], LABELS['y'])
 
-        self.decorate_plot(self.position_error_plot[0], TITLES['x_error'], LABELS['t'], LABELS['x_error'])
+        self.decorate_plot(self.position_error_plot[0], TITLES['x_error'], y_label=LABELS['x_error'])
         self.decorate_plot(self.position_error_plot[1], TITLES['y_error'], LABELS['t'], LABELS['y_error'])
 
-        self.decorate_plot(self.control_action_plot[0], TITLES['v_vs_t'], LABELS['t'], LABELS['v'])
+        self.decorate_plot(self.control_action_plot[0], TITLES['v_vs_t'], y_label=LABELS['v'])
         self.decorate_plot(self.control_action_plot[1], TITLES['w_vs_t'], LABELS['t'], LABELS['w'])
         plt.show()
