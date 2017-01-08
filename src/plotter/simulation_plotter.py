@@ -14,7 +14,7 @@ class SimulationPlotter(Plotter):
         self.fig_part_1, self.plots_part_1 = plt.subplots(2, 2, sharex=True)
         self.fig_part_2, self.plots_part_2 = plt.subplots(1, 2)
 
-    def _plot_reference(self, plot, tag, ys, xs=None):
+    def plot_reference(self, plot, tag, ys, xs=None):
         if xs is None:
             xs = self.t
 
@@ -39,9 +39,9 @@ class SimulationPlotter(Plotter):
         y_error = get_error(self.data['y_ref'], self.data['y'])
         theta_error = get_error(self.data['theta_ref'], self.data['theta'])
 
-        self._plot_reference(self.plots_part_0[0, 0], 'x', self.data['x_ref'])
-        self._plot_reference(self.plots_part_0[1, 0], 'y', self.data['y_ref'])
-        self._plot_reference(self.plots_part_1[0, 0], r'\theta', self.data['theta_ref'])
+        self.plot_reference(self.plots_part_0[0, 0], 'x', self.data['x_ref'])
+        self.plot_reference(self.plots_part_0[1, 0], 'y', self.data['y_ref'])
+        self.plot_reference(self.plots_part_1[0, 0], r'\theta', self.data['theta_ref'])
 
         self._plot_actual_data(self.plots_part_0[0, 0], 'x', self.data['x'])
         self._plot_actual_data(self.plots_part_0[1, 0], 'y', self.data['y'], )
@@ -57,7 +57,7 @@ class SimulationPlotter(Plotter):
 
         plt.figure(self.fig_part_1.number)
         trajectory_plot = plt.subplot(122)
-        self._plot_reference(trajectory_plot, r'{\rm reference}', self.data['y_ref'], self.data['x_ref'])
+        self.plot_reference(trajectory_plot, r'{\rm reference}', self.data['y_ref'], self.data['x_ref'])
         self._plot_actual_data(trajectory_plot, r'{\rm followed}', self.data['y'], self.data['x'])
 
         self._plot_actual_data(self.plots_part_2[0], r'v_{c}', self.data['v_c'])
