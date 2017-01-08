@@ -45,4 +45,7 @@ class ComparisonPlotter(Plotter):
             self.plot_actual_data(self.control_action_plot[1], tag, data['w_c'], color=color)
 
         self.decorate_plot(self.trajectory_plot, TITLES['trajectories'], LABELS['x'], LABELS['y'])
+
+        self.decorate_plot(self.position_plot[0], TITLES['x_vs_t'], LABELS['t'], LABELS['x'])
+        self.decorate_plot(self.position_plot[1], TITLES['y_vs_t'], LABELS['t'], LABELS['y'])
         plt.show()
