@@ -2,7 +2,7 @@
 # coding=utf-8
 import matplotlib.pyplot as plt
 
-from .constants import TITLES, LABELS, PLOT, COLORS
+from .constants import TITLES, LABELS, PLOT
 from .plotter import get_error, Plotter
 
 
@@ -13,10 +13,6 @@ class SimulationPlotter(Plotter):
         self.fig_part_0, self.plots_part_0 = plt.subplots(2, 2, sharex=True)
         self.fig_part_1, self.plots_part_1 = plt.subplots(2, 2, sharex=True)
         self.fig_part_2, self.plots_part_2 = plt.subplots(1, 2)
-
-    def plot_error(self, plot, error, tag):
-        label = r'$' + tag + r'_{error}$'
-        plot.plot(self.t, error, COLORS['line_0'], label=label)
 
     def plot_results(self):
         x_error = get_error(self.data['x_ref'], self.data['x'])
