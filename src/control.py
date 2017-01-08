@@ -106,7 +106,7 @@ if __name__ == '__main__':
 
     i = 0
     trajectory = create_trajectory(TRAJECTORY, PERIOD)
-    data_container = get_data_container()
+    data_container = get_data_container(CONTROLLER)
     controller = create_controller(trajectory, CONTROLLER, DELTA_T, SIM_INFO)
     rate = rospy.Rate(int(1 / DELTA_T))
     while not rospy.is_shutdown() and i < STEPS:
@@ -116,7 +116,7 @@ if __name__ == '__main__':
     print('Simulation was completed successfully!')
     # wait before plotting after simulation is completed
     time.sleep(2)
-    plotter = SimulationPlotter(data_container, CONTROLLER)
+    plotter = SimulationPlotter(data_container)
     plotter.plot_results()
     export_results(data_container, os.sep.join(__file__.split(os.sep)[:-2]) + '/results.db')
     print ('Data was exported successfully!')

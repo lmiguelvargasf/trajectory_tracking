@@ -7,9 +7,8 @@ from .plotter import get_error, Plotter
 
 
 class SimulationPlotter(Plotter):
-    def __init__(self, data, controller_name):
+    def __init__(self, data):
         Plotter.__init__(self)
-        self.controller = controller_name
         self.data = data
 
     def _plot_reference(self, plot, tag, ys, xs=None):
@@ -74,9 +73,9 @@ class SimulationPlotter(Plotter):
         self._decorate_plot(self.plots_part_2[1], TITLES['w_vs_t'], LABELS['t'], LABELS['w'])
 
         title = ''
-        if self.controller == 'euler':
+        if self.data['controller_name'] == 'euler':
             title = r'${\rm Euler\ method\ controller}\ $'
-        elif self.controller == 'pid':
+        elif self.data['controller_name'] == 'pid':
             title = r'${\rm PID\ controller}\ $'
 
         self.fig_part_0.suptitle(title + TITLES['x_n_y'], fontsize=PLOT['fig_title_size'])
