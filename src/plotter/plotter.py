@@ -34,9 +34,9 @@ class Plotter:
         label = r'$' + tag + (r'_{ref}$' if tag in ('x', 'y', r'\theta') else r'$')
         plot.plot(xs, ys, COLORS['ref'], label=label, lw=PLOT['line_width'])
 
-    def plot_error(self, plot, error, tag):
-        label = r'$' + tag + r'_{error}$'
-        plot.plot(self.t, error, COLORS['line_0'], label=label)
+    def plot_error(self, plot, error, tag, color=COLORS['line_0']):
+        label = r'$' + tag + (r'_{error}$' if tag in ('x', 'y', r'\theta') else r'$')
+        plot.plot(self.t, error, color, label=label)
 
     def _decorate_plot(self, plot, title, x_label, y_label):
         plot.set_title(title, fontsize=PLOT['plot_title_size'])
