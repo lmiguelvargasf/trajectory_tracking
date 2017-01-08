@@ -14,11 +14,11 @@ class SimulationPlotter(Plotter):
         self.fig_part_1, self.plots_part_1 = plt.subplots(2, 2, sharex=True)
         self.fig_part_2, self.plots_part_2 = plt.subplots(1, 2)
 
-    def _plot_actual_data(self, plot, tag, ys, xs=None):
+    def _plot_actual_data(self, plot, tag, ys, xs=None, color=COLORS['line_0']):
         if xs is None:
             xs = self.t
         label= r'$' + tag + r'$'
-        plot.plot(xs, ys, COLORS['line_0'], label=label)
+        plot.plot(xs, ys, color, label=label)
 
     def _plot_error(self, plot, error, tag):
         label = r'$' + tag + r'_{error}$'
