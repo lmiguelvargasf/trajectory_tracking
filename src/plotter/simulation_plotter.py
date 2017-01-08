@@ -14,7 +14,7 @@ class SimulationPlotter(Plotter):
         self.fig_part_1, self.plots_part_1 = plt.subplots(2, 2, sharex=True)
         self.fig_part_2, self.plots_part_2 = plt.subplots(1, 2)
 
-    def _plot_error(self, plot, error, tag):
+    def plot_error(self, plot, error, tag):
         label = r'$' + tag + r'_{error}$'
         plot.plot(self.t, error, COLORS['line_0'], label=label)
 
@@ -35,9 +35,9 @@ class SimulationPlotter(Plotter):
         self.plot_zeros(self.plots_part_0[1, 1])
         self.plot_zeros(self.plots_part_1[1, 0])
 
-        self._plot_error(self.plots_part_0[0, 1], x_error, 'x')
-        self._plot_error(self.plots_part_0[1, 1], y_error, 'y')
-        self._plot_error(self.plots_part_1[1, 0], theta_error, r'\theta')
+        self.plot_error(self.plots_part_0[0, 1], x_error, 'x')
+        self.plot_error(self.plots_part_0[1, 1], y_error, 'y')
+        self.plot_error(self.plots_part_1[1, 0], theta_error, r'\theta')
 
         plt.figure(self.fig_part_1.number)
         trajectory_plot = plt.subplot(122)
