@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 import matplotlib.pyplot as plt
 
+from .constants import COLORS
 from .plotter import Plotter
-from .constants import PLOT, COLORS
 
 
 class ComparisonPlotter(Plotter):
@@ -24,10 +24,10 @@ class ComparisonPlotter(Plotter):
         self.plot_reference(self.position_plot[0], 'x', self.x_ref)
         self.plot_reference(self.position_plot[1], 'y', self.y_ref)
 
-        for i in range(len(self.data_list)):
-            self.trajectory_plot.plot(self.data_list[i]['x'], self.data_list[i]['y'],
-                                      COLORS['line_' + str(i)],
-                                      label=r'${\rm' + self.data_list[i]['controller_name'] + str(i) + r'}$')
+        for i, data in enumerate(self.data_list):
+            tag = r'{\rm' + self.data_list[i]['controller_name'] + str(i) + r'}'
+            color = COLORS['line_' + str(i)]
+            self.plot_actual_data(self.trajectory_plot, tag, data['y'], data['x'], color)
 
         self.plot_zeros(self.position_error_plot[0])
         self.plot_zeros(self.position_error_plot[1])
