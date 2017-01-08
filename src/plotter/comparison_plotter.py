@@ -25,7 +25,7 @@ class ComparisonPlotter(Plotter):
         self.plot_reference(self.position_plot[1], 'y', self.y_ref)
 
         for i, data in enumerate(self.data_list):
-            tag = r'{\rm' + self.data_list[i]['controller_name'] + str(i) + r'}'
+            tag = r'{\rm' + self.data_list[i]['controller_name'] + r'}'
             color = COLORS['line_' + str(i)]
             self.plot_actual_data(self.trajectory_plot, tag, data['y'], data['x'], color)
 
