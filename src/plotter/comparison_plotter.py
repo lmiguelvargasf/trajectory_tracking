@@ -48,4 +48,8 @@ class ComparisonPlotter(Plotter):
 
         self.decorate_plot(self.position_plot[0], TITLES['x_vs_t'], LABELS['t'], LABELS['x'])
         self.decorate_plot(self.position_plot[1], TITLES['y_vs_t'], LABELS['t'], LABELS['y'])
+
+        self.decorate_plot(self.position_error_plot[0], TITLES['x_error'], LABELS['t'], LABELS['x_error'])
+        self.decorate_plot(self.position_error_plot[1], TITLES['y_error'], LABELS['t'], LABELS['y_error'])
+
         plt.show()
