@@ -2,7 +2,9 @@
 from plotter.plotter import Plotter
 
 
-class ComparisonPlotter(Plotter):
+class ComparisonPlotter:
     def __init__(self, data_list):
-        Plotter.__init__(self)
-        self.data_list = data_list
+        pass
+
+    def plot_comparison(self):
+        pass

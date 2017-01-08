@@ -15,7 +15,4 @@ def get_data_container(controller_name):
 
 
 class Plotter:
-    def __init__(self):
-        self.fig_part_0, self.plots_part_0 = plt.subplots(2, 2, sharex=True)
-        self.fig_part_1, self.plots_part_1 = plt.subplots(2, 2, sharex=True)
-        self.fig_part_2, self.plots_part_2 = plt.subplots(1, 2)
+    pass

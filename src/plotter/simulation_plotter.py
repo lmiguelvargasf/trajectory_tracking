@@ -3,13 +3,15 @@
 import matplotlib.pyplot as plt
 
 from .constants import TITLES, LABELS, PLOT, COLORS
-from .plotter import get_error, Plotter
+from .plotter import get_error
 
 
-class SimulationPlotter(Plotter):
+class SimulationPlotter:
     def __init__(self, data):
-        Plotter.__init__(self)
         self.data = data
+        self.fig_part_0, self.plots_part_0 = plt.subplots(2, 2, sharex=True)
+        self.fig_part_1, self.plots_part_1 = plt.subplots(2, 2, sharex=True)
+        self.fig_part_2, self.plots_part_2 = plt.subplots(1, 2)
 
     def _plot_reference(self, plot, tag, ys, xs=None):
         if xs is None:
