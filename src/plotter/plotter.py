@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 # coding=utf-8
-import matplotlib.pyplot as plt
 from .constants import ARRAY_NAMES
 
 
@@ -15,4 +14,6 @@ def get_data_container(controller_name):
 
 
 class Plotter:
-    pass
+    def __init__(self, t, zeros):
+        self.t = t
+        self.zeros = zeros

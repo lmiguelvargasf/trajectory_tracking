@@ -3,11 +3,12 @@
 import matplotlib.pyplot as plt
 
 from .constants import TITLES, LABELS, PLOT, COLORS
-from .plotter import get_error
+from .plotter import get_error, Plotter
 
 
-class SimulationPlotter:
+class SimulationPlotter(Plotter):
     def __init__(self, data):
+        Plotter.__init__(self, data.pop('t'), data.pop('zeros'))
         self.data = data
         self.fig_part_0, self.plots_part_0 = plt.subplots(2, 2, sharex=True)
         self.fig_part_1, self.plots_part_1 = plt.subplots(2, 2, sharex=True)
@@ -15,23 +16,23 @@ class SimulationPlotter:
 
     def _plot_reference(self, plot, tag, ys, xs=None):
         if xs is None:
-            xs = self.data['t']
+            xs = self.t
 
         label = r'$' + tag + (r'_{ref}$' if tag in ('x', 'y', r'\theta') else r'$')
         plot.plot(xs, ys, COLORS['ref'], label=label, lw=PLOT['line_width'])
 
     def _plot_zeros(self, plot):
-        plot.plot(self.data['t'], self.data['zeros'], COLORS['ref'], label=r'$e=0$', lw=PLOT['line_width'])
+        plot.plot(self.t, self.zeros, COLORS['ref'], label=r'$e=0$', lw=PLOT['line_width'])
 
     def _plot_actual_data(self, plot, tag, ys, xs=None):
         if xs is None:
-            xs = self.data['t']
+            xs = self.t
         label= r'$' + tag + r'$'
         plot.plot(xs, ys, COLORS['actual'], label=label)
 
     def _plot_error(self, plot, error, tag):
         label = r'$' + tag + r'_{error}$'
-        plot.plot(self.data['t'], error, COLORS['actual'], label=label)
+        plot.plot(self.t, error, COLORS['actual'], label=label)
 
     def plot_results(self):
         x_error = get_error(self.data['x_ref'], self.data['x'])
