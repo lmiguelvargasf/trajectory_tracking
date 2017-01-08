@@ -2,7 +2,7 @@
 import matplotlib.pyplot as plt
 
 from .constants import COLORS
-from .plotter import Plotter
+from .plotter import Plotter, get_error
 
 
 class ComparisonPlotter(Plotter):
@@ -25,11 +25,21 @@ class ComparisonPlotter(Plotter):
         self.plot_reference(self.position_plot[1], 'y', self.y_ref)
 
         for i, data in enumerate(self.data_list):
+            x_error = get_error(data['x_ref'], data['x'])
+            y_error = get_error(data['y_ref'], data['y'])
+
             tag = r'{\rm' + self.data_list[i]['controller_name'] + r'}'
             color = COLORS['line_' + str(i)]
+
             self.plot_actual_data(self.trajectory_plot, tag, data['y'], data['x'], color)
             self.plot_actual_data(self.position_plot[0], tag, data['x'], color=color)
             self.plot_actual_data(self.position_plot[1], tag, data['y'], color=color)
+
+            self.plot_error(self.position_error_plot[0], x_error, tag, color)
+            self.plot_error(self.position_error_plot[1], y_error, tag, color)
+
+
+
 
         self.plot_zeros(self.position_error_plot[0])
         self.plot_zeros(self.position_error_plot[1])
