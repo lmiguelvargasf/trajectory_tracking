@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # coding=utf-8
-from .constants import ARRAY_NAMES
+from .constants import ARRAY_NAMES, COLORS, PLOT
 
 
 def get_error(reference, actual):
@@ -17,3 +17,10 @@ class Plotter:
     def __init__(self, t, zeros):
         self.t = t
         self.zeros = zeros
+
+    def plot_reference(self, plot, tag, ys, xs=None):
+        if xs is None:
+            xs = self.t
+
+        label = r'$' + tag + (r'_{ref}$' if tag in ('x', 'y', r'\theta') else r'$')
+        plot.plot(xs, ys, COLORS['ref'], label=label, lw=PLOT['line_width'])

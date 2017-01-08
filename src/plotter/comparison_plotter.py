@@ -19,5 +19,7 @@ class ComparisonPlotter(Plotter):
         self.y_ref = temp_data['y_ref']
 
     def plot_comparison(self):
-        self.trajectory_plot.plot(self.x_ref, self.y_ref, 'r--', label=r'${\rm reference}$', lw=PLOT['line_width'])
+        self.plot_reference(self.trajectory_plot, r'${\rm reference}$', self.y_ref, self.x_ref)
+        self.plot_reference(self.position_plot[0], 'x', self.x_ref)
+        self.plot_reference(self.position_plot[1], 'y', self.y_ref)
         plt.show()

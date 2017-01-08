@@ -8,18 +8,11 @@ from .plotter import get_error, Plotter
 
 class SimulationPlotter(Plotter):
     def __init__(self, data):
-        Plotter.__init__(self, data.pop('t'), data.pop('zeros'))
+        Plotter.__init__(self, data.pop('t'), data.pop('zeros'), )
         self.data = data
         self.fig_part_0, self.plots_part_0 = plt.subplots(2, 2, sharex=True)
         self.fig_part_1, self.plots_part_1 = plt.subplots(2, 2, sharex=True)
         self.fig_part_2, self.plots_part_2 = plt.subplots(1, 2)
-
-    def plot_reference(self, plot, tag, ys, xs=None):
-        if xs is None:
-            xs = self.t
-
-        label = r'$' + tag + (r'_{ref}$' if tag in ('x', 'y', r'\theta') else r'$')
-        plot.plot(xs, ys, COLORS['ref'], label=label, lw=PLOT['line_width'])
 
     def _plot_zeros(self, plot):
         plot.plot(self.t, self.zeros, COLORS['ref'], label=r'$e=0$', lw=PLOT['line_width'])
