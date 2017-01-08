@@ -28,6 +28,8 @@ class ComparisonPlotter(Plotter):
             tag = r'{\rm' + self.data_list[i]['controller_name'] + r'}'
             color = COLORS['line_' + str(i)]
             self.plot_actual_data(self.trajectory_plot, tag, data['y'], data['x'], color)
+            self.plot_actual_data(self.position_plot[0], tag, data['x'], color=color)
+            self.plot_actual_data(self.position_plot[1], tag, data['y'], color=color)
 
         self.plot_zeros(self.position_error_plot[0])
         self.plot_zeros(self.position_error_plot[1])
