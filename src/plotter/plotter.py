@@ -11,3 +11,7 @@ def get_error(reference, actual):
 
 def get_data_container():
     return {array: [] for array in ARRAY_NAMES}
+
+
+class Plotter:
+    pass
