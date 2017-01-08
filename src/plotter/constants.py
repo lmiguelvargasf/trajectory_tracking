@@ -47,7 +47,12 @@ PLOT = {
 
 COLORS = {
     'ref': '--r',
-    'actual': 'b',
+    'line_0': 'b',
+    'line_1': 'g',
+    'line_2': 'c',
+    'line_3': 'k',
+    'line_4': 'm',
+    'line_5': 'y',
 }
 
 ARRAY_NAMES = ('t', 'x', 'x_ref', 'y', 'y_ref', 'theta', 'theta_ref', 'v_c', 'w_c', 'zeros')

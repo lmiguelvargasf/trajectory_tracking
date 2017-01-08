@@ -18,11 +18,11 @@ class SimulationPlotter(Plotter):
         if xs is None:
             xs = self.t
         label= r'$' + tag + r'$'
-        plot.plot(xs, ys, COLORS['actual'], label=label)
+        plot.plot(xs, ys, COLORS['line_0'], label=label)
 
     def _plot_error(self, plot, error, tag):
         label = r'$' + tag + r'_{error}$'
-        plot.plot(self.t, error, COLORS['actual'], label=label)
+        plot.plot(self.t, error, COLORS['line_0'], label=label)
 
     def plot_results(self):
         x_error = get_error(self.data['x_ref'], self.data['x'])
