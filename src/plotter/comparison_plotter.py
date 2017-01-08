@@ -22,4 +22,7 @@ class ComparisonPlotter(Plotter):
         self.plot_reference(self.trajectory_plot, r'${\rm reference}$', self.y_ref, self.x_ref)
         self.plot_reference(self.position_plot[0], 'x', self.x_ref)
         self.plot_reference(self.position_plot[1], 'y', self.y_ref)
+
+        self.plot_zeros(self.position_error_plot[0])
+        self.plot_zeros(self.position_error_plot[1])
         plt.show()
