@@ -14,7 +14,7 @@ class SimulationPlotter(Plotter):
         self.fig_part_1, self.plots_part_1 = plt.subplots(2, 2, sharex=True)
         self.fig_part_2, self.plots_part_2 = plt.subplots(1, 2)
 
-    def _plot_zeros(self, plot):
+    def plot_zeros(self, plot):
         plot.plot(self.t, self.zeros, COLORS['ref'], label=r'$e=0$', lw=PLOT['line_width'])
 
     def _plot_actual_data(self, plot, tag, ys, xs=None):
@@ -40,9 +40,9 @@ class SimulationPlotter(Plotter):
         self._plot_actual_data(self.plots_part_0[1, 0], 'y', self.data['y'], )
         self._plot_actual_data(self.plots_part_1[0, 0], r'\theta', self.data['theta'])
 
-        self._plot_zeros(self.plots_part_0[0, 1])
-        self._plot_zeros(self.plots_part_0[1, 1])
-        self._plot_zeros(self.plots_part_1[1, 0])
+        self.plot_zeros(self.plots_part_0[0, 1])
+        self.plot_zeros(self.plots_part_0[1, 1])
+        self.plot_zeros(self.plots_part_1[1, 0])
 
         self._plot_error(self.plots_part_0[0, 1], x_error, 'x')
         self._plot_error(self.plots_part_0[1, 1], y_error, 'y')
