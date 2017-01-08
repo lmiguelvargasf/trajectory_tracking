@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import matplotlib.pyplot as plt
 
-from .constants import COLORS
+from .constants import COLORS, LABELS, TITLES
 from .plotter import Plotter, get_error
 
 
@@ -20,9 +20,12 @@ class ComparisonPlotter(Plotter):
         self.data_list = data_list
 
     def plot_comparison(self):
-        self.plot_reference(self.trajectory_plot, r'${\rm reference}$', self.y_ref, self.x_ref)
+        self.plot_reference(self.trajectory_plot, r'{\rm reference}', self.y_ref, self.x_ref)
         self.plot_reference(self.position_plot[0], 'x', self.x_ref)
         self.plot_reference(self.position_plot[1], 'y', self.y_ref)
+
+        self.plot_zeros(self.position_error_plot[0])
+        self.plot_zeros(self.position_error_plot[1])
 
         for i, data in enumerate(self.data_list):
             x_error = get_error(data['x_ref'], data['x'])
@@ -41,6 +44,5 @@ class ComparisonPlotter(Plotter):
             self.plot_actual_data(self.control_action_plot[0], tag, data['v_c'], color=color)
             self.plot_actual_data(self.control_action_plot[1], tag, data['w_c'], color=color)
 
-        self.plot_zeros(self.position_error_plot[0])
-        self.plot_zeros(self.position_error_plot[1])
+        self.decorate_plot(self.trajectory_plot, TITLES['trajectories'], LABELS['x'], LABELS['y'])
         plt.show()
