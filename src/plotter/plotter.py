@@ -38,7 +38,7 @@ class Plotter:
         label = r'$' + tag + (r'_{error}$' if tag in ('x', 'y', r'\theta') else r'$')
         plot.plot(self.t, error, color, label=label)
 
-    def _decorate_plot(self, plot, title, x_label, y_label):
+    def decorate_plot(self, plot, title, x_label, y_label):
         plot.set_title(title, fontsize=PLOT['plot_title_size'])
         plot.set_xlabel(x_label, fontsize=PLOT['axis_label_size'])
         plot.set_ylabel(y_label, fontsize=PLOT['axis_label_size'])
