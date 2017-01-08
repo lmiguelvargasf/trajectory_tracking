@@ -14,9 +14,6 @@ class SimulationPlotter(Plotter):
         self.fig_part_1, self.plots_part_1 = plt.subplots(2, 2, sharex=True)
         self.fig_part_2, self.plots_part_2 = plt.subplots(1, 2)
 
-    def plot_zeros(self, plot):
-        plot.plot(self.t, self.zeros, COLORS['ref'], label=r'$e=0$', lw=PLOT['line_width'])
-
     def _plot_actual_data(self, plot, tag, ys, xs=None):
         if xs is None:
             xs = self.t
