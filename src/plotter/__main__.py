@@ -23,11 +23,10 @@ def print_usage():
     print('\tShows the list of simulations.')
 
 
-def plot_simulation(simulation_name):
-    data_container = get_data_container(str(simulation_name).split('_')[0])
+def plot_simulation(table, sim_name):
+    data_container = get_data_container(str(sim_name).split('_')[0])
     number_of_columns = len(ARRAY_NAMES) - 1
-    cursor.execute(QUERIES['select_data'].format(simulation_name))
-    for row in cursor.fetchall():
+    for row in table:
         for i in range(number_of_columns):
             data_container[ARRAY_NAMES[i]].append(row[i])
         data_container[ARRAY_NAMES[number_of_columns]].append(0)
@@ -39,7 +38,7 @@ def plot_simulation(simulation_name):
 if __name__ == '__main__':
     parameters = sys.argv[1:]
 
-    if len(parameters) not in (1, 2, 3):
+    if len(parameters) not in (1, 2, 3, 4):
         print_error_message()
         sys.exit(1)
 
@@ -60,7 +59,8 @@ if __name__ == '__main__':
     if len(parameters) == 1:
         print("Plotting results of the last simulation...")
         simulation_name = cursor.fetchone()[0]
-        plot_simulation(simulation_name)
+        cursor.execute(QUERIES['select_data'].format(simulation_name))
+        plot_simulation(cursor.fetchall(), simulation_name)
 
     if len(parameters) == 2:
         rows = cursor.fetchall()
@@ -76,7 +76,8 @@ if __name__ == '__main__':
             print('Error: simulation does not exists')
             sys.exit(3)
         print("Plotting the results of the simulation: {}...".format(simulation_name))
-        plot_simulation(simulation_name)
+        cursor.execute(QUERIES['select_data'].format(simulation_name))
+        plot_simulation(cursor.fetchall(), simulation_name)
 
     cursor.close()
     connection.close()
