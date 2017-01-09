@@ -183,7 +183,9 @@ There is one mandatory requirement that is comparing two simulations of the
 same trajectory, i.e., the controller can be different.
 
 Although at first glance it seems that the time that both simulations
-lasted should be the same, it is possible to force a comparison.
+lasted should be the same, it is possible to force a comparison. When a
+comparison is forced, the smallest time of the two simulations is taken,
+and the other simulation is limited to the smallest time.
 
 To compare two simulations use:
 ```
