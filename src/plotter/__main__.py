@@ -1,12 +1,10 @@
 import os
-import sqlite3
-
 import sys
 
 from context_manager.db_context_manager import DBContextManager
-from .simulation_plotter import SimulationPlotter
-from .plotter import get_data_container
 from .constants import QUERIES, ARRAY_NAMES
+from .plotter import get_data_container
+from .simulation_plotter import SimulationPlotter
 
 
 def print_error_message():
