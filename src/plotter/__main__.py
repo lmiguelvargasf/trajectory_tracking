@@ -9,16 +9,14 @@ from .plotter import get_data_container
 from .simulation_plotter import SimulationPlotter
 
 
-def plot_simulation(table, sim_name):
+def get_filled_data_container(sim_name, table):
     data_container = get_data_container(str(sim_name).split('_')[0])
     number_of_columns = len(ARRAY_NAMES) - 1
     for row in table:
         for i in range(number_of_columns):
             data_container[ARRAY_NAMES[i]].append(row[i])
         data_container[ARRAY_NAMES[number_of_columns]].append(0)
-
-    plotter = SimulationPlotter(data_container)
-    plotter.plot_results()
+    return data_container
 
 
 def plot_last_sim_results(path_to_db):
@@ -27,7 +25,8 @@ def plot_last_sim_results(path_to_db):
         print("Plotting results of the last simulation...")
         simulation_name = cursor.fetchone()[0]
         cursor.execute(QUERIES['select_data'].format(simulation_name))
-        plot_simulation(cursor.fetchall(), simulation_name)
+        data_container = get_filled_data_container(simulation_name, cursor.fetchall())
+        SimulationPlotter(data_container).plot_results()
 
 
 def print_sim_names(path_to_db):
@@ -44,10 +43,11 @@ def get_sim_names(path_to_db):
     return simulations
 
 
-def plot_specific_simulation(path_to_db):
+def plot_specific_simulation(path_to_db, sim_name):
     with DBContextManager(path_to_db) as cursor:
-        cursor.execute(QUERIES['select_data'].format(simulation_name))
-        plot_simulation(cursor.fetchall(), simulation_name)
+        cursor.execute(QUERIES['select_data'].format(sim_name))
+        data_container = get_filled_data_container(sim_name, cursor.fetchall())
+        SimulationPlotter(data_container).plot_results()
 
 
 if __name__ == '__main__':
@@ -81,4 +81,4 @@ if __name__ == '__main__':
             sys.exit(3)
 
         print("Plotting the results of the simulation: {}...".format(simulation_name))
-        plot_specific_simulation(path_to_database)
+        plot_specific_simulation(path_to_database, simulation_name)
