@@ -19,6 +19,7 @@ TITLES = {
     'theta_vs_t': r'$\theta,\ \theta_{ref}\ {\rm vs}\ t$',
     'theta_error': r'$\theta_{error}\ {\rm vs}\ t$',
     'trajectory': r'${\rm followed\ trajectory\ vs\ reference\ trajectory}$',
+    'trajectories': r'${\rm followed\ trajectories\ vs\ reference\ trajectory}$',
     'v_vs_t': r'$v_{c}\ {\rm vs}\ t$',
     'w_vs_t': r'$\omega_{c}\ {\rm vs}\ t$',
     'x_n_y': r'${\rm results - }\ x\ {\rm and}\ y$',
@@ -47,7 +48,12 @@ PLOT = {
 
 COLORS = {
     'ref': '--r',
-    'actual': 'b',
+    'line_0': 'b',
+    'line_1': 'g',
+    'line_2': 'c',
+    'line_3': 'k',
+    'line_4': 'm',
+    'line_5': 'y',
 }
 
 ARRAY_NAMES = ('t', 'x', 'x_ref', 'y', 'y_ref', 'theta', 'theta_ref', 'v_c', 'w_c', 'zeros')
