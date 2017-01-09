@@ -177,6 +177,27 @@ $ cd ~/turtlebot_ws/src/trajectory_tracking/src/
 $ python -m plotter /absolute/path/to/database/results.db --sims
 ```
 
+### Comparing the results of two simulations
+It is possible to compare the obtained results in two different simulations.
+There is one mandatory requirement that is comparing two simulations of the
+same trajectory, i.e., the controller can be different.
+
+Although at first glance it seems that the time that both simulations
+lasted should be the same, it is possible to force a comparison.
+
+To compare two simulations use:
+```
+$ cd ~/turtlebot_ws/src/trajectory_tracking/src/
+$ python -m plotter /absolute/path/to/database/results.db sim1_name sim2_name
+```
+
+To force the plot comparison of two simulations use:
+```
+$ cd ~/turtlebot_ws/src/trajectory_tracking/src/
+$ python -m plotter /absolute/path/to/database/results.db sim1_name sim2_name --f
+```
+
+
 ## Trajectories
 Three trajectories have been used to test each controller.
 
