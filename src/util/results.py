@@ -1,6 +1,6 @@
 import datetime
 
-from db_context_manager import DBContextManager
+from context_manager.db_context_manager import DBContextManager
 from util.constants import QUERIES
 
 
