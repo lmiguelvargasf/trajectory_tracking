@@ -3,24 +3,10 @@ import os
 import sys
 
 from context_manager.db_context_manager import DBContextManager
+from .printer import print_error_message, print_usage_message
 from .constants import QUERIES, ARRAY_NAMES
 from .plotter import get_data_container
 from .simulation_plotter import SimulationPlotter
-
-
-def print_error_message():
-    print('Error using module plotter!')
-    print('Try python -m plotter --help for more information')
-
-
-def print_usage():
-    print('Usage:')
-    print('python -m plotter /path/to/database/results.db [simulation_A] [simulation_B]')
-    print('\tPlots the results of the last simulation when both simulation_A and simulation_B are not provided.')
-    print('\tPlots the results of simulation_A when just this parameter is provided.')
-    print('\tPlots the results of simulation_A and simulation_B when both parameters are provided.')
-    print('python -m plotter /path/to/database/results.db --sims')
-    print('\tShows the list of simulations.')
 
 
 def plot_simulation(table, sim_name):
@@ -72,7 +58,7 @@ if __name__ == '__main__':
         sys.exit(1)
 
     if len(parameters) == 1 and parameters[0] == '--help':
-        print_usage()
+        print_usage_message()
         sys.exit(0)
 
     path_to_database = parameters[0]
