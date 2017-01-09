@@ -3,6 +3,7 @@ import sqlite3
 
 import sys
 
+from context_manager.db_context_manager import DBContextManager
 from .simulation_plotter import SimulationPlotter
 from .plotter import get_data_container
 from .constants import QUERIES, ARRAY_NAMES
@@ -35,6 +36,35 @@ def plot_simulation(table, sim_name):
     plotter.plot_results()
 
 
+def plot_last_sim_results(path_to_db):
+    with DBContextManager(path_to_db) as cursor:
+        cursor.execute(QUERIES['select_sim'])
+        print("Plotting results of the last simulation...")
+        simulation_name = cursor.fetchone()[0]
+        cursor.execute(QUERIES['select_data'].format(simulation_name))
+        plot_simulation(cursor.fetchall(), simulation_name)
+
+
+def print_sim_names(path_to_db):
+    with DBContextManager(path_to_db) as cursor:
+        cursor.execute(QUERIES['select_sim'])
+        for row in cursor.fetchall():
+            print(row[0])
+
+
+def get_sim_names(path_to_db):
+    with DBContextManager(path_to_db) as cursor:
+        cursor.execute(QUERIES['select_sim'])
+        simulations = [row[0] for row in cursor.fetchall()]
+    return simulations
+
+
+def plot_specific_simulation(path_to_db):
+    with DBContextManager(path_to_db) as cursor:
+        cursor.execute(QUERIES['select_data'].format(simulation_name))
+        plot_simulation(cursor.fetchall(), simulation_name)
+
+
 if __name__ == '__main__':
     parameters = sys.argv[1:]
 
@@ -52,32 +82,18 @@ if __name__ == '__main__':
         print('Error: database does not exist!')
         sys.exit(2)
 
-    connection = sqlite3.connect(path_to_database)
-    cursor = connection.cursor()
-    cursor.execute(QUERIES['select_sim'])
-
     if len(parameters) == 1:
-        print("Plotting results of the last simulation...")
-        simulation_name = cursor.fetchone()[0]
-        cursor.execute(QUERIES['select_data'].format(simulation_name))
-        plot_simulation(cursor.fetchall(), simulation_name)
+        plot_last_sim_results(path_to_database)
+        sys.exit(0)
 
-    if len(parameters) == 2:
-        rows = cursor.fetchall()
-        if parameters[1] == '--sims':
-            for row in rows:
-                print(row[0])
-            sys.exit(0)
-
-        simulations = [row[0] for row in rows]
+    if len(parameters) == 2 and parameters[1] == '--sims':
+        print_sim_names(path_to_database)
+        sys.exit(0)
+    else:
         simulation_name = parameters[1]
-
-        if simulation_name not in simulations:
+        if simulation_name not in get_sim_names(path_to_database):
             print('Error: simulation does not exists')
             sys.exit(3)
-        print("Plotting the results of the simulation: {}...".format(simulation_name))
-        cursor.execute(QUERIES['select_data'].format(simulation_name))
-        plot_simulation(cursor.fetchall(), simulation_name)
 
-    cursor.close()
-    connection.close()
+        print("Plotting the results of the simulation: {}...".format(simulation_name))
+        plot_specific_simulation(path_to_database)
