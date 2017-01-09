@@ -3,7 +3,6 @@ from __future__ import print_function
 
 import os
 import sys
-import time
 
 import rospy
 from gazebo_msgs.msg import ModelStates
@@ -114,11 +113,13 @@ if __name__ == '__main__':
         rate.sleep()
 
     print('Simulation was completed successfully!')
-    # wait before plotting after simulation is completed
-    time.sleep(2)
+    export_results(data_container,
+                   CONTROLLER, TRAJECTORY,
+                   os.sep.join(__file__.split(os.sep)[:-2]) + '/results.db')
+    print('Data was exported successfully!')
+    print('Plotting results...')
     plotter = SimulationPlotter(data_container)
     plotter.plot_results()
-    export_results(data_container, os.sep.join(__file__.split(os.sep)[:-2]) + '/results.db')
-    print ('Data was exported successfully!')
+    print('Press Ctrl+C to terminate program.')
 
     rospy.spin()
