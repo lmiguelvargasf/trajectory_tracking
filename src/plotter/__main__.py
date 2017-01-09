@@ -43,11 +43,19 @@ def get_sim_names(path_to_db):
     return simulations
 
 
-def plot_specific_simulation(path_to_db, sim_name):
+def plot_simulation(path_to_db, sim_name):
     with DBContextManager(path_to_db) as cursor:
         cursor.execute(QUERIES['select_data'].format(sim_name))
         data_container = get_filled_data_container(sim_name, cursor.fetchall())
         SimulationPlotter(data_container).plot_results()
+
+
+def plot_simulation_comparison(path_to_db, sim1, sim2):
+    pass
+
+
+def plot_forced_simulation_comparison(path_to_db, sim1, sim2):
+    pass
 
 
 if __name__ == '__main__':
@@ -71,14 +79,41 @@ if __name__ == '__main__':
         plot_last_sim_results(path_to_database)
         sys.exit(0)
 
-    if len(parameters) == 2 and parameters[1] == '--sims':
-        print_sim_names(path_to_database)
-        sys.exit(0)
-    else:
-        simulation_name = parameters[1]
-        if simulation_name not in get_sim_names(path_to_database):
-            print('Error: simulation does not exists')
-            sys.exit(3)
+    if len(parameters) == 2:
+        if parameters[1] == '--sims':
+            print_sim_names(path_to_database)
+            sys.exit(0)
+        else:
+            simulation_name = parameters[1]
+            if simulation_name not in get_sim_names(path_to_database):
+                print('Error: simulation does not exists!')
+                sys.exit(3)
 
-        print("Plotting the results of the simulation: {}...".format(simulation_name))
-        plot_specific_simulation(path_to_database, simulation_name)
+            print("Plotting the results of the simulation: {}...".format(simulation_name))
+            plot_simulation(path_to_database, simulation_name)
+            sys.exit(0)
+
+    if len(parameters) in (3, 4):
+        if len(parameters) == 4 and parameters[3] != '--f':
+            print_error_message()
+            sys.exit(0)
+
+        provided_sims = parameters[1:3]
+        simulations = get_sim_names(path_to_database)
+
+        for sim in provided_sims:
+            if sim not in simulations:
+                print('Error: simulation "{}" does not exists!'.format(sim))
+                sys.exit(3)
+
+        if provided_sims[0] == provided_sims[1]:
+            print('Error: simulations must be different!')
+            sys.exit(4)
+
+
+        if len(parameters) == 3:
+            print('Plotting simulation comparison...')
+            plot_simulation_comparison(path_to_database, *provided_sims)
+        else:
+            print('Plotting forced simulation comparison...')
+            plot_forced_simulation_comparison(path_to_database, *provided_sims)
