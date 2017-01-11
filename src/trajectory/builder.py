@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+from .lissajous_trajectory import LissajousTrajectory
 from .circular_trajectory import CircularTrajectory
 from .epitrochoid_trajectory import EpitrochoidTrajectory
 from .lemniscate_trajectory import LemniscateTrajectory
@@ -16,3 +17,5 @@ def create_trajectory(trajectory_name, period):
         return LemniscateTrajectory(2.0, period)
     elif trajectory_name == 'epitrochoid':
         return EpitrochoidTrajectory(5, 1, 3, period, 1 / 3.0)
+    elif trajectory_name == 'lissajous':
+        return LissajousTrajectory(1, 1, 3, 2, period)
