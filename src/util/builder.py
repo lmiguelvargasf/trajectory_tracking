@@ -2,7 +2,6 @@
 
 from controller.euler_controller import EulerMethodController
 from controller.pid_controller import PIDController
-from trajectory.astroid_trajectory import AstroidTrajectory
 from trajectory.circular_trajectory import CircularTrajectory
 from trajectory.epitrochoid_trajectory import EpitrochoidTrajectory
 from trajectory.lemniscate_trajectory import LemniscateTrajectory
@@ -18,8 +17,6 @@ def create_trajectory(trajectory_name, period):
         return CircularTrajectory(2.0, period)
     elif trajectory_name == 'squared':
         return SquaredTrajectory(2.0, period, 0.01, 0.01)
-    elif trajectory_name == 'astroid':
-        return AstroidTrajectory(2.0, period)
     elif trajectory_name == 'lemniscate':
         return LemniscateTrajectory(2.0, period)
     elif trajectory_name == 'epitrochoid':
