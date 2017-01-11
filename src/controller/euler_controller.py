@@ -1,6 +1,5 @@
 #!/usr/bin/env python
-from math import atan2, sin
-from math import cos
+from math import atan2, sin, cos
 
 from .controller import Controller
 
