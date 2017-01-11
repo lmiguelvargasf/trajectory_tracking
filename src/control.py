@@ -10,7 +10,8 @@ from geometry_msgs.msg import Twist
 
 from plotter.plotter import get_data_container
 from plotter.simulation_plotter import SimulationPlotter
-from util.builder import create_trajectory, create_controller
+from trajectory.builder import create_trajectory
+from util.builder import create_controller
 from util.results import export_results
 
 DELTA_T = 0.1  # this is the sampling time
