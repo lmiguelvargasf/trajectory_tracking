@@ -2,7 +2,6 @@
 from math import atan2, sin
 from math import cos
 
-from util.angle import get_angle_between_0_and_2_pi
 from .controller import Controller
 
 
@@ -28,11 +27,18 @@ class PIDController(Controller):
         self.MAX_V = speed_limits['linear']
         self.MAX_W = speed_limits['angular']
 
+    def set_next_reference(self):
+        reference = self.trajectory.get_position_at((self.i + 1) * self.delta)
+        self.x_ref_n_plus_1 = reference.x
+        self.y_ref_n_plus_1 = reference.y
+
     def compute_control_actions(self, pose, twist, i):
         self.i = i
         self.set_current_orientation(pose.orientation)
         self.set_current_position(pose.position)
-        self.set_current_reference(self.trajectory.get_position_at((i + 1) * self.delta))
+        self.set_current_reference(self.trajectory.get_position_at(i * self.delta))
+        self.set_next_reference()
+
 
         w = self.get_angular_speed(twist)
         v = self.get_linear_speed(twist)
@@ -101,17 +107,7 @@ class PIDController(Controller):
         return w_ref_n
 
     def compute_angular_speed_reference(self):
-        theta_ref = atan2(self.y_ref_n - self.y_n, self.x_ref_n - self.x_n)
-
-        if self.trajectory.get_name()  in ('squared', 'circular'):
-            if not (0 <= self.i * self.delta <= self.simulation_time / 4):
-                theta_ref = get_angle_between_0_and_2_pi(theta_ref)
-                self.theta_n = get_angle_between_0_and_2_pi(self.theta_n)
-
-            if self.trajectory.get_name() == 'circular' and (self.i + 1) * self.delta == self.simulation_time:
-                theta_ref = atan2(sin(theta_ref), cos(theta_ref))
-                self.theta_n = atan2(sin(self.theta_n), cos(self.theta_n))
-
+        theta_ref = atan2(self.y_ref_n_plus_1 - self.y_n, self.x_ref_n_plus_1 - self.x_n)
         w_ref_n = (theta_ref - self.theta_n) / self.delta
 
         self.theta_ref_n = theta_ref
@@ -126,8 +122,8 @@ class PIDController(Controller):
         return v_ref_n
 
     def compute_linear_speed_reference(self):
-        v_x_ref = (self.x_ref_n - self.x_n) / self.delta
-        v_y_ref = (self.y_ref_n - self.y_n) / self.delta
+        v_x_ref = (self.x_ref_n_plus_1 - self.x_n) / self.delta
+        v_y_ref = (self.y_ref_n_plus_1 - self.y_n) / self.delta
         v_ref_n = (v_x_ref ** 2 + v_y_ref ** 2) ** 0.5
         return v_ref_n
 
