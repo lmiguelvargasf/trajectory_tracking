@@ -16,7 +16,7 @@ class LemniscateTrajectoryTest(unittest.TestCase):
         self.assertEqual('lemniscate', self.trajectory.get_name())
 
     def test_given_lemniscate_trajectory_when_getting_position_after_0s_then_position_is_returned(self):
-        self.expected_position.x = 2.8284
+        self.expected_position.x = 2.0
         self.expected_position.y = 0.0
         self.assertPositionAlmostEqual(self.expected_position, self.trajectory.get_position_at(0), 0.01)
 
@@ -27,7 +27,7 @@ class LemniscateTrajectoryTest(unittest.TestCase):
 
 
     def test_given_lemniscate_trajectory_when_getting_position_after_2s_then_position_is_returned(self):
-        self.expected_position.x = -2.8284
+        self.expected_position.x = -2.0
         self.expected_position.y = 0
         self.assertPositionAlmostEqual(self.expected_position, self.trajectory.get_position_at(2), 0.01)
 
@@ -37,7 +37,7 @@ class LemniscateTrajectoryTest(unittest.TestCase):
         self.assertPositionAlmostEqual(self.expected_position, self.trajectory.get_position_at(3), 0.01)
 
     def test_given_lemniscate_trajectory_when_getting_position_after_4s_then_position_is_returned(self):
-        self.expected_position.x = 2.8284
+        self.expected_position.x = 2.0
         self.expected_position.y = 0
         self.assertPositionAlmostEqual(self.expected_position, self.trajectory.get_position_at(4), 0.01)
 
