@@ -23,7 +23,7 @@ class EulerMethodController(Controller):
         return self.y_ref_n_plus_1 - self.K_Y * (self.y_ref_n - self.y_n) - self.y_n
 
     def get_delta_theta_n(self):
-        return self.theta_ez_n - self.K_THETA * (self.theta_ez_n - self.theta_n) - self.theta_n
+        return self.theta_ref_n - self.K_THETA * (self.theta_ref_n - self.theta_n) - self.theta_n
 
     def compute_theta_ez_n(self):
          return atan2(self.get_delta_y_n(), self.get_delta_x_n())
@@ -32,11 +32,10 @@ class EulerMethodController(Controller):
         delta_x_n = self.get_delta_x_n()
         delta_y_n = self.get_delta_y_n()
 
-        return (delta_x_n * cos(self.theta_ez_n) + delta_y_n * sin(self.theta_ez_n)) / self.delta
+        return (delta_x_n * cos(self.theta_ref_n) + delta_y_n * sin(self.theta_ref_n)) / self.delta
 
     def compute_w_c_n(self):
         w_n = self.get_delta_theta_n() / self.delta
-        self.theta_ref_n = self.theta_ez_n
 
         # limit angular velocity to be between -pi and pi rad/s
         return atan2(sin(w_n), cos(w_n))
@@ -48,6 +47,6 @@ class EulerMethodController(Controller):
         self.set_current_reference(self.trajectory.get_position_at(i * self.delta))
         self.set_next_reference()
 
-        self.theta_ez_n = self.compute_theta_ez_n()
+        self.theta_ref_n = self.compute_theta_ez_n()
         self.v_c_n = self.compute_v_c_n()
         self.w_c_n =  self.compute_w_c_n()
