@@ -6,7 +6,7 @@ def print_usage():
     print('Usage:')
     print('python -m trajectory trajectory_name')
     print('\tShows a plot of trajectory_name.')
-    print('python -m trajectory --trajectories')
+    print('python -m trajectory --list')
     print('\tShows the list of trajectories.')
 
 

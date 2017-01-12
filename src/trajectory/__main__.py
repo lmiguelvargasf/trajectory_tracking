@@ -40,7 +40,7 @@ if __name__ == '__main__':
 
     path = os.sep.join(__file__.split(os.sep)[:-1])
 
-    if arg == '--trajectories':
+    if arg == '--list':
         print_files_in_path(path)
         sys.exit(0)
 
