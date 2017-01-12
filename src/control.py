@@ -17,11 +17,11 @@ from util.results import export_results
 DELTA_T = 0.1  # this is the sampling time
 SIM_INFO = {
     'linear': (60.0, 0.075, 1.25),
-    'circular': (120.0, 0.11, 1.25),
-    'squared': (160.0, 0.11, 1.25),
-    'lemniscate': (120.0, 0.125, 1.25),
-    'epitrochoid': (240.0, 0.162, 1.25),
-    'lissajous': (120.0, 0.324, 1.25)
+    'circular': (300.0, 0.11, 1.25),
+    'squared': (300.0, 0.11, 1.25),
+    'lemniscate': (300.0, 0.125, 1.25),
+    'epitrochoid': (600.0, 0.162, 1.25),
+    'lissajous': (300.0, 0.162, 1.25)
 }
 
 
