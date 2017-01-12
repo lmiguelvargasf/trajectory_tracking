@@ -21,6 +21,7 @@ SIM_INFO = {
     'squared': (160.0, 0.11, 1.25),
     'lemniscate': (120.0, 0.125, 1.25),
     'epitrochoid': (240.0, 0.162, 1.25),
+    'lissajous': (120.0, 0.324, 1.25)
 }
 
 
@@ -70,7 +71,7 @@ if __name__ == '__main__':
         print('Error: "{}" not valid controller name!'.format(sys.argv[1]))
         sys.exit(-2)
 
-    if parameters[1] in ('linear', 'circular', 'squared'):
+    if parameters[1] in ('linear', 'circular', 'squared', 'lemniscate', 'epitrochoid', 'lissajous'):
         TRAJECTORY = parameters[1]
         PERIOD = SIM_INFO[TRAJECTORY][0]
         MAX_V = SIM_INFO[TRAJECTORY][1]
