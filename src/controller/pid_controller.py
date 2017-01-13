@@ -1,6 +1,5 @@
 #!/usr/bin/env python
-from math import atan2, sin
-from math import cos
+from math import atan2
 
 from .controller import Controller
 
@@ -39,9 +38,7 @@ class PIDController(Controller):
         self.set_current_reference(self.trajectory.get_position_at(i * self.delta))
         self.set_next_reference()
 
-
-        w = self.get_angular_speed(twist)
-        v = self.get_linear_speed(twist)
+        v, w = self.get_velocities(twist)
 
         v_ref_n = self.compute_linear_speed_reference()
         v_ref_n = self.limit_linear_speed_reference(v_ref_n)
@@ -84,7 +81,6 @@ class PIDController(Controller):
     def compute_errors(self, v, v_ref_n, w, w_ref_n):
         e_v = v_ref_n - v
         e_w = w_ref_n - w
-        self.e_w_n = atan2(sin(e_w), cos(e_w))
         return e_v, e_w
 
     def compute_w_pid_factors(self):
@@ -107,10 +103,8 @@ class PIDController(Controller):
         return w_ref_n
 
     def compute_angular_speed_reference(self):
-        theta_ref = atan2(self.y_ref_n_plus_1 - self.y_n, self.x_ref_n_plus_1 - self.x_n)
-        w_ref_n = (theta_ref - self.theta_n) / self.delta
-
-        self.theta_ref_n = theta_ref
+        self.theta_ref_n = atan2(self.y_ref_n_plus_1 - self.y_n, self.x_ref_n_plus_1 - self.x_n)
+        w_ref_n = (self.theta_ref_n - self.theta_n) / self.delta
 
         return w_ref_n
 
@@ -127,11 +121,10 @@ class PIDController(Controller):
         v_ref_n = (v_x_ref ** 2 + v_y_ref ** 2) ** 0.5
         return v_ref_n
 
-    def get_linear_speed(self, twist):
+    def get_velocities(self, twist):
         v_x = twist.linear.x
         v_y = twist.linear.y
         v = (v_x ** 2 + v_y ** 2) ** 0.5
-        return v
+        w = twist.angular.z
 
-    def get_angular_speed(self, twist):
-        return twist.angular.z
+        return v, w
