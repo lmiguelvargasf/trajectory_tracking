@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-from math import atan2
+from math import atan2, sin, cos
 
 from .controller import Controller
 
@@ -104,6 +104,7 @@ class PIDController(Controller):
 
     def compute_angular_speed_reference(self):
         self.theta_ref_n = atan2(self.y_ref_n_plus_1 - self.y_n, self.x_ref_n_plus_1 - self.x_n)
+        self.theta_n = atan2(sin(self.theta_n), cos(self.theta_n))
         w_ref_n = (self.theta_ref_n - self.theta_n) / self.delta
 
         return w_ref_n
