@@ -122,6 +122,18 @@ $ catkin_make
 Finally, this package is ready to be used.
 
 ## Usage
+
+### Plotting a trajectory
+It is possible to visualize the trajectories that the mobile robot can
+follow:
+
+```
+$ cd ~/turtlebot_ws/src/trajectory_tracking/src/
+$ python -m trajectory trajectory_name
+```
+
+where `trajectory_name` is the name of the trajectory to visualize.
+
 ### Running a simulation
 Open a terminal window, and you have to source the workspace, and execute
 a launch file in order to initialize Gazebo:
