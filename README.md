@@ -20,10 +20,6 @@ These algorithms have been tested, and are properly working for the following tr
 | lissajous     | :white_check_mark: |        :x:         |
 
 
-* Linear Trajectory
-* Circular Trajectory
-* Squared Trajectory
-
 ## Installation
 Before cloning this repository, you should install ROS and Gazebo.
 It is highly recommended to use Ubuntu as OS. I also suggest installing
