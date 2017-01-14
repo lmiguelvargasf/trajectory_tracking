@@ -8,6 +8,18 @@ Algorithms that have been used and are working properly so far:
 * PID controller
 
 These algorithms have been tested, and are properly working for the following trajectories:
+
+
+| Trajectory    | Euler Controller   | PID Controller     |
+| ------------- |:------------------:|:------------------:|
+| linear        | :white_check_mark: | :white_check_mark: |
+| circular      | :white_check_mark: |        :x:         |
+| squared       | :white_check_mark: |        :x:         |
+| lemniscate    | :white_check_mark: |        :x:         |
+| epitrochoid   | :white_check_mark: |        :x:         |
+| lissajous     | :white_check_mark: |        :x:         |
+
+
 * Linear Trajectory
 * Circular Trajectory
 * Squared Trajectory
