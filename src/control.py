@@ -24,6 +24,13 @@ SIM_INFO = {
     'lissajous': (300.0, 0.162, 1.25)
 }
 
+IMPLEMENTED = {
+    'euler':
+        ('linear', 'circular', 'squared', 'lemniscate', 'epitrochoid', 'lissajous'),
+    'pid':
+        ('linear'),
+}
+
 
 def get_pose(message):
     global current_pose, current_twist
@@ -71,13 +78,13 @@ if __name__ == '__main__':
         print('Error: "{}" not valid controller name!'.format(sys.argv[1]))
         sys.exit(-2)
 
-    if parameters[1] in ('linear', 'circular', 'squared', 'lemniscate', 'epitrochoid', 'lissajous'):
+    if parameters[1] in IMPLEMENTED[CONTROLLER]:
         TRAJECTORY = parameters[1]
         PERIOD = SIM_INFO[TRAJECTORY][0]
         MAX_V = SIM_INFO[TRAJECTORY][1]
         MAX_W = SIM_INFO[TRAJECTORY][2]
     else:
-        print('Error: "{}" not a valid trajectory name!'.format(parameters[1]))
+        print('Error: "{}" is not a valid trajectory name for {} controller!'.format((parameters[1]), CONTROLLER))
         sys.exit(-3)
 
     try:
