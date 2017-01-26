@@ -3,6 +3,7 @@ from __future__ import print_function
 
 import os
 import sys
+from collections import namedtuple
 
 import rospy
 from gazebo_msgs.msg import ModelStates
@@ -13,6 +14,8 @@ from plotter.simulation_plotter import SimulationPlotter
 from trajectory.builder import create_trajectory
 from util.builder import create_controller
 from util.results import export_results
+
+SimInfo = namedtuple('SimInfo', 'time max_v, max_w')
 
 DELTA_T = 0.1  # this is the sampling time
 SIM_INFO = {
