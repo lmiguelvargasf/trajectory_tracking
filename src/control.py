@@ -29,7 +29,8 @@ SIM_INFO = {
 
 IMPLEMENTED = {
     'euler':
-        ('linear', 'circular', 'squared', 'lemniscate', 'epitrochoid', 'lissajous'),
+        ('linear', 'circular', 'squared',
+         'lemniscate', 'epitrochoid', 'lissajous'),
     'pid':
         ('linear'),
 }
@@ -72,7 +73,8 @@ if __name__ == '__main__':
         elif len(parameters) > 3:
             print('too much arguments!')
 
-        print('Try: rosrun trajectory_tracking control.py <controller> <trajectory> [simulation_time]')
+        print('Try: rosrun trajectory_tracking control.py <controller> '
+              '<trajectory> [simulation_time]')
         sys.exit(-1)
 
     if parameters[0] in ('euler', 'pid'):
@@ -87,7 +89,8 @@ if __name__ == '__main__':
         MAX_V = SIM_INFO[TRAJECTORY].max_v
         MAX_W = SIM_INFO[TRAJECTORY].max_w
     else:
-        print('Error: "{}" is not a valid trajectory name for {} controller!'.format((parameters[1]), CONTROLLER))
+        print('Error: "{}" is not a valid trajectory name for {} controller!'
+              .format((parameters[1]), CONTROLLER))
         sys.exit(-3)
 
     try:
@@ -109,7 +112,9 @@ if __name__ == '__main__':
     current_pose = None
     current_twist = None
     subscriber = rospy.Subscriber('gazebo/model_states', ModelStates, get_pose)
-    twist_publisher = rospy.Publisher('computed_control_actions', Twist, queue_size=1)
+    twist_publisher = rospy.Publisher('computed_control_actions',
+                                      Twist,
+                                      queue_size=1)
 
     while current_pose is None or current_twist is None:
         pass

@@ -17,6 +17,8 @@ def create_controller(trajectory, controller_name, delta, sim_info):
         return PIDController(
             trajectory,
             simulation_data,
-            {'kpv': 0.2, 'kiv': 1.905, 'kdv': 0.00, 'kpw': 0.45, 'kiw': 1.25, 'kdw': 0.00},
-            {'linear': sim_info[trajectory_name].max_v, 'angular': sim_info[trajectory_name].max_w}
+            {'kpv': 0.2, 'kiv': 1.905, 'kdv': 0.00,
+             'kpw': 0.45, 'kiw': 1.25, 'kdw': 0.00},
+            {'linear': sim_info[trajectory_name].max_v,
+             'angular': sim_info[trajectory_name].max_w}
         )
