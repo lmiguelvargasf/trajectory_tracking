@@ -3,6 +3,7 @@ from __future__ import print_function
 
 import os
 import sys
+from collections import namedtuple
 
 import rospy
 from gazebo_msgs.msg import ModelStates
@@ -14,19 +15,22 @@ from trajectory.builder import create_trajectory
 from util.builder import create_controller
 from util.results import export_results
 
+SimInfo = namedtuple('SimInfo', 'time max_v, max_w')
+
 DELTA_T = 0.1  # this is the sampling time
 SIM_INFO = {
-    'linear': (60.0, 0.076, 1.35),
-    'circular': (300.0, 0.11, 1.25),
-    'squared': (300.0, 0.11, 1.25),
-    'lemniscate': (300.0, 0.125, 1.25),
-    'epitrochoid': (600.0, 0.162, 1.25),
-    'lissajous': (300.0, 0.162, 1.25)
+    'linear': SimInfo(60.0, 0.076, 1.35),
+    'circular': SimInfo(300.0, 0.11, 1.25),
+    'squared': SimInfo(300.0, 0.11, 1.25),
+    'lemniscate': SimInfo(300.0, 0.125, 1.25),
+    'epitrochoid': SimInfo(600.0, 0.162, 1.25),
+    'lissajous': SimInfo(300.0, 0.162, 1.25)
 }
 
 IMPLEMENTED = {
     'euler':
-        ('linear', 'circular', 'squared', 'lemniscate', 'epitrochoid', 'lissajous'),
+        ('linear', 'circular', 'squared',
+         'lemniscate', 'epitrochoid', 'lissajous'),
     'pid':
         ('linear'),
 }
@@ -69,7 +73,8 @@ if __name__ == '__main__':
         elif len(parameters) > 3:
             print('too much arguments!')
 
-        print('Try: rosrun trajectory_tracking control.py <controller> <trajectory> [simulation_time]')
+        print('Try: rosrun trajectory_tracking control.py <controller> '
+              '<trajectory> [simulation_time]')
         sys.exit(-1)
 
     if parameters[0] in ('euler', 'pid'):
@@ -80,11 +85,12 @@ if __name__ == '__main__':
 
     if parameters[1] in IMPLEMENTED[CONTROLLER]:
         TRAJECTORY = parameters[1]
-        PERIOD = SIM_INFO[TRAJECTORY][0]
-        MAX_V = SIM_INFO[TRAJECTORY][1]
-        MAX_W = SIM_INFO[TRAJECTORY][2]
+        PERIOD = SIM_INFO[TRAJECTORY].time
+        MAX_V = SIM_INFO[TRAJECTORY].max_v
+        MAX_W = SIM_INFO[TRAJECTORY].max_w
     else:
-        print('Error: "{}" is not a valid trajectory name for {} controller!'.format((parameters[1]), CONTROLLER))
+        print('Error: "{}" is not a valid trajectory name for {} controller!'
+              .format((parameters[1]), CONTROLLER))
         sys.exit(-3)
 
     try:
@@ -106,7 +112,9 @@ if __name__ == '__main__':
     current_pose = None
     current_twist = None
     subscriber = rospy.Subscriber('gazebo/model_states', ModelStates, get_pose)
-    twist_publisher = rospy.Publisher('computed_control_actions', Twist, queue_size=1)
+    twist_publisher = rospy.Publisher('computed_control_actions',
+                                      Twist,
+                                      queue_size=1)
 
     while current_pose is None or current_twist is None:
         pass

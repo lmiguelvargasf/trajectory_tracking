@@ -67,6 +67,7 @@ CATKIN_IGNORE
 .idea/sqlDataSources.xml
 .idea/dynamic.xml
 .idea/uiDesigner.xml
+.idea/codeStyleSettings.xml
 
 # Gradle:
 .idea/gradle.xml
