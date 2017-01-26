@@ -19,12 +19,12 @@ SimInfo = namedtuple('SimInfo', 'time max_v, max_w')
 
 DELTA_T = 0.1  # this is the sampling time
 SIM_INFO = {
-    'linear': (60.0, 0.076, 1.35),
-    'circular': (300.0, 0.11, 1.25),
-    'squared': (300.0, 0.11, 1.25),
-    'lemniscate': (300.0, 0.125, 1.25),
-    'epitrochoid': (600.0, 0.162, 1.25),
-    'lissajous': (300.0, 0.162, 1.25)
+    'linear': SimInfo(60.0, 0.076, 1.35),
+    'circular': SimInfo(300.0, 0.11, 1.25),
+    'squared': SimInfo(300.0, 0.11, 1.25),
+    'lemniscate': SimInfo(300.0, 0.125, 1.25),
+    'epitrochoid': SimInfo(600.0, 0.162, 1.25),
+    'lissajous': SimInfo(300.0, 0.162, 1.25)
 }
 
 IMPLEMENTED = {
@@ -83,9 +83,9 @@ if __name__ == '__main__':
 
     if parameters[1] in IMPLEMENTED[CONTROLLER]:
         TRAJECTORY = parameters[1]
-        PERIOD = SIM_INFO[TRAJECTORY][0]
-        MAX_V = SIM_INFO[TRAJECTORY][1]
-        MAX_W = SIM_INFO[TRAJECTORY][2]
+        PERIOD = SIM_INFO[TRAJECTORY].time
+        MAX_V = SIM_INFO[TRAJECTORY].max_v
+        MAX_W = SIM_INFO[TRAJECTORY].max_w
     else:
         print('Error: "{}" is not a valid trajectory name for {} controller!'.format((parameters[1]), CONTROLLER))
         sys.exit(-3)
