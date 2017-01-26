@@ -5,14 +5,22 @@ from util.constants import QUERIES
 
 
 def export_results(data, controller_name, trajectory_name, database_path):
-    creation_datetime = datetime.datetime.now()
+    def get_table_name(controller, trajectory, date_time):
+        return '_'.join([controller,
+                         trajectory,
+                         date_time.strftime('%Y_%m_%d_%H_%M_%S')])
+
+    date_time = datetime.datetime.now()
 
     with DBContextManager(database_path) as cursor:
-        table_name = ('_'.join([controller_name, trajectory_name, creation_datetime.strftime('%Y_%m_%d_%H_%M_%S')]))
+        table_name = get_table_name(
+            controller_name,
+            trajectory_name,
+            date_time
+        )
+
         cursor.execute(QUERIES['create_sims'])
-
-        cursor.execute(QUERIES['insert_sim'], (table_name, creation_datetime))
-
+        cursor.execute(QUERIES['insert_sim'], (table_name, date_time))
         cursor.execute(QUERIES['create_sim'].format(table_name))
 
         for i in range(len(data['t'])):
