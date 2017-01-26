@@ -129,10 +129,11 @@ follow:
 
 ```
 $ cd ~/turtlebot_ws/src/trajectory_tracking/src/
-$ python -m trajectory trajectory_name
+$ python -m trajectory
 ```
 
-where `trajectory_name` is the name of the trajectory to visualize.
+This will run a console application in which one can list all available
+trajectories, and one can also plot a trajectory.
 
 ### Running a simulation
 Open a terminal window, and you have to source the workspace, and execute
